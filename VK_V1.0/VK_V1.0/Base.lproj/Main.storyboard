@@ -60,9 +60,8 @@
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="A1g-Ji-5UW"/>
                                         </constraints>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="filled" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="Вход"/>
                                         <connections>
-                                            <action selector="loginButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="RrO-QC-a8i"/>
                                             <segue destination="cx8-PB-LPK" kind="presentation" identifier="loginVC" modalPresentationStyle="fullScreen" id="LdK-mE-ApP"/>
                                         </connections>
                                     </button>
@@ -101,8 +100,8 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="loginTextView" destination="jcz-IA-IL6" id="wW8-FE-miD"/>
-                        <outlet property="passwordTextView" destination="Mww-lu-HKK" id="vTg-o3-BzL"/>
+                        <outlet property="loginTextField" destination="jcz-IA-IL6" id="wW8-FE-miD"/>
+                        <outlet property="passwordTextField" destination="Mww-lu-HKK" id="vTg-o3-BzL"/>
                         <outlet property="scrollView" destination="upZ-j2-UCU" id="ALp-lg-Ins"/>
                     </connections>
                 </viewController>

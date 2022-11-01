@@ -16,18 +16,22 @@ final class LoginViewController: UIViewController {
         static let actionOkText = "OK"
     }
 
-    // MARK: - Private Visual Components
+    // MARK: - IBOutlet
 
-    @IBOutlet private var passwordTextView: UITextField!
-    @IBOutlet private var loginTextView: UITextField!
+    @IBOutlet private var passwordTextField: UITextField!
+    @IBOutlet private var loginTextField: UITextField!
     @IBOutlet private var scrollView: UIScrollView!
 
     // MARK: - LifeCycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        addObserver()
         addTapGesture()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        addObserver()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -35,7 +39,7 @@ final class LoginViewController: UIViewController {
         removeObserver()
     }
 
-    // MARK: - Public methods
+    // MARK: - Public method
 
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if identifier == Constants.segueIdentifier {
@@ -49,11 +53,15 @@ final class LoginViewController: UIViewController {
         return true
     }
 
+    // MARK: - IBActions
+
+    @IBAction private func unwindAction(_ sender: UIStoryboardSegue) {}
+
     // MARK: - Private methods
 
     private func addTapGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboardAction))
-        scrollView?.addGestureRecognizer(tapGesture)
+        scrollView.addGestureRecognizer(tapGesture)
     }
 
     private func addObserver() {
@@ -81,8 +89,8 @@ final class LoginViewController: UIViewController {
     }
 
     private func checkLoginInfo() -> Bool {
-        guard let login = loginTextView.text,
-              let password = passwordTextView.text else { return false }
+        guard let login = loginTextField.text,
+              let password = passwordTextField.text else { return false }
         if login == Constants.loginText, password == Constants.passwordText {
             return true
         } else {
@@ -91,18 +99,16 @@ final class LoginViewController: UIViewController {
     }
 
     private func showLoginError() {
-        let alter = UIAlertController(
+        let alertController = UIAlertController(
             title: Constants.alertTitleText,
             message:
             Constants.alertMessageText,
             preferredStyle: .alert
         )
         let action = UIAlertAction(title: Constants.actionOkText, style: .cancel, handler: nil)
-        alter.addAction(action)
-        present(alter, animated: true, completion: nil)
+        alertController.addAction(action)
+        present(alertController, animated: true, completion: nil)
     }
-
-    // MARK: - Private Actions
 
     @objc private func keyboardWillShownAction(notification: Notification) {
         guard let info = notification.userInfo as? NSDictionary,
@@ -117,20 +123,16 @@ final class LoginViewController: UIViewController {
             kbSize.height,
             right: 0.0
         )
-        scrollView?.contentInset = contentInsets
-        scrollView?.scrollIndicatorInsets = contentInsets
+        scrollView.contentInset = contentInsets
+        scrollView.scrollIndicatorInsets = contentInsets
     }
 
     @objc private func keyboardWillHideAction(notification: Notification) {
-        scrollView?.contentInset = UIEdgeInsets.zero
+        scrollView.contentInset = UIEdgeInsets.zero
         scrollView.scrollIndicatorInsets = UIEdgeInsets.zero
     }
 
     @objc private func hideKeyboardAction() {
-        scrollView?.endEditing(true)
+        scrollView.endEditing(true)
     }
-
-    @IBAction private func unwindAction(_ sender: UIStoryboardSegue) {}
-
-    @IBAction private func loginButtonAction(_ sender: UIButton) {}
 }
