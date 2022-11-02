@@ -13,7 +13,6 @@ final class LoginViewController: UIViewController {
         static let passwordText = "1"
         static let alertTitleText = "Ошибка"
         static let alertMessageText = "Логин и/или пароль неверны."
-        static let actionOkText = "OK"
     }
 
     // MARK: - IBOutlet
@@ -42,22 +41,42 @@ final class LoginViewController: UIViewController {
     // MARK: - Public method
 
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        if identifier == Constants.segueIdentifier {
-            if checkLoginInfo() {
-                return true
-            } else {
-                showLoginError()
-                return false
-            }
+        guard identifier == Constants.segueIdentifier,
+              checkLoginInfo()
+        else {
+            showLoginError(title: Constants.alertTitleText, message: Constants.alertMessageText)
+            return false
         }
         return true
     }
 
-    // MARK: - IBActions
-
-    @IBAction private func unwindAction(_ sender: UIStoryboardSegue) {}
-
     // MARK: - Private methods
+
+    @objc private func keyboardWillShownAction(notification: Notification) {
+        guard let info = notification.userInfo as? NSDictionary,
+              let kbSize = (
+                  info.value(forKey: UIResponder.keyboardFrameEndUserInfoKey)
+                      as? NSValue
+              )?.cgRectValue.size else { return }
+        let contentInsets = UIEdgeInsets(
+            top: 0.0,
+            left: 0.0,
+            bottom:
+            kbSize.height,
+            right: 0.0
+        )
+        scrollView.contentInset = contentInsets
+        scrollView.scrollIndicatorInsets = contentInsets
+    }
+
+    @objc private func keyboardWillHideAction(notification: Notification) {
+        scrollView.contentInset = UIEdgeInsets.zero
+        scrollView.scrollIndicatorInsets = UIEdgeInsets.zero
+    }
+
+    @objc private func hideKeyboardAction() {
+        scrollView.endEditing(true)
+    }
 
     private func addTapGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboardAction))
@@ -90,49 +109,9 @@ final class LoginViewController: UIViewController {
 
     private func checkLoginInfo() -> Bool {
         guard let login = loginTextField.text,
-              let password = passwordTextField.text else { return false }
-        if login == Constants.loginText, password == Constants.passwordText {
-            return true
-        } else {
-            return false
-        }
-    }
-
-    private func showLoginError() {
-        let alertController = UIAlertController(
-            title: Constants.alertTitleText,
-            message:
-            Constants.alertMessageText,
-            preferredStyle: .alert
-        )
-        let action = UIAlertAction(title: Constants.actionOkText, style: .cancel, handler: nil)
-        alertController.addAction(action)
-        present(alertController, animated: true, completion: nil)
-    }
-
-    @objc private func keyboardWillShownAction(notification: Notification) {
-        guard let info = notification.userInfo as? NSDictionary,
-              let kbSize = (
-                  info.value(forKey: UIResponder.keyboardFrameEndUserInfoKey)
-                      as? NSValue
-              )?.cgRectValue.size else { return }
-        let contentInsets = UIEdgeInsets(
-            top: 0.0,
-            left: 0.0,
-            bottom:
-            kbSize.height,
-            right: 0.0
-        )
-        scrollView.contentInset = contentInsets
-        scrollView.scrollIndicatorInsets = contentInsets
-    }
-
-    @objc private func keyboardWillHideAction(notification: Notification) {
-        scrollView.contentInset = UIEdgeInsets.zero
-        scrollView.scrollIndicatorInsets = UIEdgeInsets.zero
-    }
-
-    @objc private func hideKeyboardAction() {
-        scrollView.endEditing(true)
+              let password = passwordTextField.text,
+              login == Constants.loginText,
+              password == Constants.passwordText else { return false }
+        return true
     }
 }
