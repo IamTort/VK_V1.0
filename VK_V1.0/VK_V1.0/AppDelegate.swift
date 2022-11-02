@@ -25,5 +25,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         )
     }
 
-    func application(_: UIApplication, didDiscardSceneSessions _: Set<UISceneSession>) {}
+    private func application(_: UIApplication, didDiscardSceneSessionsSet set: Set<UISceneSession>) {}
 }
