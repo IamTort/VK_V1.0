@@ -12,9 +12,9 @@ final class FriendsTableViewController: UITableViewController {
         static let segueIdentifier = "photoSegue"
         static let friends = [
             User(imageName: "cat", name: "Marcus Volfgan", photos: ["cat", "car", "bear"]),
-            User(imageName: nil, name: "Aarcus Volfgan", photos: ["cat", "car", "bear"]),
+            User(imageName: nil, name: "Ahdurcus Volfgan", photos: ["cat", "car", "bear"]),
             User(imageName: "cat", name: "Tarcus Volfgan", photos: ["cat", "car", "bear"]),
-            User(imageName: "cat", name: "Ahdurcus Volfgan", photos: ["cat", "car", "bear"]),
+            User(imageName: "cat", name: "Arrcus Volfgan", photos: ["cat", "car", "bear"]),
             User(imageName: nil, name: "Krcus Volfgan", photos: ["cat", "car", "bear"])
         ]
     }
@@ -22,7 +22,7 @@ final class FriendsTableViewController: UITableViewController {
     // MARK: - Private property
 
     private let friends = Constants.friends
-    private var sortedFriends = [Character: [User]]()
+    private var sortedFriendsDict = [Character: [User]]()
 
     // MARK: - LifeCycle
 
@@ -34,20 +34,20 @@ final class FriendsTableViewController: UITableViewController {
     // MARK: - Public methods
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        sortedFriends.keys.count
+        sortedFriendsDict.keys.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let keysSorted = sortedFriends.keys.sorted()
-        let friends = sortedFriends[keysSorted[section]]?.count ?? 0
+        let keysSorted = sortedFriendsDict.keys.sorted()
+        let friends = sortedFriendsDict[keysSorted[section]]?.count ?? 0
         return friends
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let firstChar = sortedFriends.keys.sorted()[indexPath.section]
+        let firstChar = sortedFriendsDict.keys.sorted()[indexPath.section]
         guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier, for: indexPath)
             as? FriendsTableViewCell,
-            let friends = sortedFriends[firstChar] else { return UITableViewCell() }
+            let friends = sortedFriendsDict[firstChar] else { return UITableViewCell() }
 
         let friend = friends[indexPath.row]
         cell.setupData(data: friend)
@@ -55,13 +55,14 @@ final class FriendsTableViewController: UITableViewController {
     }
 
     override func tableView(_: UITableView, titleForHeaderInSection section: Int) -> String? {
-        String(sortedFriends.keys.sorted()[section])
+        String(sortedFriendsDict.keys.sorted()[section])
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard segue.identifier == Constants.segueIdentifier,
               let destination = segue.destination as? PhotoCollectionViewController,
               let indexPath = tableView.indexPathForSelectedRow else { return }
+
         destination.user = friends[indexPath.row]
     }
 
@@ -84,6 +85,6 @@ final class FriendsTableViewController: UITableViewController {
     }
 
     private func sortFriends() {
-        sortedFriends = sort(friends: friends)
+        sortedFriendsDict = sort(friends: friends)
     }
 }

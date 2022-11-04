@@ -13,7 +13,7 @@ final class GradientView: UIView {
 
     @IBInspectable private var startColor: UIColor = .blue {
         didSet {
-            updateColors()
+            gradientLayer?.colors = [startColor.cgColor, endColor.cgColor]
         }
     }
 

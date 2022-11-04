@@ -41,7 +41,7 @@ final class LikeControl: UIControl {
         addGestureRecognizer(tapGestureRecognizer)
     }
 
-    @objc func handleTapAction(_: UITapGestureRecognizer) {
+    @objc private func handleTapAction(_: UITapGestureRecognizer) {
         isLike.toggle()
 
         guard isLike else {

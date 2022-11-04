@@ -315,7 +315,7 @@
                                 <connections>
                                     <outlet property="avatarImageView" destination="Y6b-jp-d6N" id="RTf-lp-7GG"/>
                                     <outlet property="nameLabel" destination="VxN-6m-rML" id="BKp-2n-eLX"/>
-                                    <segue destination="OT4-HD-vBN" kind="show" identifier="photoSegue" id="bWB-Xd-PsK"/>
+                                    <segue destination="OT4-HD-vBN" kind="show" identifier="photoSegue" id="qLc-PT-blU"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -450,11 +450,11 @@
             </objects>
             <point key="canvasLocation" x="906" y="70"/>
         </scene>
-        <!--Item 1-->
+        <!--Друзья-->
         <scene sceneID="zhe-8D-h9R">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="RV4-s4-MsH" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item 1" image="pencil" catalog="system" selectedImage="pencil" id="WrV-md-nCK">
+                    <tabBarItem key="tabBarItem" title="Друзья" image="person" catalog="system" selectedImage="person.fill" id="WrV-md-nCK">
                         <color key="badgeColor" red="0.87058818339999999" green="0.58823531870000001" blue="0.2117646933" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </tabBarItem>
                     <toolbarItems/>
@@ -471,11 +471,11 @@
             </objects>
             <point key="canvasLocation" x="1815.9420289855075" y="-220.3125"/>
         </scene>
-        <!--Item 2-->
+        <!--Группы-->
         <scene sceneID="wlq-I4-Maa">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Iwa-WI-gbZ" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item 2" image="archivebox.circle" catalog="system" selectedImage="archivebox.circle" id="IK7-x6-I01"/>
+                    <tabBarItem key="tabBarItem" title="Группы" image="archivebox.circle" catalog="system" selectedImage="archivebox.circle" id="IK7-x6-I01"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="kbT-tR-6Dq">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -493,7 +493,8 @@
     </scenes>
     <resources>
         <image name="archivebox.circle" catalog="system" width="128" height="121"/>
-        <image name="pencil" catalog="system" width="128" height="113"/>
+        <image name="person" catalog="system" width="128" height="117"/>
+        <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="suit.heart" catalog="system" width="128" height="109"/>
         <systemColor name="linkColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
