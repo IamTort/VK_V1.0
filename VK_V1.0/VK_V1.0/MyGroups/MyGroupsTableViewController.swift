@@ -10,7 +10,7 @@ final class MyGroupsTableViewController: UITableViewController {
     private enum Constants {
         static let cellIdentifier = "groupCell"
         static let segueIdentifier = "addGroupSegue"
-        static let mygroups = [Group(image: "built", title: "Cтроить весело")]
+        static let mygroups = [Group(imageName: "built", title: "Cтроить весело")]
     }
 
     // MARK: - Private property
@@ -26,7 +26,7 @@ final class MyGroupsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier, for: indexPath)
             as? MyGroupsTableViewCell else { return UITableViewCell() }
-        cell.setup(data: mygroups[indexPath.row])
+        cell.setup(group: mygroups[indexPath.row])
         return cell
     }
 

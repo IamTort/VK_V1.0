@@ -1,10 +1,8 @@
 // Group.swift
 // Copyright © RoadMap. All rights reserved.
 
-import Foundation
-
 /// Модель группы
 struct Group {
-    let image: String
+    let imageName: String
     let title: String
 }

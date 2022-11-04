@@ -7,13 +7,13 @@ import UIKit
 final class MyGroupsTableViewCell: UITableViewCell {
     // MARK: - Private IBOutlets
 
-    @IBOutlet var avatarImageView: UIImageView!
-    @IBOutlet var titleGroupLabel: UILabel!
+    @IBOutlet private var avatarImageView: UIImageView!
+    @IBOutlet private var titleGroupLabel: UILabel!
 
     // MARK: - Public method
 
-    func setup(data: Group) {
-        avatarImageView.image = UIImage(named: data.image)
-        titleGroupLabel.text = data.title
+    func setup(group: Group) {
+        avatarImageView.image = UIImage(named: group.imageName)
+        titleGroupLabel.text = group.title
     }
 }

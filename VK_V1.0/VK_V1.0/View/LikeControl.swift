@@ -1,4 +1,5 @@
 // LikeControl.swift
+// Copyright © RoadMap. All rights reserved.
 
 import UIKit
 
@@ -19,9 +20,9 @@ final class LikeControl: UIControl {
     // MARK: - Private property
 
     private var isLike = false
-    private var touches = 0 {
+    private var likesCount = 0 {
         didSet {
-            countLikeLabel.text = "\(touches)"
+            countLikeLabel.text = "\(likesCount)"
         }
     }
 
@@ -35,9 +36,9 @@ final class LikeControl: UIControl {
     // MARK: - Private methods
 
     private func createGestureRecognizer() {
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTapAction(_:)))
-        tap.numberOfTapsRequired = 2
-        addGestureRecognizer(tap)
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapAction(_:)))
+        tapGestureRecognizer.numberOfTapsRequired = 2
+        addGestureRecognizer(tapGestureRecognizer)
     }
 
     @objc func handleTapAction(_: UITapGestureRecognizer) {
@@ -47,12 +48,12 @@ final class LikeControl: UIControl {
             heartImageView.image = UIImage(systemName: Constants.heartImageName)
             countLikeLabel.textColor = .black
             heartImageView.tintColor = .black
-            touches -= 1
+            likesCount -= 1
             return
         }
         heartImageView.image = UIImage(systemName: Constants.fillHeartImageName)
         countLikeLabel.textColor = .red
         heartImageView.tintColor = .red
-        touches += 1
+        likesCount += 1
     }
 }

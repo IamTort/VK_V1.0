@@ -8,7 +8,6 @@ final class PhotoCollectionViewCell: UICollectionViewCell {
     // MARK: - Private IBOutlets
 
     @IBOutlet private var photoImageView: UIImageView!
-    @IBOutlet private var likeContainerControl: LikeControl!
 
     // MARK: - Public methods
 

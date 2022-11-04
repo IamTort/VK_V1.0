@@ -1,9 +1,10 @@
 // GradientView.swift
+// Copyright © RoadMap. All rights reserved.
 
 import UIKit
 
 /// Вью для отображения градиента
-@IBDesignable final class GradientView: UIView {
+final class GradientView: UIView {
     // MARK: - Private property
 
     private var gradientLayer: CAGradientLayer? {

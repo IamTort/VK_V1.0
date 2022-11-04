@@ -413,7 +413,6 @@
                                     </constraints>
                                 </collectionViewCellContentView>
                                 <connections>
-                                    <outlet property="likeContainerControl" destination="zhp-TW-L6b" id="ggW-UX-Xsc"/>
                                     <outlet property="photoImageView" destination="dUB-sr-C7m" id="gcz-v0-jxx"/>
                                 </connections>
                             </collectionViewCell>

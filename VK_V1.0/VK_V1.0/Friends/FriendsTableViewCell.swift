@@ -20,7 +20,7 @@ final class FriendsTableViewCell: UITableViewCell {
 
     func setupData(data: User) {
         nameLabel.text = data.name
-        guard let image = data.image else {
+        guard let image = data.imageName else {
             avatarImageView.image = UIImage(named: Constants.avatarImageName)
             return
         }

@@ -11,17 +11,17 @@ final class FriendsTableViewController: UITableViewController {
         static let cellIdentifier = "friendCell"
         static let segueIdentifier = "photoSegue"
         static let friends = [
-            User(image: "cat", name: "Marcus Volfgan", photos: ["cat", "car", "bear"]),
-            User(image: nil, name: "Aarcus Volfgan", photos: ["cat", "car", "bear"]),
-            User(image: "cat", name: "Tarcus Volfgan", photos: ["cat", "car", "bear"]),
-            User(image: "cat", name: "Ahdurcus Volfgan", photos: ["cat", "car", "bear"]),
-            User(image: nil, name: "Krcus Volfgan", photos: ["cat", "car", "bear"])
+            User(imageName: "cat", name: "Marcus Volfgan", photos: ["cat", "car", "bear"]),
+            User(imageName: nil, name: "Aarcus Volfgan", photos: ["cat", "car", "bear"]),
+            User(imageName: "cat", name: "Tarcus Volfgan", photos: ["cat", "car", "bear"]),
+            User(imageName: "cat", name: "Ahdurcus Volfgan", photos: ["cat", "car", "bear"]),
+            User(imageName: nil, name: "Krcus Volfgan", photos: ["cat", "car", "bear"])
         ]
     }
 
     // MARK: - Private property
 
-    private var friends = Constants.friends
+    private let friends = Constants.friends
     private var sortedFriends = [Character: [User]]()
 
     // MARK: - LifeCycle

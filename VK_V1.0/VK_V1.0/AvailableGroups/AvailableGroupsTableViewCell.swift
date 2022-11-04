@@ -12,8 +12,8 @@ final class AvailableGroupsTableViewCell: UITableViewCell {
 
     // MARK: - Public methods
 
-    func setup(data: Group) {
-        avatarImageView.image = UIImage(named: data.image)
-        titleLabel.text = data.title
+    func setup(group: Group) {
+        avatarImageView.image = UIImage(named: group.imageName)
+        titleLabel.text = group.title
     }
 }

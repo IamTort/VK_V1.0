@@ -5,7 +5,7 @@ import Foundation
 
 /// Модель друг
 struct User {
-    let image: String?
+    let imageName: String?
     let name: String
     let photos: [String]
 }
