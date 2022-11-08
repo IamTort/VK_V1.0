@@ -33,7 +33,8 @@ final class AvailableGroupsTableViewController: UITableViewController {
     // MARK: - LifeCycle
 
     override func viewDidLoad() {
-        filteredGroups = availableGroups
+        super.viewDidLoad()
+        updateFilteredGroups()
     }
 
     // MARK: - Public methods
@@ -50,6 +51,12 @@ final class AvailableGroupsTableViewController: UITableViewController {
 
         return cell
     }
+    
+    // MARK: - Private methods
+    private func updateFilteredGroups() {
+        filteredGroups = availableGroups
+    }
+    
 }
 
 // MARK: - UISearchBarDelegate
