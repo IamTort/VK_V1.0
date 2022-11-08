@@ -13,8 +13,23 @@ final class FriendsTableViewCell: UITableViewCell {
 
     // MARK: - Private IBOutlets
 
+    @IBOutlet private var containerView: UIView! {
+        didSet {
+            isUserInteractionEnabled = true
+            let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+            tap.numberOfTapsRequired = 1
+            containerView.addGestureRecognizer(tap)
+        }
+    }
     @IBOutlet private var nameLabel: UILabel!
     @IBOutlet private var avatarImageView: UIImageView!
+
+    // MARK: - LifeCycle
+    override class func awakeFromNib() {
+        super.awakeFromNib()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+        tap.numberOfTapsRequired = 1
+    }
 
     // MARK: - Public methods
 
@@ -25,5 +40,20 @@ final class FriendsTableViewCell: UITableViewCell {
             return
         }
         avatarImageView.image = UIImage(named: image)
+    }
+    
+    // MARK: - Private methods
+    
+    @objc private func handleTap(_: UITapGestureRecognizer) {
+        UIView.animate(
+            withDuration: 1,
+            delay: 0,
+            usingSpringWithDamping: 0.5,
+            initialSpringVelocity: 1,
+            options: .curveEaseInOut
+        ) {
+            self.avatarImageView.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+        }
+        avatarImageView.transform = .identity
     }
 }

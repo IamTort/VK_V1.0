@@ -18,20 +18,45 @@ final class AvailableGroupsTableViewController: UITableViewController {
         ]
     }
 
+    // MARK: - Private IBOutlet
+
+    @IBOutlet private var searchBar: UISearchBar!
+
     // MARK: - Public property
 
     let availableGroups = Constants.availableGroups
 
+    // MARK: - Private property
+
+    private var filteredGroups: [Group] = []
+
+    // MARK: - LifeCycle
+
+    override func viewDidLoad() {
+        filteredGroups = availableGroups
+    }
+
     // MARK: - Public methods
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        availableGroups.count
+        filteredGroups.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier, for: indexPath)
             as? AvailableGroupsTableViewCell else { return UITableViewCell() }
-        cell.setup(group: availableGroups[indexPath.row])
+
+        cell.setup(group: filteredGroups[indexPath.row])
+
         return cell
+    }
+}
+
+// MARK: - UISearchBarDelegate
+
+extension AvailableGroupsTableViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        filteredGroups = searchText.isEmpty ? availableGroups : availableGroups.filter { $0.title.contains(searchText) }
+        tableView.reloadData()
     }
 }

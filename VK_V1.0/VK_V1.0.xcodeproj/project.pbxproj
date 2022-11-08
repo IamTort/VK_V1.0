@@ -20,6 +20,10 @@
 		FA3142392912E163008AF0CF /* PhotoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3142382912E163008AF0CF /* PhotoCollectionViewCell.swift */; };
 		FA31424129143987008AF0CF /* LikeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31424029143987008AF0CF /* LikeControl.swift */; };
 		FA3142432914470E008AF0CF /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3142422914470E008AF0CF /* GradientView.swift */; };
+		FA31424B291A5144008AF0CF /* NewsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31424A291A5144008AF0CF /* NewsTableViewController.swift */; };
+		FA31424D291A515B008AF0CF /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31424C291A515B008AF0CF /* NewsTableViewCell.swift */; };
+		FA314250291A5326008AF0CF /* News.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31424F291A5326008AF0CF /* News.swift */; };
+		FA314252291A9783008AF0CF /* NewsLikeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA314251291A9783008AF0CF /* NewsLikeControl.swift */; };
 		FAD44465290FDF19006E71AF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD44464290FDF19006E71AF /* AppDelegate.swift */; };
 		FAD44467290FDF19006E71AF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD44466290FDF19006E71AF /* SceneDelegate.swift */; };
 		FAD44469290FDF19006E71AF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD44468290FDF19006E71AF /* LoginViewController.swift */; };
@@ -42,6 +46,10 @@
 		FA3142382912E163008AF0CF /* PhotoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewCell.swift; sourceTree = "<group>"; };
 		FA31424029143987008AF0CF /* LikeControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeControl.swift; sourceTree = "<group>"; };
 		FA3142422914470E008AF0CF /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		FA31424A291A5144008AF0CF /* NewsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewController.swift; sourceTree = "<group>"; };
+		FA31424C291A515B008AF0CF /* NewsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
+		FA31424F291A5326008AF0CF /* News.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = News.swift; sourceTree = "<group>"; };
+		FA314251291A9783008AF0CF /* NewsLikeControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsLikeControl.swift; sourceTree = "<group>"; };
 		FAD44461290FDF19006E71AF /* VK_V1.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VK_V1.0.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAD44464290FDF19006E71AF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FAD44466290FDF19006E71AF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -122,8 +130,27 @@
 			children = (
 				FA31424029143987008AF0CF /* LikeControl.swift */,
 				FA3142422914470E008AF0CF /* GradientView.swift */,
+				FA314251291A9783008AF0CF /* NewsLikeControl.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		FA314249291A5129008AF0CF /* NewsScene */ = {
+			isa = PBXGroup;
+			children = (
+				FA31424E291A5221008AF0CF /* Model */,
+				FA31424A291A5144008AF0CF /* NewsTableViewController.swift */,
+				FA31424C291A515B008AF0CF /* NewsTableViewCell.swift */,
+			);
+			path = NewsScene;
+			sourceTree = "<group>";
+		};
+		FA31424E291A5221008AF0CF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				FA31424F291A5326008AF0CF /* News.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		FAD44458290FDF19006E71AF = {
@@ -145,6 +172,7 @@
 		FAD44463290FDF19006E71AF /* VK_V1.0 */ = {
 			isa = PBXGroup;
 			children = (
+				FA314249291A5129008AF0CF /* NewsScene */,
 				FA3142202912BB38008AF0CF /* Friends */,
 				FA3142352912E132008AF0CF /* PhotoScene */,
 				FA3142302912DA7A008AF0CF /* AvailableGroups */,
@@ -277,10 +305,14 @@
 				FA31421E291278B3008AF0CF /* UIViewController+Extension.swift in Sources */,
 				FA31422C2912D967008AF0CF /* MyGroupsTableViewController.swift in Sources */,
 				FA3142372912E152008AF0CF /* PhotoCollectionViewController.swift in Sources */,
+				FA31424B291A5144008AF0CF /* NewsTableViewController.swift in Sources */,
 				FA3142272912BBB6008AF0CF /* User.swift in Sources */,
 				FA31422F2912D97C008AF0CF /* Group.swift in Sources */,
+				FA314250291A5326008AF0CF /* News.swift in Sources */,
+				FA314252291A9783008AF0CF /* NewsLikeControl.swift in Sources */,
 				FAD44469290FDF19006E71AF /* LoginViewController.swift in Sources */,
 				FA3142432914470E008AF0CF /* GradientView.swift in Sources */,
+				FA31424D291A515B008AF0CF /* NewsTableViewCell.swift in Sources */,
 				FA3142342912DAA7008AF0CF /* AvailableGroupsTableViewCell.swift in Sources */,
 				FA31424129143987008AF0CF /* LikeControl.swift in Sources */,
 				FAD44465290FDF19006E71AF /* AppDelegate.swift in Sources */,
