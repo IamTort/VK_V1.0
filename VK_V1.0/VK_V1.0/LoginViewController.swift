@@ -9,8 +9,8 @@ final class LoginViewController: UIViewController {
 
     private enum Constants {
         static let segueIdentifier = "loginVC"
-        static let loginText = ""
-        static let passwordText = ""
+        static let loginText = "a"
+        static let passwordText = "1"
         static let alertTitleText = "Ошибка"
         static let alertMessageText = "Логин и/или пароль неверны."
     }

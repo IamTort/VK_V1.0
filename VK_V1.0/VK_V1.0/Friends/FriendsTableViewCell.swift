@@ -21,10 +21,12 @@ final class FriendsTableViewCell: UITableViewCell {
             containerView.addGestureRecognizer(tap)
         }
     }
+
     @IBOutlet private var nameLabel: UILabel!
     @IBOutlet private var avatarImageView: UIImageView!
 
     // MARK: - LifeCycle
+
     override class func awakeFromNib() {
         super.awakeFromNib()
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
@@ -41,9 +43,9 @@ final class FriendsTableViewCell: UITableViewCell {
         }
         avatarImageView.image = UIImage(named: image)
     }
-    
+
     // MARK: - Private methods
-    
+
     @objc private func handleTap(_: UITapGestureRecognizer) {
         UIView.animate(
             withDuration: 1,

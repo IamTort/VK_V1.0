@@ -15,11 +15,10 @@ final class NewsTableViewController: UITableViewController {
                 name: "Marcus Volfgan",
                 time: "15.09.2022",
                 description: """
-                            Когда так много позади всего,
-                            в особенности — горя,
-                            поддержки чьей-нибудь не жди,
-                            сядь в поезд,
-                            высадись у моря.
+                Когда так много позади всего,
+                в особенности — горя,
+                поддержки чьей-нибудь не жди,
+                сядь в поезд, высадись у моря.
                 """,
                 photoName: "car",
                 likeCount: 346,
@@ -41,10 +40,10 @@ final class NewsTableViewController: UITableViewController {
                 name: "Marcus Volfgan",
                 time: "12.03.2022",
                 description: """
-                            Приехать к морю в несезон,
-                            помимо материальных выгод,
-                            имеет тот еще резон,
-                            что это — временный, но выход.
+                Приехать к морю в несезон,
+                помимо материальных выгод,
+                имеет тот еще резон,
+                что это — временный, но выход.
                 """,
                 photoName: "cat",
                 likeCount: 45,
@@ -64,8 +63,9 @@ final class NewsTableViewController: UITableViewController {
     }
 
     // MARK: - Private IBOutlet
-    
-    @IBOutlet private weak var searchBar: UISearchBar!
+
+    @IBOutlet private var searchBar: UISearchBar!
+
     // MARK: - Private property
 
     private let news = Constants.news

@@ -17,6 +17,8 @@ final class FriendsTableViewController: UITableViewController {
             User(imageName: "cat", name: "Arrcus Volfgan", photos: ["cat", "car", "bear"]),
             User(imageName: nil, name: "Krcus Volfgan", photos: ["cat", "car", "bear"])
         ]
+        static let futuraFontName = "Futura-Bold"
+        static let colorName = "tiffanyColor"
     }
 
     // MARK: - Private property
@@ -58,10 +60,10 @@ final class FriendsTableViewController: UITableViewController {
         let view = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 35))
         let label = UILabel()
         label.textColor = .systemGray
-        label.font = UIFont(name: "Futura-Bold", size: 15)
+        label.font = UIFont(name: Constants.futuraFontName, size: 15)
         label.frame = CGRect(x: 15, y: 0, width: 100, height: 16)
         view.addSubview(label)
-        view.backgroundColor = UIColor(named: "tiffanyColor")
+        view.backgroundColor = UIColor(named: Constants.colorName)
         label.text = String(sortedFriendsDict.keys.sorted()[section])
         return view
     }
