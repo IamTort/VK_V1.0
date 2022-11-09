@@ -3,7 +3,7 @@
 
 import UIKit
 
-/// Компонент для отображения количества лайков в ячейке Новости
+/// Компонент анимированных лайков
 final class NewsLikeControl: UIControl {
     // MARK: - Private enum
 
@@ -19,7 +19,7 @@ final class NewsLikeControl: UIControl {
 
     // MARK: - Private property
 
-    private var isLike = false
+    private var isLiked = false
     private var likesCount = 0 {
         didSet {
             countLikeLabel.text = "\(likesCount)"
@@ -47,9 +47,9 @@ final class NewsLikeControl: UIControl {
     }
 
     @objc private func handleTapAction(_: UITapGestureRecognizer) {
-        isLike.toggle()
+        isLiked.toggle()
 
-        guard isLike else {
+        guard isLiked else {
             heartImageView.image = UIImage(systemName: Constants.heartImageName)
             countLikeLabel.textColor = .systemGray
             heartImageView.tintColor = .systemGray

@@ -24,6 +24,7 @@
 		FA31424D291A515B008AF0CF /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31424C291A515B008AF0CF /* NewsTableViewCell.swift */; };
 		FA314250291A5326008AF0CF /* News.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31424F291A5326008AF0CF /* News.swift */; };
 		FA314252291A9783008AF0CF /* NewsLikeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA314251291A9783008AF0CF /* NewsLikeControl.swift */; };
+		FA314256291BDB45008AF0CF /* FriendsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA314255291BDB45008AF0CF /* FriendsHeaderView.swift */; };
 		FAD44465290FDF19006E71AF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD44464290FDF19006E71AF /* AppDelegate.swift */; };
 		FAD44467290FDF19006E71AF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD44466290FDF19006E71AF /* SceneDelegate.swift */; };
 		FAD44469290FDF19006E71AF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD44468290FDF19006E71AF /* LoginViewController.swift */; };
@@ -50,6 +51,7 @@
 		FA31424C291A515B008AF0CF /* NewsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
 		FA31424F291A5326008AF0CF /* News.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = News.swift; sourceTree = "<group>"; };
 		FA314251291A9783008AF0CF /* NewsLikeControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsLikeControl.swift; sourceTree = "<group>"; };
+		FA314255291BDB45008AF0CF /* FriendsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsHeaderView.swift; sourceTree = "<group>"; };
 		FAD44461290FDF19006E71AF /* VK_V1.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VK_V1.0.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAD44464290FDF19006E71AF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FAD44466290FDF19006E71AF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 			children = (
 				FA3142212912BB5A008AF0CF /* FriendsTableViewController.swift */,
 				FA3142232912BB68008AF0CF /* FriendsTableViewCell.swift */,
+				FA314255291BDB45008AF0CF /* FriendsHeaderView.swift */,
 				FA3142252912BBA4008AF0CF /* Model */,
 			);
 			path = Friends;
@@ -311,6 +314,7 @@
 				FA314250291A5326008AF0CF /* News.swift in Sources */,
 				FA314252291A9783008AF0CF /* NewsLikeControl.swift in Sources */,
 				FAD44469290FDF19006E71AF /* LoginViewController.swift in Sources */,
+				FA314256291BDB45008AF0CF /* FriendsHeaderView.swift in Sources */,
 				FA3142432914470E008AF0CF /* GradientView.swift in Sources */,
 				FA31424D291A515B008AF0CF /* NewsTableViewCell.swift in Sources */,
 				FA3142342912DAA7008AF0CF /* AvailableGroupsTableViewCell.swift in Sources */,

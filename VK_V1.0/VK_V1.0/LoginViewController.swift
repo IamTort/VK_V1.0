@@ -9,8 +9,8 @@ final class LoginViewController: UIViewController {
 
     private enum Constants {
         static let segueIdentifier = "loginVC"
-        static let loginText = "a"
-        static let passwordText = "1"
+        static let loginText = ""
+        static let passwordText = ""
         static let alertTitleText = "Ошибка"
         static let alertMessageText = "Логин и/или пароль неверны."
     }
@@ -52,7 +52,7 @@ final class LoginViewController: UIViewController {
             return false
         }
         animateDots()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             self.performSegue(withIdentifier: Constants.segueIdentifier, sender: self)
         }
         return false
