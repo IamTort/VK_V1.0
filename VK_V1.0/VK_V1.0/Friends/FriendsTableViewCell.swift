@@ -13,8 +13,16 @@ final class FriendsTableViewCell: UITableViewCell {
 
     // MARK: - Private IBOutlets
 
+    @IBOutlet private var containerView: UIView!
     @IBOutlet private var nameLabel: UILabel!
     @IBOutlet private var avatarImageView: UIImageView!
+
+    // MARK: - LifeCycle
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        addTapGesture()
+    }
 
     // MARK: - Public methods
 
@@ -25,5 +33,26 @@ final class FriendsTableViewCell: UITableViewCell {
             return
         }
         avatarImageView.image = UIImage(named: image)
+    }
+
+    // MARK: - Private methods
+
+    private func addTapGesture() {
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapAction))
+        avatarImageView.addGestureRecognizer(tapGestureRecognizer)
+        avatarImageView.isUserInteractionEnabled = true
+    }
+
+    @objc private func handleTapAction() {
+        UIView.animate(
+            withDuration: 1,
+            delay: 0,
+            usingSpringWithDamping: 0.5,
+            initialSpringVelocity: 1,
+            options: .curveEaseInOut
+        ) {
+            self.avatarImageView.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+        }
+        avatarImageView.transform = .identity
     }
 }
