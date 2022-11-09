@@ -16,22 +16,13 @@ final class FriendsTableViewCell: UITableViewCell {
     @IBOutlet private var containerView: UIView! {
         didSet {
             isUserInteractionEnabled = true
-            let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
-            tap.numberOfTapsRequired = 1
-            containerView.addGestureRecognizer(tap)
+            let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapAction(_:)))
+            containerView.addGestureRecognizer(tapGestureRecognizer)
         }
     }
 
     @IBOutlet private var nameLabel: UILabel!
     @IBOutlet private var avatarImageView: UIImageView!
-
-    // MARK: - LifeCycle
-
-    override class func awakeFromNib() {
-        super.awakeFromNib()
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
-        tap.numberOfTapsRequired = 1
-    }
 
     // MARK: - Public methods
 
@@ -46,7 +37,7 @@ final class FriendsTableViewCell: UITableViewCell {
 
     // MARK: - Private methods
 
-    @objc private func handleTap(_: UITapGestureRecognizer) {
+    @objc private func handleTapAction(_: UITapGestureRecognizer) {
         UIView.animate(
             withDuration: 1,
             delay: 0,

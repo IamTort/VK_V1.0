@@ -43,7 +43,6 @@ final class NewsLikeControl: UIControl {
 
     private func createGestureRecognizer() {
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTapAction(_:)))
-        tapGestureRecognizer.numberOfTapsRequired = 1
         addGestureRecognizer(tapGestureRecognizer)
     }
 

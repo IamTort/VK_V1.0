@@ -51,12 +51,12 @@ final class AvailableGroupsTableViewController: UITableViewController {
 
         return cell
     }
-    
+
     // MARK: - Private methods
+
     private func updateFilteredGroups() {
         filteredGroups = availableGroups
     }
-    
 }
 
 // MARK: - UISearchBarDelegate

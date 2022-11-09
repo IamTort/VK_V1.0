@@ -20,7 +20,6 @@ final class LoginViewController: UIViewController {
     @IBOutlet private var passwordTextField: UITextField!
     @IBOutlet private var loginTextField: UITextField!
     @IBOutlet private var scrollView: UIScrollView!
-
     @IBOutlet private var firstDotImageView: UIImageView!
     @IBOutlet private var secondDotImageView: UIImageView!
     @IBOutlet private var thirdDotImageView: UIImageView!
@@ -88,9 +87,9 @@ final class LoginViewController: UIViewController {
     }
 
     private func setupUIDots() {
-        firstDotImageView.layer.cornerRadius = 10
-        secondDotImageView.layer.cornerRadius = 10
-        thirdDotImageView.layer.cornerRadius = 10
+        [firstDotImageView, secondDotImageView, thirdDotImageView].forEach {
+            $0.layer.cornerRadius = 10
+        }
     }
 
     private func animateDots() {

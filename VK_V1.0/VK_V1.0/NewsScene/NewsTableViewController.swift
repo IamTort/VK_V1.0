@@ -11,7 +11,7 @@ final class NewsTableViewController: UITableViewController {
         static let cellIdentifier = "newsCell"
         static let news = [
             News(
-                avatarName: "cat",
+                avatarImageName: "cat",
                 name: "Marcus Volfgan",
                 time: "15.09.2022",
                 description: """
@@ -20,23 +20,23 @@ final class NewsTableViewController: UITableViewController {
                 поддержки чьей-нибудь не жди,
                 сядь в поезд, высадись у моря.
                 """,
-                photoName: "car",
+                photoImageName: "car",
                 likeCount: 346,
                 viewsCount: 2984
             ),
             News(
-                avatarName: "car",
+                avatarImageName: "car",
                 name: "Marcus Volfgan",
                 time: "15.01.2022",
                 description:
                 "Стоишь на берегу и чувствуешь солёный запах ветра, что веет с моря." +
                     " И веришь, что свободен ты, и жизнь лишь началась.",
-                photoName: "bear",
+                photoImageName: "bear",
                 likeCount: 456,
                 viewsCount: 584
             ),
             News(
-                avatarName: "man",
+                avatarImageName: "man",
                 name: "Marcus Volfgan",
                 time: "12.03.2022",
                 description: """
@@ -45,17 +45,17 @@ final class NewsTableViewController: UITableViewController {
                 имеет тот еще резон,
                 что это — временный, но выход.
                 """,
-                photoName: "cat",
+                photoImageName: "cat",
                 likeCount: 45,
                 viewsCount: 4
             ),
             News(
-                avatarName: "cat",
+                avatarImageName: "cat",
                 name: "Marcus Volfgan",
                 time: "05.09.2022",
                 description:
                 nil,
-                photoName: "car",
+                photoImageName: "car",
                 likeCount: 456,
                 viewsCount: 584
             )
