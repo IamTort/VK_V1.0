@@ -9,8 +9,8 @@ final class LoginViewController: UIViewController {
 
     private enum Constants {
         static let segueIdentifier = "loginVC"
-        static let loginText = "a"
-        static let passwordText = "1"
+        static let loginText = ""
+        static let passwordText = ""
         static let alertTitleText = "Ошибка"
         static let alertMessageText = "Логин и/или пароль неверны."
     }
@@ -20,12 +20,16 @@ final class LoginViewController: UIViewController {
     @IBOutlet private var passwordTextField: UITextField!
     @IBOutlet private var loginTextField: UITextField!
     @IBOutlet private var scrollView: UIScrollView!
+    @IBOutlet private var firstDotImageView: UIImageView!
+    @IBOutlet private var secondDotImageView: UIImageView!
+    @IBOutlet private var thirdDotImageView: UIImageView!
 
     // MARK: - LifeCycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         addTapGesture()
+        setupUIDots()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -47,7 +51,11 @@ final class LoginViewController: UIViewController {
             showLoginError(title: Constants.alertTitleText, message: Constants.alertMessageText)
             return false
         }
-        return true
+        animateDots()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            self.performSegue(withIdentifier: Constants.segueIdentifier, sender: self)
+        }
+        return false
     }
 
     // MARK: - Private methods
@@ -76,6 +84,38 @@ final class LoginViewController: UIViewController {
 
     @objc private func hideKeyboardAction() {
         scrollView.endEditing(true)
+    }
+
+    private func setupUIDots() {
+        [firstDotImageView, secondDotImageView, thirdDotImageView].forEach {
+            $0.layer.cornerRadius = 10
+        }
+    }
+
+    private func animateDots() {
+        UIImageView.animate(
+            withDuration: 1.2,
+            delay: 0,
+            options: [.autoreverse, .repeat]
+        ) {
+            self.firstDotImageView.alpha = 1
+        }
+
+        UIImageView.animate(
+            withDuration: 1.2,
+            delay: 0.9,
+            options: [.autoreverse, .repeat]
+        ) {
+            self.secondDotImageView.alpha = 1
+        }
+
+        UIImageView.animate(
+            withDuration: 1.2,
+            delay: 1.9,
+            options: [.autoreverse, .repeat]
+        ) {
+            self.thirdDotImageView.alpha = 1
+        }
     }
 
     private func addTapGesture() {
