@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="iTP-TI-GWb">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
@@ -9,10 +9,53 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Cloud View Controller-->
+        <scene sceneID="oTN-AR-4D3">
+            <objects>
+                <viewController id="iTP-TI-GWb" customClass="CloudViewController" customModule="VK_V1_0" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="vhE-v6-tek" customClass="CloudView" customModule="VK_V1_0" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F8H-v4-Ll8">
+                                <rect key="frame" x="0.0" y="241" width="414" height="414"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zKJ-qS-hYg">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="414"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="zKJ-qS-hYg" secondAttribute="trailing" id="Ct0-hF-8PN"/>
+                                    <constraint firstItem="zKJ-qS-hYg" firstAttribute="top" secondItem="F8H-v4-Ll8" secondAttribute="top" id="TdP-c1-JR1"/>
+                                    <constraint firstAttribute="bottom" secondItem="zKJ-qS-hYg" secondAttribute="bottom" id="Xxb-f2-cdA"/>
+                                    <constraint firstAttribute="width" secondItem="F8H-v4-Ll8" secondAttribute="height" multiplier="1:1" id="aBm-FV-Y42"/>
+                                    <constraint firstItem="zKJ-qS-hYg" firstAttribute="leading" secondItem="F8H-v4-Ll8" secondAttribute="leading" id="grQ-Ub-AgJ"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="rRm-6P-Qlf"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="F8H-v4-Ll8" firstAttribute="centerX" secondItem="vhE-v6-tek" secondAttribute="centerX" id="J3D-WE-WCp"/>
+                            <constraint firstItem="F8H-v4-Ll8" firstAttribute="width" secondItem="vhE-v6-tek" secondAttribute="width" id="OWg-NW-aBT"/>
+                            <constraint firstItem="F8H-v4-Ll8" firstAttribute="centerY" secondItem="vhE-v6-tek" secondAttribute="centerY" id="nxr-lg-Dq5"/>
+                        </constraints>
+                        <connections>
+                            <outlet property="backView" destination="zKJ-qS-hYg" id="Jg7-Y7-PiJ"/>
+                            <outlet property="cloudView" destination="F8H-v4-Ll8" id="OHe-p0-d3u"/>
+                        </connections>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Mzx-u4-0dE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-872" y="70"/>
+        </scene>
         <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="LoginViewController" customModule="VK_V1_0" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" id="BYZ-38-t0r" customClass="LoginViewController" customModule="VK_V1_0" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC" customClass="GradientView" customModule="VK_V1_0" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -447,10 +490,10 @@
                                             </constraints>
                                         </imageView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zhp-TW-L6b" customClass="LikeControl" customModule="VK_V1_0" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                                            <rect key="frame" x="0.0" y="40" width="150" height="110"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V8X-6t-dph">
-                                                    <rect key="frame" x="76" y="130" width="50" height="12"/>
+                                                    <rect key="frame" x="76" y="90" width="50" height="12"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="50" id="pgk-lE-RGW"/>
                                                     </constraints>
@@ -459,7 +502,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="suit.heart" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="cNu-Bf-7lg">
-                                                    <rect key="frame" x="130" y="131.5" width="12" height="9.5"/>
+                                                    <rect key="frame" x="130" y="91.5" width="12" height="9.5"/>
                                                     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="12" id="htc-pm-XxP"/>
@@ -482,7 +525,7 @@
                                         </view>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="zhp-TW-L6b" firstAttribute="top" secondItem="qf7-BJ-ETa" secondAttribute="top" id="084-T0-hxd"/>
+                                        <constraint firstItem="zhp-TW-L6b" firstAttribute="top" secondItem="qf7-BJ-ETa" secondAttribute="top" constant="40" id="084-T0-hxd"/>
                                         <constraint firstAttribute="trailing" secondItem="zhp-TW-L6b" secondAttribute="trailing" id="JAf-sQ-LcA"/>
                                         <constraint firstItem="dUB-sr-C7m" firstAttribute="top" secondItem="qf7-BJ-ETa" secondAttribute="top" id="QFj-Ws-QVC"/>
                                         <constraint firstAttribute="trailing" secondItem="dUB-sr-C7m" secondAttribute="trailing" id="Vnd-6e-TEg"/>
@@ -494,6 +537,7 @@
                                 </collectionViewCellContentView>
                                 <connections>
                                     <outlet property="photoImageView" destination="dUB-sr-C7m" id="gcz-v0-jxx"/>
+                                    <segue destination="PCv-Mq-2g2" kind="show" identifier="swipeSceneSegue" id="2SY-Zi-GSW"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -507,6 +551,38 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qoP-5D-pE7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3650.7246376811595" y="-220.3125"/>
+        </scene>
+        <!--Swipe Photo View Controller-->
+        <scene sceneID="iVu-Qf-Izg">
+            <objects>
+                <viewController id="PCv-Mq-2g2" customClass="SwipePhotoViewController" customModule="VK_V1_0" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Aam-bo-4I4">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hub-oF-uC4">
+                                <rect key="frame" x="0.0" y="241" width="414" height="414"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="hub-oF-uC4" secondAttribute="height" multiplier="1:1" id="9x9-ya-LOf"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="eZO-yA-563"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="hub-oF-uC4" firstAttribute="width" secondItem="Aam-bo-4I4" secondAttribute="width" id="7U1-Q6-XMh"/>
+                            <constraint firstItem="hub-oF-uC4" firstAttribute="centerY" secondItem="Aam-bo-4I4" secondAttribute="centerY" id="GZW-jp-okb"/>
+                            <constraint firstItem="hub-oF-uC4" firstAttribute="centerX" secondItem="Aam-bo-4I4" secondAttribute="centerX" id="c0G-LD-MzM"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="Xul-UO-pzo"/>
+                    <connections>
+                        <outlet property="photoImageView" destination="hub-oF-uC4" id="5op-fI-HpD"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bwR-Py-K0K" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4540.579710144928" y="-220.3125"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="ABC-5h-6wf">
@@ -764,7 +840,7 @@
         <!--Друзья-->
         <scene sceneID="zhe-8D-h9R">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="RV4-s4-MsH" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="RV4-s4-MsH" customClass="CustomNavigationController" customModule="VK_V1_0" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Друзья" image="person" catalog="system" selectedImage="person.fill" id="WrV-md-nCK">
                         <color key="badgeColor" red="0.87058818339999999" green="0.58823531870000001" blue="0.2117646933" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </tabBarItem>
@@ -785,7 +861,7 @@
         <!--Группы-->
         <scene sceneID="wlq-I4-Maa">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Iwa-WI-gbZ" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Iwa-WI-gbZ" customClass="CustomNavigationController" customModule="VK_V1_0" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Группы" image="archivebox.circle" catalog="system" selectedImage="archivebox.circle" id="IK7-x6-I01"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="kbT-tR-6Dq">

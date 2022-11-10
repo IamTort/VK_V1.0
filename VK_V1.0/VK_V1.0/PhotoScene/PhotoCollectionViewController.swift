@@ -41,6 +41,15 @@ final class PhotoCollectionViewController: UICollectionViewController {
         return cell
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard segue.identifier == "swipeSceneSegue",
+              let destination = segue.destination as? SwipePhotoViewController,
+              let cell = sender as? UICollectionViewCell,
+              let indexPath = collectionView.indexPath(for: cell) else { return }
+        destination.user = user
+        destination.swipe = indexPath.row
+    }
+
     // MARK: - Private methods
 
     private func setupTitle() {
