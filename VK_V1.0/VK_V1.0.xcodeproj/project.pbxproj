@@ -26,11 +26,11 @@
 		FA314252291A9783008AF0CF /* NewsLikeControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA314251291A9783008AF0CF /* NewsLikeControl.swift */; };
 		FA314256291BDB45008AF0CF /* FriendsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA314255291BDB45008AF0CF /* FriendsHeaderView.swift */; };
 		FA314258291BEB0C008AF0CF /* SwipePhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA314257291BEB0C008AF0CF /* SwipePhotoViewController.swift */; };
-		FA31425A291C46C3008AF0CF /* cloudView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA314259291C46C3008AF0CF /* cloudView.swift */; };
+		FA31425A291C46C3008AF0CF /* CloudView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA314259291C46C3008AF0CF /* CloudView.swift */; };
 		FA31425C291C4D5A008AF0CF /* CloudViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31425B291C4D5A008AF0CF /* CloudViewController.swift */; };
 		FA31426A291D1814008AF0CF /* CustomPushAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA314269291D1814008AF0CF /* CustomPushAnimator.swift */; };
 		FA31426C291D1824008AF0CF /* CustomPopAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31426B291D1824008AF0CF /* CustomPopAnimator.swift */; };
-		FA31426E291D18D9008AF0CF /* UIView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31426D291D18D9008AF0CF /* UIView+extension.swift */; };
+		FA31426E291D18D9008AF0CF /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31426D291D18D9008AF0CF /* UIView+Extension.swift */; };
 		FA314270291D1A68008AF0CF /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31426F291D1A68008AF0CF /* CustomNavigationController.swift */; };
 		FA314272291D1B0C008AF0CF /* CustomInteractiveTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA314271291D1B0C008AF0CF /* CustomInteractiveTransition.swift */; };
 		FAD44465290FDF19006E71AF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD44464290FDF19006E71AF /* AppDelegate.swift */; };
@@ -61,11 +61,11 @@
 		FA314251291A9783008AF0CF /* NewsLikeControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsLikeControl.swift; sourceTree = "<group>"; };
 		FA314255291BDB45008AF0CF /* FriendsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsHeaderView.swift; sourceTree = "<group>"; };
 		FA314257291BEB0C008AF0CF /* SwipePhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipePhotoViewController.swift; sourceTree = "<group>"; };
-		FA314259291C46C3008AF0CF /* cloudView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cloudView.swift; sourceTree = "<group>"; };
+		FA314259291C46C3008AF0CF /* CloudView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudView.swift; sourceTree = "<group>"; };
 		FA31425B291C4D5A008AF0CF /* CloudViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudViewController.swift; sourceTree = "<group>"; };
 		FA314269291D1814008AF0CF /* CustomPushAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPushAnimator.swift; sourceTree = "<group>"; };
 		FA31426B291D1824008AF0CF /* CustomPopAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPopAnimator.swift; sourceTree = "<group>"; };
-		FA31426D291D18D9008AF0CF /* UIView+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+extension.swift"; sourceTree = "<group>"; };
+		FA31426D291D18D9008AF0CF /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		FA31426F291D1A68008AF0CF /* CustomNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
 		FA314271291D1B0C008AF0CF /* CustomInteractiveTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInteractiveTransition.swift; sourceTree = "<group>"; };
 		FAD44461290FDF19006E71AF /* VK_V1.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VK_V1.0.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -177,7 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				FA314268291D17CC008AF0CF /* NavigationAnimations */,
-				FA314259291C46C3008AF0CF /* cloudView.swift */,
+				FA314259291C46C3008AF0CF /* CloudView.swift */,
 				FA31425B291C4D5A008AF0CF /* CloudViewController.swift */,
 			);
 			path = Animations;
@@ -226,7 +226,7 @@
 				FAD4446F290FDF1B006E71AF /* LaunchScreen.storyboard */,
 				FAD44472290FDF1B006E71AF /* Info.plist */,
 				FA31421D291278B3008AF0CF /* UIViewController+Extension.swift */,
-				FA31426D291D18D9008AF0CF /* UIView+extension.swift */,
+				FA31426D291D18D9008AF0CF /* UIView+Extension.swift */,
 				FA314267291D1796008AF0CF /* Animations */,
 				FA31424429145B62008AF0CF /* View */,
 			);
@@ -353,11 +353,11 @@
 				FA3142272912BBB6008AF0CF /* User.swift in Sources */,
 				FA31422F2912D97C008AF0CF /* Group.swift in Sources */,
 				FA314250291A5326008AF0CF /* News.swift in Sources */,
-				FA31425A291C46C3008AF0CF /* cloudView.swift in Sources */,
+				FA31425A291C46C3008AF0CF /* CloudView.swift in Sources */,
 				FA314252291A9783008AF0CF /* NewsLikeControl.swift in Sources */,
 				FAD44469290FDF19006E71AF /* LoginViewController.swift in Sources */,
 				FA314256291BDB45008AF0CF /* FriendsHeaderView.swift in Sources */,
-				FA31426E291D18D9008AF0CF /* UIView+extension.swift in Sources */,
+				FA31426E291D18D9008AF0CF /* UIView+Extension.swift in Sources */,
 				FA3142432914470E008AF0CF /* GradientView.swift in Sources */,
 				FA31424D291A515B008AF0CF /* NewsTableViewCell.swift in Sources */,
 				FA3142342912DAA7008AF0CF /* AvailableGroupsTableViewCell.swift in Sources */,

@@ -21,10 +21,6 @@ final class SwipePhotoViewController: UIViewController {
     var user: User?
     var swipe = 0
 
-    // MARK: - Private property
-
-    private var animator: UIViewPropertyAnimator!
-
     // MARK: - LifeCycle
 
     override func viewDidLoad() {

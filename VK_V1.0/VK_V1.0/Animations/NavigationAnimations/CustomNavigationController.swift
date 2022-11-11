@@ -22,7 +22,7 @@ final class CustomNavigationController: UINavigationController, UINavigationCont
         _ navigationController: UINavigationController,
         interactionControllerFor animationController: UIViewControllerAnimatedTransitioning
     ) -> UIViewControllerInteractiveTransitioning? {
-        interactiveTransition.hasStarted ? interactiveTransition : nil
+        interactiveTransition.isStarted ? interactiveTransition : nil
     }
 
     func navigationController(
@@ -31,15 +31,18 @@ final class CustomNavigationController: UINavigationController, UINavigationCont
         from fromVC: UIViewController,
         to toVC: UIViewController
     ) -> UIViewControllerAnimatedTransitioning? {
-        if operation == .push {
+        switch operation {
+        case .pop:
+            guard navigationController.viewControllers.first != toVC else {
+                return CustomPopAnimator()
+            }
+            interactiveTransition.viewController = toVC
+            return CustomPopAnimator()
+        case .push:
             interactiveTransition.viewController = toVC
             return CustomPushAnimator()
-        } else if operation == .pop {
-            if navigationController.viewControllers.first != toVC {
-                interactiveTransition.viewController = toVC
-            }
-            return CustomPopAnimator()
+        default:
+            return nil
         }
-        return nil
     }
 }

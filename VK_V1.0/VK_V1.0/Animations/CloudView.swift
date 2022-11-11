@@ -1,4 +1,4 @@
-// cloudView.swift
+// CloudView.swift
 // Copyright © RoadMap. All rights reserved.
 
 import UIKit
@@ -10,7 +10,7 @@ final class CloudView: UIView {
     @IBOutlet private var cloudView: UIView!
     @IBOutlet private var backView: UIView!
 
-    // MARK: - Private property
+    // MARK: - Private Visual Components
 
     private let cloudLayer = CAShapeLayer()
     private let backLayer = CAShapeLayer()

@@ -4,7 +4,7 @@
 import UIKit
 
 /// Кастомный хэдэр
-class FriendsHeaderView: UIView {
+final class FriendsHeaderView: UIView {
     // MARK: - Private enum
 
     private enum Constants {

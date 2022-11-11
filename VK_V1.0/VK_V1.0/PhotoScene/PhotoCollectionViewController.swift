@@ -9,6 +9,7 @@ final class PhotoCollectionViewController: UICollectionViewController {
 
     private enum Constants {
         static let cellIdentifier = "photoCell"
+        static let segueIdentifier = "swipeSceneSegue"
     }
 
     // MARK: - Public property
@@ -42,7 +43,7 @@ final class PhotoCollectionViewController: UICollectionViewController {
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard segue.identifier == "swipeSceneSegue",
+        guard segue.identifier == Constants.segueIdentifier,
               let destination = segue.destination as? SwipePhotoViewController,
               let cell = sender as? UICollectionViewCell,
               let indexPath = collectionView.indexPath(for: cell) else { return }
