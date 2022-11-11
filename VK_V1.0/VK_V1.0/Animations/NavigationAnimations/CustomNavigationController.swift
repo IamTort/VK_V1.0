@@ -13,7 +13,7 @@ final class CustomNavigationController: UINavigationController, UINavigationCont
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        delegate = self
+        setupDelegate()
     }
 
     // MARK: - Public methods
@@ -44,5 +44,11 @@ final class CustomNavigationController: UINavigationController, UINavigationCont
         default:
             return nil
         }
+    }
+
+    // MARK: - Private methods
+
+    private func setupDelegate() {
+        delegate = self
     }
 }
