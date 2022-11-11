@@ -12,8 +12,8 @@ final class CloudView: UIView {
 
     // MARK: - Private Visual Components
 
-    private let cloudLayer = CAShapeLayer()
-    private let backLayer = CAShapeLayer()
+    private let cloudShapeLayer = CAShapeLayer()
+    private let backShapeLayer = CAShapeLayer()
     private let bezierPath = UIBezierPath()
 
     // MARK: - LifeCycle
@@ -22,8 +22,8 @@ final class CloudView: UIView {
         super.awakeFromNib()
         configureBezierPath()
         configureLayers()
-        configureAnimation()
-        displayCloudView()
+        configureBasicAnimation()
+        affineTransformCloudView()
     }
 
     // MARK: - Private methods
@@ -88,27 +88,27 @@ final class CloudView: UIView {
         bezierPath.close()
     }
 
-    private func displayCloudView() {
+    private func affineTransformCloudView() {
         cloudView.transform = CGAffineTransform(scaleX: 2, y: 2)
         cloudView.layer.bounds.origin.x = -130
         cloudView.layer.bounds.origin.y = -150
     }
 
     private func configureLayers() {
-        cloudLayer.path = bezierPath.cgPath
-        cloudLayer.lineWidth = 3
-        cloudLayer.strokeColor = UIColor.blue.cgColor
-        cloudLayer.fillColor = UIColor.clear.cgColor
-        cloudView.layer.addSublayer(cloudLayer)
+        cloudShapeLayer.path = bezierPath.cgPath
+        cloudShapeLayer.lineWidth = 3
+        cloudShapeLayer.strokeColor = UIColor.blue.cgColor
+        cloudShapeLayer.fillColor = UIColor.clear.cgColor
+        cloudView.layer.addSublayer(cloudShapeLayer)
 
-        backLayer.path = bezierPath.cgPath
-        backLayer.lineWidth = 4
-        backLayer.strokeColor = UIColor.gray.cgColor
-        backLayer.fillColor = UIColor.white.cgColor
-        backView.layer.addSublayer(backLayer)
+        backShapeLayer.path = bezierPath.cgPath
+        backShapeLayer.lineWidth = 4
+        backShapeLayer.strokeColor = UIColor.gray.cgColor
+        backShapeLayer.fillColor = UIColor.white.cgColor
+        backView.layer.addSublayer(backShapeLayer)
     }
 
-    private func configureAnimation() {
+    private func configureBasicAnimation() {
         let strokeStartAnimation = CABasicAnimation(keyPath: #keyPath(CAShapeLayer.strokeStart))
         strokeStartAnimation.fromValue = 0
         strokeStartAnimation.toValue = 1
@@ -122,6 +122,6 @@ final class CloudView: UIView {
         animationGroup.animations = [strokeStartAnimation, strokeEndAnimation]
         animationGroup.duration = 4
         animationGroup.repeatCount = .infinity
-        cloudLayer.add(animationGroup, forKey: nil)
+        cloudShapeLayer.add(animationGroup, forKey: nil)
     }
 }

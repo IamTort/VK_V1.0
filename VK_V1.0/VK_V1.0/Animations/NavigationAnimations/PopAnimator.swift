@@ -4,7 +4,7 @@
 import UIKit
 
 ///  Анимация скрытия экрана
-final class CustomPopAnimator: NSObject, UIViewControllerAnimatedTransitioning {
+final class PopAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     // MARK: - Private property
 
     private let animationDuration: TimeInterval = 1

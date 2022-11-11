@@ -3,8 +3,8 @@
 
 import UIKit
 
-///  Кастомный контроллер навигации
-final class CustomNavigationController: UINavigationController, UINavigationControllerDelegate {
+///  Контроллер навигации
+final class MainNavigationController: UINavigationController, UINavigationControllerDelegate {
     // MARK: - Private property
 
     private let interactiveTransition = CustomInteractiveTransition()
@@ -34,13 +34,13 @@ final class CustomNavigationController: UINavigationController, UINavigationCont
         switch operation {
         case .pop:
             guard navigationController.viewControllers.first != toVC else {
-                return CustomPopAnimator()
+                return PopAnimator()
             }
             interactiveTransition.viewController = toVC
-            return CustomPopAnimator()
+            return PopAnimator()
         case .push:
             interactiveTransition.viewController = toVC
-            return CustomPushAnimator()
+            return PushAnimator()
         default:
             return nil
         }

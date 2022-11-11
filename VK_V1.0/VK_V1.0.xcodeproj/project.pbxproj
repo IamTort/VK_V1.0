@@ -28,10 +28,10 @@
 		FA314258291BEB0C008AF0CF /* SwipePhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA314257291BEB0C008AF0CF /* SwipePhotoViewController.swift */; };
 		FA31425A291C46C3008AF0CF /* CloudView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA314259291C46C3008AF0CF /* CloudView.swift */; };
 		FA31425C291C4D5A008AF0CF /* CloudViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31425B291C4D5A008AF0CF /* CloudViewController.swift */; };
-		FA31426A291D1814008AF0CF /* CustomPushAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA314269291D1814008AF0CF /* CustomPushAnimator.swift */; };
-		FA31426C291D1824008AF0CF /* CustomPopAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31426B291D1824008AF0CF /* CustomPopAnimator.swift */; };
+		FA31426A291D1814008AF0CF /* PushAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA314269291D1814008AF0CF /* PushAnimator.swift */; };
+		FA31426C291D1824008AF0CF /* PopAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31426B291D1824008AF0CF /* PopAnimator.swift */; };
 		FA31426E291D18D9008AF0CF /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31426D291D18D9008AF0CF /* UIView+Extension.swift */; };
-		FA314270291D1A68008AF0CF /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31426F291D1A68008AF0CF /* CustomNavigationController.swift */; };
+		FA314270291D1A68008AF0CF /* MainNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31426F291D1A68008AF0CF /* MainNavigationController.swift */; };
 		FA314272291D1B0C008AF0CF /* CustomInteractiveTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA314271291D1B0C008AF0CF /* CustomInteractiveTransition.swift */; };
 		FAD44465290FDF19006E71AF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD44464290FDF19006E71AF /* AppDelegate.swift */; };
 		FAD44467290FDF19006E71AF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD44466290FDF19006E71AF /* SceneDelegate.swift */; };
@@ -63,10 +63,10 @@
 		FA314257291BEB0C008AF0CF /* SwipePhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipePhotoViewController.swift; sourceTree = "<group>"; };
 		FA314259291C46C3008AF0CF /* CloudView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudView.swift; sourceTree = "<group>"; };
 		FA31425B291C4D5A008AF0CF /* CloudViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudViewController.swift; sourceTree = "<group>"; };
-		FA314269291D1814008AF0CF /* CustomPushAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPushAnimator.swift; sourceTree = "<group>"; };
-		FA31426B291D1824008AF0CF /* CustomPopAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPopAnimator.swift; sourceTree = "<group>"; };
+		FA314269291D1814008AF0CF /* PushAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushAnimator.swift; sourceTree = "<group>"; };
+		FA31426B291D1824008AF0CF /* PopAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopAnimator.swift; sourceTree = "<group>"; };
 		FA31426D291D18D9008AF0CF /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
-		FA31426F291D1A68008AF0CF /* CustomNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
+		FA31426F291D1A68008AF0CF /* MainNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavigationController.swift; sourceTree = "<group>"; };
 		FA314271291D1B0C008AF0CF /* CustomInteractiveTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInteractiveTransition.swift; sourceTree = "<group>"; };
 		FAD44461290FDF19006E71AF /* VK_V1.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VK_V1.0.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FAD44464290FDF19006E71AF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -186,9 +186,9 @@
 		FA314268291D17CC008AF0CF /* NavigationAnimations */ = {
 			isa = PBXGroup;
 			children = (
-				FA314269291D1814008AF0CF /* CustomPushAnimator.swift */,
-				FA31426B291D1824008AF0CF /* CustomPopAnimator.swift */,
-				FA31426F291D1A68008AF0CF /* CustomNavigationController.swift */,
+				FA314269291D1814008AF0CF /* PushAnimator.swift */,
+				FA31426B291D1824008AF0CF /* PopAnimator.swift */,
+				FA31426F291D1A68008AF0CF /* MainNavigationController.swift */,
 				FA314271291D1B0C008AF0CF /* CustomInteractiveTransition.swift */,
 			);
 			path = NavigationAnimations;
@@ -363,11 +363,11 @@
 				FA3142342912DAA7008AF0CF /* AvailableGroupsTableViewCell.swift in Sources */,
 				FA31424129143987008AF0CF /* LikeControl.swift in Sources */,
 				FAD44465290FDF19006E71AF /* AppDelegate.swift in Sources */,
-				FA31426C291D1824008AF0CF /* CustomPopAnimator.swift in Sources */,
+				FA31426C291D1824008AF0CF /* PopAnimator.swift in Sources */,
 				FA314272291D1B0C008AF0CF /* CustomInteractiveTransition.swift in Sources */,
 				FA3142322912DA92008AF0CF /* AvailableGroupsTableViewController.swift in Sources */,
-				FA314270291D1A68008AF0CF /* CustomNavigationController.swift in Sources */,
-				FA31426A291D1814008AF0CF /* CustomPushAnimator.swift in Sources */,
+				FA314270291D1A68008AF0CF /* MainNavigationController.swift in Sources */,
+				FA31426A291D1814008AF0CF /* PushAnimator.swift in Sources */,
 				FA3142242912BB68008AF0CF /* FriendsTableViewCell.swift in Sources */,
 				FAD44467290FDF19006E71AF /* SceneDelegate.swift in Sources */,
 				FA314258291BEB0C008AF0CF /* SwipePhotoViewController.swift in Sources */,

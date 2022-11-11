@@ -5,7 +5,7 @@ import UIKit
 
 /// Интерактивная анимация закрытия экрана
 final class CustomInteractiveTransition: UIPercentDrivenInteractiveTransition {
-    // MARK: - Public property
+    // MARK: - Public Visual Component
 
     var viewController: UIViewController? {
         didSet {
@@ -17,7 +17,7 @@ final class CustomInteractiveTransition: UIPercentDrivenInteractiveTransition {
 
     // MARK: - Private property
 
-    private var shouldFinish: Bool = false
+    private var shouldFinished = false
 
     // MARK: - Private methods
 
@@ -39,11 +39,11 @@ final class CustomInteractiveTransition: UIPercentDrivenInteractiveTransition {
             let translation = recognizer.translation(in: recognizer.view)
             let relativeTranslation = translation.y / (recognizer.view?.bounds.width ?? 1)
             let progress = max(0, min(1, relativeTranslation))
-            shouldFinish = progress > 0.3
+            shouldFinished = progress > 0.3
             update(progress)
         case .ended:
             isStarted = false
-            _ = shouldFinish ? finish() : cancel()
+            _ = shouldFinished ? finish() : cancel()
         case .cancelled:
             isStarted = false
             cancel()

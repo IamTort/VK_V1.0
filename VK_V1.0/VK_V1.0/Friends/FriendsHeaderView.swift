@@ -3,7 +3,7 @@
 
 import UIKit
 
-/// Кастомный хэдэр
+/// Хэдэр друзей
 final class FriendsHeaderView: UIView {
     // MARK: - Private enum
 

@@ -4,7 +4,7 @@
 import UIKit
 
 /// Анимация открытия экрана
-final class CustomPushAnimator: NSObject, UIViewControllerAnimatedTransitioning {
+final class PushAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     // MARK: - Private property
 
     private let animationDuration: TimeInterval = 1

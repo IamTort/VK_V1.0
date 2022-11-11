@@ -9,7 +9,7 @@ final class CloudViewController: UIViewController {
 
     private enum Constants {
         static let loginViewControllerID = "LoginViewController"
-        static let storyboardName = "Main"
+        static let mainStoryboardName = "Main"
     }
 
     // MARK: - LifeCycle
@@ -23,7 +23,7 @@ final class CloudViewController: UIViewController {
 
     private func performSegue(withDuration: UInt32) {
         sleep(withDuration)
-        let storyboard = UIStoryboard(name: Constants.storyboardName, bundle: nil)
+        let storyboard = UIStoryboard(name: Constants.mainStoryboardName, bundle: nil)
         let loginViewController = storyboard.instantiateViewController(withIdentifier: Constants.loginViewControllerID)
         loginViewController.modalPresentationStyle = .fullScreen
         present(loginViewController, animated: true)
