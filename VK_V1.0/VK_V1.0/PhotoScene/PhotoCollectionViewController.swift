@@ -10,17 +10,23 @@ final class PhotoCollectionViewController: UICollectionViewController {
     private enum Constants {
         static let cellIdentifier = "photoCell"
         static let segueIdentifier = "swipeSceneSegue"
+        static let userId = "494643076"
     }
 
     // MARK: - Public property
 
     var user: User?
 
+    // MARK: - Private property
+
+    private let service = NetworkService()
+
     // MARK: - LifeCycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTitle()
+        service.loadData(data: .photos, for: Constants.userId, searchText: nil)
     }
 
     // MARK: - Public methods

@@ -15,7 +15,15 @@ final class MyGroupsTableViewController: UITableViewController {
 
     // MARK: - Private property
 
+    private let service = NetworkService()
     private var mygroups = Constants.mygroups
+
+    // MARK: - LifeCycle
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        service.loadData(data: .myGroups, for: nil, searchText: nil)
+    }
 
     // MARK: - Public methods
 

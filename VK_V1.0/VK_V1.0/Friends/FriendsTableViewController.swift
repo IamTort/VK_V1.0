@@ -21,6 +21,7 @@ final class FriendsTableViewController: UITableViewController {
 
     // MARK: - Private property
 
+    private let service = NetworkService()
     private let friends = Constants.friends
     private var sortedFriendsDict = [Character: [User]]()
 
@@ -29,6 +30,7 @@ final class FriendsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         sortFriends()
+        service.loadData(data: .friends, for: nil, searchText: nil)
     }
 
     // MARK: - Public methods
