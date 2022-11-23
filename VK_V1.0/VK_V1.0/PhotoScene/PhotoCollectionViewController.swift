@@ -10,17 +10,23 @@ final class PhotoCollectionViewController: UICollectionViewController {
     private enum Constants {
         static let cellIdentifier = "photoCell"
         static let segueIdentifier = "swipeSceneSegue"
+        static let userId = "494643076"
     }
 
     // MARK: - Public property
 
     var user: User?
 
+    // MARK: - Private property
+
+    private let networkService = NetworkService()
+
     // MARK: - LifeCycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTitle()
+        fetchPhotos()
     }
 
     // MARK: - Public methods
@@ -52,6 +58,10 @@ final class PhotoCollectionViewController: UICollectionViewController {
     }
 
     // MARK: - Private methods
+
+    private func fetchPhotos() {
+        networkService.fetchPhotos(for: Constants.userId)
+    }
 
     private func setupTitle() {
         navigationItem.title = user?.name

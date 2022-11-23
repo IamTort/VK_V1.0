@@ -16,6 +16,7 @@ final class AvailableGroupsTableViewController: UITableViewController {
             Group(imageName: "built", title: "Cтроить дом"),
             Group(imageName: "man", title: "Молодые мужчины")
         ]
+        static let searchText = "nature"
     }
 
     // MARK: - Private IBOutlet
@@ -28,6 +29,7 @@ final class AvailableGroupsTableViewController: UITableViewController {
 
     // MARK: - Private property
 
+    private let networkService = NetworkService()
     private var filteredGroups: [Group] = []
 
     // MARK: - LifeCycle
@@ -35,6 +37,7 @@ final class AvailableGroupsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         updateFilteredGroups()
+        loadAvailableGroups()
     }
 
     // MARK: - Public methods
@@ -48,11 +51,14 @@ final class AvailableGroupsTableViewController: UITableViewController {
             as? AvailableGroupsTableViewCell else { return UITableViewCell() }
 
         cell.setup(group: filteredGroups[indexPath.row])
-
         return cell
     }
 
     // MARK: - Private methods
+
+    private func loadAvailableGroups() {
+        networkService.fetchAvailableGroups(searchText: Constants.searchText)
+    }
 
     private func updateFilteredGroups() {
         filteredGroups = availableGroups

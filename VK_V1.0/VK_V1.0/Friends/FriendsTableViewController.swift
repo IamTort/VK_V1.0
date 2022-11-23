@@ -21,33 +21,35 @@ final class FriendsTableViewController: UITableViewController {
 
     // MARK: - Private property
 
+    private let networkService = NetworkService()
     private let friends = Constants.friends
-    private var sortedFriendsDict = [Character: [User]]()
+    private var sortedFriendsMap = [Character: [User]]()
 
     // MARK: - LifeCycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         sortFriends()
+        loadFriends()
     }
 
     // MARK: - Public methods
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        sortedFriendsDict.keys.count
+        sortedFriendsMap.keys.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let keysSorted = sortedFriendsDict.keys.sorted()
-        let friends = sortedFriendsDict[keysSorted[section]]?.count ?? 0
+        let keysSorted = sortedFriendsMap.keys.sorted()
+        let friends = sortedFriendsMap[keysSorted[section]]?.count ?? 0
         return friends
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let firstChar = sortedFriendsDict.keys.sorted()[indexPath.section]
+        let firstChar = sortedFriendsMap.keys.sorted()[indexPath.section]
         guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier, for: indexPath)
             as? FriendsTableViewCell,
-            let friends = sortedFriendsDict[firstChar] else { return UITableViewCell() }
+            let friends = sortedFriendsMap[firstChar] else { return UITableViewCell() }
 
         let friend = friends[indexPath.row]
         cell.setupData(data: friend)
@@ -59,7 +61,7 @@ final class FriendsTableViewController: UITableViewController {
     }
 
     override func tableView(_: UITableView, titleForHeaderInSection section: Int) -> String? {
-        String(sortedFriendsDict.keys.sorted()[section])
+        String(sortedFriendsMap.keys.sorted()[section])
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -80,9 +82,13 @@ final class FriendsTableViewController: UITableViewController {
 
     // MARK: - Private methods
 
+    private func loadFriends() {
+        networkService.fetchFriends()
+    }
+
     private func configureHeaderView(section index: Int) -> UIView {
         let headerView = FriendsHeaderView()
-        headerView.configureText(text: String(sortedFriendsDict.keys.sorted()[index]))
+        headerView.configureText(text: String(sortedFriendsMap.keys.sorted()[index]))
         return headerView
     }
 
@@ -103,6 +109,6 @@ final class FriendsTableViewController: UITableViewController {
     }
 
     private func sortFriends() {
-        sortedFriendsDict = sort(friends: friends)
+        sortedFriendsMap = sort(friends: friends)
     }
 }
