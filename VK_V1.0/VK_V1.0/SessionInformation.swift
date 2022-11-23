@@ -3,14 +3,14 @@
 
 import Foundation
 
-/// Информация о сессии
+/// Информация о текущей сессии пользователя
 final class SessionInformation {
-    static let instance = SessionInformation()
 
     // MARK: - Public property
-
+    static let instance = SessionInformation()
     var token: String?
     var userId: Int?
 
+    // MARK: - Initializers
     private init() {}
 }

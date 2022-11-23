@@ -9,10 +9,10 @@ final class AuthorizationViewController: UIViewController {
     // MARK: - Private enum
 
     private enum Constants {
-        static let path = "/authorize"
-        static let scheme = "https"
-        static let host = "oauth.vk.com"
-        static let queryItems = [
+        static let pathValue = "/authorize"
+        static let schemeValue = "https"
+        static let hostValue = "oauth.vk.com"
+        static let queryItemsValue = [
             URLQueryItem(name: "client_id", value: "8181012"),
             URLQueryItem(name: "display", value: "mobile"),
             URLQueryItem(name: "redirect_uri", value: "https://oauth.vk.com/blank.html"),
@@ -25,15 +25,15 @@ final class AuthorizationViewController: UIViewController {
         static let accessTokenName = "access_token"
         static let userIdName = "user_id"
         static let wkWebViewPath = "/blank.html"
-        static let ampersand = "&"
-        static let equals = "="
+        static let ampersandText = "&"
+        static let equalsText = "="
     }
 
     // MARK: - Private IBOutlet
 
     @IBOutlet private var webView: WKWebView! {
         didSet {
-            self.webView.navigationDelegate = self
+            webView.navigationDelegate = self
         }
     }
 
@@ -48,10 +48,10 @@ final class AuthorizationViewController: UIViewController {
 
     private func loadAuth() {
         var urlComponents = URLComponents()
-        urlComponents.scheme = Constants.scheme
-        urlComponents.host = Constants.host
-        urlComponents.path = Constants.path
-        urlComponents.queryItems = Constants.queryItems
+        urlComponents.scheme = Constants.schemeValue
+        urlComponents.host = Constants.hostValue
+        urlComponents.path = Constants.pathValue
+        urlComponents.queryItems = Constants.queryItemsValue
 
         guard let url = urlComponents.url else { return }
         let request = URLRequest(url: url)
@@ -77,8 +77,8 @@ extension AuthorizationViewController: WKNavigationDelegate {
         }
 
         let params = fragment
-            .components(separatedBy: Constants.ampersand)
-            .map { $0.components(separatedBy: Constants.equals) }
+            .components(separatedBy: Constants.ampersandText)
+            .map { $0.components(separatedBy: Constants.equalsText) }
             .reduce([String: String]()) { result, param in
                 var dict = result
                 let key = param[0]

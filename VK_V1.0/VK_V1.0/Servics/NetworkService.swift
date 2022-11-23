@@ -1,12 +1,6 @@
 // NetworkService.swift
 // Copyright © RoadMap. All rights reserved.
 
-//
-//  NetworkService.swift
-//  VK_V1.0
-//
-//  Created by angelina on 23.11.2022.
-//
 import Alamofire
 import Foundation
 
@@ -20,7 +14,7 @@ enum TypeMethod {
 
 /// Загрузка данных с сервера
 final class NetworkService {
-    // MARK: - Private enum
+    // MARK: - Constants
 
     private enum Constants {
         static let friendMethod = "/method/friends.get"
