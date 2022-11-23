@@ -3,7 +3,7 @@
 
 import UIKit
 
-/// Компонент вью
+/// Хэдэр друзей
 class FriendsHeaderView: UIView {
     // MARK: - Private enum
 
