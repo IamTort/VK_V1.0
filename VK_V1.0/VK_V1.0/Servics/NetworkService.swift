@@ -4,14 +4,6 @@
 import Alamofire
 import Foundation
 
-/// Глобальный список типов данных
-enum TypeMethod {
-    case friends
-    case photos
-    case myGroups
-    case availableGroups
-}
-
 /// Загрузка данных с сервера
 final class NetworkService {
     // MARK: - Constants
@@ -36,49 +28,56 @@ final class NetworkService {
 
     // MARK: - Public methods
 
-    func loadData(data: TypeMethod, for ownerId: String?, searchText: String?) {
-        guard let id = SessionInformation.instance.userId,
-              let token = SessionInformation.instance.token else { return }
+    func fetchFriends() {
+        guard let id = SessionInformation.shared.userId,
+              let token = SessionInformation.shared.token else { return }
+        let params = [
+            Constants.userIdName: "\(id)",
+            Constants.versionName: Constants.versionValue,
+            Constants.fieldsName: Constants.fieldsValue
+        ]
+        guard let url: URL = .configureURL(token: token, typeMethod: Constants.friendMethod, paramsMap: params)
+        else { return }
+        requestUrl(url: url)
+    }
 
-        var url: URL?
+    func fetchPhotos(for ownerId: String?) {
+        guard let ownerId = ownerId,
+              let token = SessionInformation.shared.token else { return }
+        let params = [
+            Constants.versionName: Constants.versionValue,
+            Constants.extendedName: Constants.extendedValue,
+            Constants.ownerIdName: "\(ownerId)"
+        ]
+        guard let url: URL = .configureURL(token: token, typeMethod: Constants.photosMethod, paramsMap: params)
+        else { return }
+        requestUrl(url: url)
+    }
 
-        switch data {
-        case .friends:
-            let params = [
-                Constants.userIdName: "\(id)",
-                Constants.versionName: Constants.versionValue,
-                Constants.fieldsName: Constants.fieldsValue
-            ]
-            url = .configureURL(token: token, typeMethod: Constants.friendMethod, paramsMap: params)
+    func fetchMyGroups() {
+        guard let id = SessionInformation.shared.userId,
+              let token = SessionInformation.shared.token else { return }
+        let params = [
+            Constants.userIdName: "\(id)",
+            Constants.versionName: Constants.versionValue,
+            Constants.extendedName: Constants.extendedValue
+        ]
+        guard let url: URL = .configureURL(token: token, typeMethod: Constants.myGroupsMethod, paramsMap: params)
+        else { return }
+        requestUrl(url: url)
+    }
 
-        case .photos:
-            guard let ownerId = ownerId else { return }
-            let params = [
-                Constants.versionName: Constants.versionValue,
-                Constants.extendedName: Constants.extendedValue,
-                Constants.ownerIdName: "\(ownerId)"
-            ]
-            url = .configureURL(token: token, typeMethod: Constants.photosMethod, paramsMap: params)
-
-        case .myGroups:
-            let params = [
-                Constants.userIdName: "\(id)",
-                Constants.versionName: Constants.versionValue,
-                Constants.extendedName: Constants.extendedValue
-            ]
-            url = .configureURL(token: token, typeMethod: Constants.myGroupsMethod, paramsMap: params)
-
-        case .availableGroups:
-            guard let text = searchText else { return }
-            let params = [
-                Constants.searchTextName: text,
-                Constants.versionName: Constants.versionValue,
-                Constants.countGroupsName: Constants.countGroupsValue,
-                Constants.fieldsName: Constants.fieldsValue
-            ]
-            url = .configureURL(token: token, typeMethod: Constants.availableGroupsMethod, paramsMap: params)
-        }
-        guard let url = url else { return }
+    func fetchAvailableGroups(searchText: String?) {
+        guard let text = searchText,
+              let token = SessionInformation.shared.token else { return }
+        let params = [
+            Constants.searchTextName: text,
+            Constants.versionName: Constants.versionValue,
+            Constants.countGroupsName: Constants.countGroupsValue,
+            Constants.fieldsName: Constants.fieldsValue
+        ]
+        guard let url: URL = .configureURL(token: token, typeMethod: Constants.availableGroupsMethod, paramsMap: params)
+        else { return }
         requestUrl(url: url)
     }
 

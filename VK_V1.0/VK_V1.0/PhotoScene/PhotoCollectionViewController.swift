@@ -19,14 +19,14 @@ final class PhotoCollectionViewController: UICollectionViewController {
 
     // MARK: - Private property
 
-    private let service = NetworkService()
+    private let networkService = NetworkService()
 
     // MARK: - LifeCycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTitle()
-        service.loadData(data: .photos, for: Constants.userId, searchText: nil)
+        fetchPhotos()
     }
 
     // MARK: - Public methods
@@ -58,6 +58,10 @@ final class PhotoCollectionViewController: UICollectionViewController {
     }
 
     // MARK: - Private methods
+
+    private func fetchPhotos() {
+        networkService.fetchPhotos(for: Constants.userId)
+    }
 
     private func setupTitle() {
         navigationItem.title = user?.name

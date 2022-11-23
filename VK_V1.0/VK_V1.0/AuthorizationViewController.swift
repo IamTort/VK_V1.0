@@ -4,7 +4,7 @@
 import UIKit
 import WebKit
 
-/// Экран входа
+/// Экран авторизации
 final class AuthorizationViewController: UIViewController {
     // MARK: - Private enum
 
@@ -55,7 +55,6 @@ final class AuthorizationViewController: UIViewController {
 
         guard let url = urlComponents.url else { return }
         let request = URLRequest(url: url)
-        print(request)
         webView.load(request)
     }
 }
@@ -89,10 +88,8 @@ extension AuthorizationViewController: WKNavigationDelegate {
 
         guard let token = params[Constants.accessTokenName],
               let userId = params[Constants.userIdName] else { return }
-        SessionInformation.instance.token = token
-        SessionInformation.instance.userId = Int(userId)
-        print(token)
-        print(userId)
+        SessionInformation.shared.token = token
+        SessionInformation.shared.userId = Int(userId)
         decisionHandler(.cancel)
         performSegue(withIdentifier: Constants.segueIdentifier, sender: nil)
     }
