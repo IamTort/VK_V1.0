@@ -17,8 +17,6 @@ final class FriendsTableViewController: UITableViewController {
             User(imageName: "cat", name: "Arrcus Volfgan", photos: ["cat", "car", "bear"]),
             User(imageName: nil, name: "Krcus Volfgan", photos: ["cat", "car", "bear"])
         ]
-        static let futuraFontName = "Futura-Bold"
-        static let colorName = "tiffanyColor"
     }
 
     // MARK: - Private property
@@ -57,15 +55,7 @@ final class FriendsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let view = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 35))
-//        let label = UILabel()
-//        label.textColor = .systemGray
-//        label.font = UIFont(name: Constants.futuraFontName, size: 15)
-//        label.frame = CGRect(x: 15, y: 0, width: 100, height: 16)
-//        view.addSubview(label)
-//        view.backgroundColor = UIColor(named: Constants.colorName)
-//        label.text = String(sortedFriendsDict.keys.sorted()[section])
-        FriendsHeaderView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 35))
+        configureHeaderView(section: section)
     }
 
     override func tableView(_: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -89,6 +79,12 @@ final class FriendsTableViewController: UITableViewController {
     }
 
     // MARK: - Private methods
+
+    private func configureHeaderView(section index: Int) -> UIView {
+        let headerView = FriendsHeaderView()
+        headerView.configureText(text: String(sortedFriendsDict.keys.sorted()[index]))
+        return headerView
+    }
 
     private func sort(friends: [User]) -> [Character: [User]] {
         var friendsDict = [Character: [User]]()

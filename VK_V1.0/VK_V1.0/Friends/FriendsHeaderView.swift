@@ -3,20 +3,60 @@
 
 import UIKit
 
-/// Компонент кастомного вью
-class FriendsHeaderView: UIView {
-    var view = UIView(frame: CGRect(x: 0, y: 0, width: 400, height: 35))
+/// Хэдэр друзей
+final class FriendsHeaderView: UIView {
+    // MARK: - Private enum
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        view.backgroundColor = .blue
-        addSubview(view)
+    private enum Constants {
+        static let colorName = "tiffanyColor"
     }
-    /*
-     // Only override draw() if you perform custom drawing.
-     // An empty implementation adversely affects performance during animation.
-     override func draw(_ rect: CGRect) {
-         // Drawing code
-     }
-     */
+
+    // MARK: - Private Visual Components
+
+    private let charLabel: UILabel!
+    private let backView: UIView!
+
+    // MARK: - Private Properties
+
+    private var text: String?
+
+    // MARK: - Lifecycle
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        backView.frame = bounds
+        charLabel.frame = bounds
+        charLabel.frame.origin.x += 20
+    }
+
+    // MARK: - Initializers
+
+    override init(frame: CGRect) {
+        charLabel = UILabel()
+        backView = UIView()
+        super.init(frame: frame)
+        setupView()
+    }
+
+    required init?(coder aCoder: NSCoder) {
+        charLabel = UILabel()
+        backView = UIView()
+        super.init(coder: aCoder)
+        setupView()
+    }
+
+    // MARK: - Public Methods
+
+    func configureText(text: String) {
+        charLabel.text = text
+    }
+
+    // MARK: - Private Methods
+
+    private func setupView() {
+        backView.backgroundColor = UIColor(named: Constants.colorName)
+        backView.layer.opacity = 0.5
+        addSubview(backView)
+        backView.addSubview(charLabel)
+    }
 }
