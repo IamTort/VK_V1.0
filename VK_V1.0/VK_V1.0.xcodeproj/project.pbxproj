@@ -12,13 +12,22 @@
 		FA2680D7292DAC0800A567BC /* URL+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2680D6292DAC0800A567BC /* URL+Extension.swift */; };
 		FA2680D9292DAC3B00A567BC /* SessionInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2680D8292DAC3B00A567BC /* SessionInformation.swift */; };
 		FA2680DB292DAD2200A567BC /* AuthorizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2680DA292DAD2200A567BC /* AuthorizationViewController.swift */; };
+		FA2680E5292EAE6400A567BC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2680E4292EAE6400A567BC /* User.swift */; };
+		FA2680E7292EAE6D00A567BC /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2680E6292EAE6D00A567BC /* Photo.swift */; };
+		FA2680E9292EAE7700A567BC /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2680E8292EAE7700A567BC /* Group.swift */; };
+		FA268112292FC68500A567BC /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA268111292FC68500A567BC /* UIImage+Extension.swift */; };
+		FA2681162930173000A567BC /* Groups.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2681152930173000A567BC /* Groups.swift */; };
+		FA2681192930176300A567BC /* ResponseGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2681182930176300A567BC /* ResponseGroup.swift */; };
+		FA26811B2930198600A567BC /* ResponsePhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA26811A2930198600A567BC /* ResponsePhoto.swift */; };
+		FA26811D293019A500A567BC /* Photos.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA26811C293019A500A567BC /* Photos.swift */; };
+		FA26811F293019C900A567BC /* PhotoInfoDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA26811E293019C900A567BC /* PhotoInfoDto.swift */; };
+		FA26812229301A0700A567BC /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA26812129301A0700A567BC /* Users.swift */; };
+		FA26812429301A2400A567BC /* ResponseUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA26812329301A2400A567BC /* ResponseUser.swift */; };
 		FA31421E291278B3008AF0CF /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31421D291278B3008AF0CF /* UIViewController+Extension.swift */; };
 		FA3142222912BB5A008AF0CF /* FriendsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3142212912BB5A008AF0CF /* FriendsTableViewController.swift */; };
 		FA3142242912BB68008AF0CF /* FriendsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3142232912BB68008AF0CF /* FriendsTableViewCell.swift */; };
-		FA3142272912BBB6008AF0CF /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3142262912BBB6008AF0CF /* User.swift */; };
 		FA31422A2912D953008AF0CF /* MyGroupsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3142292912D953008AF0CF /* MyGroupsTableViewCell.swift */; };
 		FA31422C2912D967008AF0CF /* MyGroupsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31422B2912D967008AF0CF /* MyGroupsTableViewController.swift */; };
-		FA31422F2912D97C008AF0CF /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31422E2912D97C008AF0CF /* Group.swift */; };
 		FA3142322912DA92008AF0CF /* AvailableGroupsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3142312912DA92008AF0CF /* AvailableGroupsTableViewController.swift */; };
 		FA3142342912DAA7008AF0CF /* AvailableGroupsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3142332912DAA7008AF0CF /* AvailableGroupsTableViewCell.swift */; };
 		FA3142372912E152008AF0CF /* PhotoCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3142362912E152008AF0CF /* PhotoCollectionViewController.swift */; };
@@ -54,13 +63,22 @@
 		FA2680D6292DAC0800A567BC /* URL+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extension.swift"; sourceTree = "<group>"; };
 		FA2680D8292DAC3B00A567BC /* SessionInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionInformation.swift; sourceTree = "<group>"; };
 		FA2680DA292DAD2200A567BC /* AuthorizationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationViewController.swift; sourceTree = "<group>"; };
+		FA2680E4292EAE6400A567BC /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		FA2680E6292EAE6D00A567BC /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
+		FA2680E8292EAE7700A567BC /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
+		FA268111292FC68500A567BC /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
+		FA2681152930173000A567BC /* Groups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Groups.swift; sourceTree = "<group>"; };
+		FA2681182930176300A567BC /* ResponseGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseGroup.swift; sourceTree = "<group>"; };
+		FA26811A2930198600A567BC /* ResponsePhoto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponsePhoto.swift; sourceTree = "<group>"; };
+		FA26811C293019A500A567BC /* Photos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photos.swift; sourceTree = "<group>"; };
+		FA26811E293019C900A567BC /* PhotoInfoDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoInfoDto.swift; sourceTree = "<group>"; };
+		FA26812129301A0700A567BC /* Users.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
+		FA26812329301A2400A567BC /* ResponseUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseUser.swift; sourceTree = "<group>"; };
 		FA31421D291278B3008AF0CF /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		FA3142212912BB5A008AF0CF /* FriendsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableViewController.swift; sourceTree = "<group>"; };
 		FA3142232912BB68008AF0CF /* FriendsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableViewCell.swift; sourceTree = "<group>"; };
-		FA3142262912BBB6008AF0CF /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		FA3142292912D953008AF0CF /* MyGroupsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGroupsTableViewCell.swift; sourceTree = "<group>"; };
 		FA31422B2912D967008AF0CF /* MyGroupsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGroupsTableViewController.swift; sourceTree = "<group>"; };
-		FA31422E2912D97C008AF0CF /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		FA3142312912DA92008AF0CF /* AvailableGroupsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailableGroupsTableViewController.swift; sourceTree = "<group>"; };
 		FA3142332912DAA7008AF0CF /* AvailableGroupsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailableGroupsTableViewCell.swift; sourceTree = "<group>"; };
 		FA3142362912E152008AF0CF /* PhotoCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCollectionViewController.swift; sourceTree = "<group>"; };
@@ -127,41 +145,87 @@
 			path = Servics;
 			sourceTree = "<group>";
 		};
-		FA3142202912BB38008AF0CF /* Friends */ = {
+		FA2680E3292EAE5600A567BC /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				FA26812729301EB000A567BC /* Photo */,
+				FA26812629301EA800A567BC /* Group */,
+				FA26812529301E9D00A567BC /* User */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		FA268113292FDD0600A567BC /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				FA31421D291278B3008AF0CF /* UIViewController+Extension.swift */,
+				FA31426D291D18D9008AF0CF /* UIView+Extension.swift */,
+				FA268111292FC68500A567BC /* UIImage+Extension.swift */,
+				FA2680D6292DAC0800A567BC /* URL+Extension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		FA268114292FDD6500A567BC /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				FA2680DA292DAD2200A567BC /* AuthorizationViewController.swift */,
+				FA3142202912BB38008AF0CF /* FriendsScene */,
+				FA3142352912E132008AF0CF /* PhotoScene */,
+				FA3142282912D927008AF0CF /* MyGroups */,
+				FA3142302912DA7A008AF0CF /* AvailableGroups */,
+				FA314249291A5129008AF0CF /* NewsScene */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		FA26812529301E9D00A567BC /* User */ = {
+			isa = PBXGroup;
+			children = (
+				FA26812329301A2400A567BC /* ResponseUser.swift */,
+				FA2680E4292EAE6400A567BC /* User.swift */,
+				FA26812129301A0700A567BC /* Users.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		FA26812629301EA800A567BC /* Group */ = {
+			isa = PBXGroup;
+			children = (
+				FA2681152930173000A567BC /* Groups.swift */,
+				FA2680E8292EAE7700A567BC /* Group.swift */,
+				FA2681182930176300A567BC /* ResponseGroup.swift */,
+			);
+			path = Group;
+			sourceTree = "<group>";
+		};
+		FA26812729301EB000A567BC /* Photo */ = {
+			isa = PBXGroup;
+			children = (
+				FA2680E6292EAE6D00A567BC /* Photo.swift */,
+				FA26811A2930198600A567BC /* ResponsePhoto.swift */,
+				FA26811C293019A500A567BC /* Photos.swift */,
+				FA26811E293019C900A567BC /* PhotoInfoDto.swift */,
+			);
+			path = Photo;
+			sourceTree = "<group>";
+		};
+		FA3142202912BB38008AF0CF /* FriendsScene */ = {
 			isa = PBXGroup;
 			children = (
 				FA3142212912BB5A008AF0CF /* FriendsTableViewController.swift */,
 				FA3142232912BB68008AF0CF /* FriendsTableViewCell.swift */,
-				FA314255291BDB45008AF0CF /* FriendsHeaderView.swift */,
-				FA3142252912BBA4008AF0CF /* Model */,
 			);
-			path = Friends;
-			sourceTree = "<group>";
-		};
-		FA3142252912BBA4008AF0CF /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				FA3142262912BBB6008AF0CF /* User.swift */,
-			);
-			path = Model;
+			path = FriendsScene;
 			sourceTree = "<group>";
 		};
 		FA3142282912D927008AF0CF /* MyGroups */ = {
 			isa = PBXGroup;
 			children = (
-				FA31422D2912D96F008AF0CF /* Model */,
 				FA31422B2912D967008AF0CF /* MyGroupsTableViewController.swift */,
 				FA3142292912D953008AF0CF /* MyGroupsTableViewCell.swift */,
 			);
 			path = MyGroups;
-			sourceTree = "<group>";
-		};
-		FA31422D2912D96F008AF0CF /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				FA31422E2912D97C008AF0CF /* Group.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		FA3142302912DA7A008AF0CF /* AvailableGroups */ = {
@@ -186,6 +250,7 @@
 		FA31424429145B62008AF0CF /* View */ = {
 			isa = PBXGroup;
 			children = (
+				FA314255291BDB45008AF0CF /* FriendsHeaderView.swift */,
 				FA31424029143987008AF0CF /* LikeControl.swift */,
 				FA3142422914470E008AF0CF /* GradientView.swift */,
 				FA314251291A9783008AF0CF /* NewsLikeControl.swift */,
@@ -253,12 +318,10 @@
 		FAD44463290FDF19006E71AF /* VK_V1.0 */ = {
 			isa = PBXGroup;
 			children = (
+				FA268114292FDD6500A567BC /* Scenes */,
+				FA2680E3292EAE5600A567BC /* Model */,
 				FA2680D3292DAA9900A567BC /* Servics */,
-				FA314249291A5129008AF0CF /* NewsScene */,
-				FA3142202912BB38008AF0CF /* Friends */,
-				FA3142352912E132008AF0CF /* PhotoScene */,
-				FA3142302912DA7A008AF0CF /* AvailableGroups */,
-				FA3142282912D927008AF0CF /* MyGroups */,
+				FA268113292FDD0600A567BC /* Extension */,
 				FAD44464290FDF19006E71AF /* AppDelegate.swift */,
 				FAD44466290FDF19006E71AF /* SceneDelegate.swift */,
 				FAD44468290FDF19006E71AF /* LoginViewController.swift */,
@@ -266,13 +329,9 @@
 				FAD4446D290FDF1B006E71AF /* Assets.xcassets */,
 				FAD4446F290FDF1B006E71AF /* LaunchScreen.storyboard */,
 				FAD44472290FDF1B006E71AF /* Info.plist */,
-				FA31421D291278B3008AF0CF /* UIViewController+Extension.swift */,
-				FA31426D291D18D9008AF0CF /* UIView+Extension.swift */,
 				FA314267291D1796008AF0CF /* Animations */,
 				FA31424429145B62008AF0CF /* View */,
-				FA2680D6292DAC0800A567BC /* URL+Extension.swift */,
 				FA2680D8292DAC3B00A567BC /* SessionInformation.swift */,
-				FA2680DA292DAD2200A567BC /* AuthorizationViewController.swift */,
 			);
 			path = VK_V1.0;
 			sourceTree = "<group>";
@@ -436,14 +495,15 @@
 				FA31425C291C4D5A008AF0CF /* CloudViewController.swift in Sources */,
 				FA3142372912E152008AF0CF /* PhotoCollectionViewController.swift in Sources */,
 				FA31424B291A5144008AF0CF /* NewsTableViewController.swift in Sources */,
-				FA3142272912BBB6008AF0CF /* User.swift in Sources */,
-				FA31422F2912D97C008AF0CF /* Group.swift in Sources */,
 				FA314250291A5326008AF0CF /* News.swift in Sources */,
 				FA31425A291C46C3008AF0CF /* CloudView.swift in Sources */,
 				FA314252291A9783008AF0CF /* NewsLikeControl.swift in Sources */,
 				FA2680D7292DAC0800A567BC /* URL+Extension.swift in Sources */,
+				FA2681192930176300A567BC /* ResponseGroup.swift in Sources */,
 				FA2680D5292DAAFD00A567BC /* NetworkService.swift in Sources */,
 				FAD44469290FDF19006E71AF /* LoginViewController.swift in Sources */,
+				FA2680E7292EAE6D00A567BC /* Photo.swift in Sources */,
+				FA26812229301A0700A567BC /* Users.swift in Sources */,
 				FA314256291BDB45008AF0CF /* FriendsHeaderView.swift in Sources */,
 				FA31426E291D18D9008AF0CF /* UIView+Extension.swift in Sources */,
 				FA3142432914470E008AF0CF /* GradientView.swift in Sources */,
@@ -454,15 +514,23 @@
 				FA31426C291D1824008AF0CF /* PopAnimator.swift in Sources */,
 				FA314272291D1B0C008AF0CF /* CustomInteractiveTransition.swift in Sources */,
 				FA3142322912DA92008AF0CF /* AvailableGroupsTableViewController.swift in Sources */,
+				FA2680E5292EAE6400A567BC /* User.swift in Sources */,
 				FA314270291D1A68008AF0CF /* MainNavigationController.swift in Sources */,
+				FA26811F293019C900A567BC /* PhotoInfoDto.swift in Sources */,
+				FA2680E9292EAE7700A567BC /* Group.swift in Sources */,
+				FA26811B2930198600A567BC /* ResponsePhoto.swift in Sources */,
 				FA31426A291D1814008AF0CF /* PushAnimator.swift in Sources */,
 				FA3142242912BB68008AF0CF /* FriendsTableViewCell.swift in Sources */,
 				FAD44467290FDF19006E71AF /* SceneDelegate.swift in Sources */,
+				FA268112292FC68500A567BC /* UIImage+Extension.swift in Sources */,
 				FA314258291BEB0C008AF0CF /* SwipePhotoViewController.swift in Sources */,
+				FA26811D293019A500A567BC /* Photos.swift in Sources */,
 				FA3142392912E163008AF0CF /* PhotoCollectionViewCell.swift in Sources */,
 				FA2680D9292DAC3B00A567BC /* SessionInformation.swift in Sources */,
 				FA3142222912BB5A008AF0CF /* FriendsTableViewController.swift in Sources */,
+				FA26812429301A2400A567BC /* ResponseUser.swift in Sources */,
 				FA31422A2912D953008AF0CF /* MyGroupsTableViewCell.swift in Sources */,
+				FA2681162930173000A567BC /* Groups.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
