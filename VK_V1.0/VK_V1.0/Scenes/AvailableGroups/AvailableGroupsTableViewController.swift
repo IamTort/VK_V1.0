@@ -42,8 +42,9 @@ final class AvailableGroupsTableViewController: UITableViewController {
 
     private func loadAvailableGroups(text: String) {
         networkService.fetchAvailableGroups(searchText: text) { [weak self] result in
-            self?.filteredGroups = result.response.items
-            self?.tableView.reloadData()
+            guard let self = self else { return }
+            self.filteredGroups = result.response.items
+            self.tableView.reloadData()
         }
     }
 }

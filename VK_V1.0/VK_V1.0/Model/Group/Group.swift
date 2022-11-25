@@ -5,14 +5,14 @@ import Foundation
 import RealmSwift
 
 /// Модель группы
-class Group: Object, Decodable {
+final class Group: Object, Decodable {
     @objc dynamic var id = 0
     @objc dynamic var name = ""
-    @objc dynamic var image = ""
+    @objc dynamic var imageUrl = ""
 
     enum CodingKeys: String, CodingKey {
         case id
         case name
-        case image = "photo_50"
+        case imageUrl = "photo_50"
     }
 }

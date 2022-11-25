@@ -64,8 +64,9 @@ final class MyGroupsTableViewController: UITableViewController {
 
     private func loadMyGroups() {
         networkService.fetchMyGroups(completion: { [weak self] result in
-            self?.groups = result.response.items
-            self?.tableView.reloadData()
+            guard let self = self else { return }
+            self.groups = result.response.items
+            self.tableView.reloadData()
         })
     }
 }

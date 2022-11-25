@@ -5,7 +5,7 @@ import Foundation
 import RealmSwift
 
 /// Информация о фото
-class PhotoInfoDto: Object, Decodable {
+final class PhotoInfoDto: Object, Decodable {
     @objc dynamic var url: String = ""
     @objc dynamic var type: String = ""
 }

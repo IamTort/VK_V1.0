@@ -20,8 +20,8 @@ final class PhotoCollectionViewController: UICollectionViewController {
     // MARK: - Private property
 
     private let networkService = NetworkService()
-    private var storedModels: [Photo]?
-    private var storedImages: [String] = []
+    private var photos: [Photo]?
+    private var imageUrls: [String] = []
 
     // MARK: - LifeCycle
 
@@ -34,7 +34,7 @@ final class PhotoCollectionViewController: UICollectionViewController {
     // MARK: - Public methods
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        storedImages.count
+        imageUrls.count
     }
 
     override func collectionView(
@@ -45,7 +45,7 @@ final class PhotoCollectionViewController: UICollectionViewController {
             withReuseIdentifier: Constants.cellIdentifier,
             for: indexPath
         ) as? PhotoCollectionViewCell else { return UICollectionViewCell() }
-        cell.setupData(data: storedImages[indexPath.item])
+        cell.setupData(data: imageUrls[indexPath.item])
         return cell
     }
 
@@ -54,7 +54,7 @@ final class PhotoCollectionViewController: UICollectionViewController {
               let destination = segue.destination as? SwipePhotoViewController,
               let cell = sender as? UICollectionViewCell,
               let indexPath = collectionView.indexPath(for: cell) else { return }
-        destination.photosUrls = storedImages
+        destination.photosUrls = imageUrls
         destination.swipe = indexPath.row
     }
 
@@ -62,11 +62,11 @@ final class PhotoCollectionViewController: UICollectionViewController {
 
     private func fetchPhotos() {
         networkService.fetchPhotos(for: user?.id) { [weak self] result in
-            self?.storedModels = result.response.items
-            guard let imagesLinks = self?.sortImage(type: Constants.photoType, array: result.response.items)
-            else { return }
-            self?.storedImages = imagesLinks
-            self?.collectionView.reloadData()
+            guard let imagesLinks = self?.sortImage(type: Constants.photoType, array: result.response.items),
+                  let self = self else { return }
+            self.photos = result.response.items
+            self.imageUrls = imagesLinks
+            self.collectionView.reloadData()
         }
     }
 

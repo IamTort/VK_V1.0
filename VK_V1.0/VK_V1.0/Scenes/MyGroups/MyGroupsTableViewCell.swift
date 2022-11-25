@@ -13,7 +13,7 @@ final class MyGroupsTableViewCell: UITableViewCell {
     // MARK: - Public method
 
     func setup(group: Group) {
-        avatarImageView.loadImage(with: group.image)
+        avatarImageView.loadImage(with: group.imageUrl)
         titleGroupLabel.text = group.name
     }
 }

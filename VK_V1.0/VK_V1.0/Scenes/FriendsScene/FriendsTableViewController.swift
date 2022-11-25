@@ -75,9 +75,10 @@ final class FriendsTableViewController: UITableViewController {
 
     private func loadFriends() {
         networkService.fetchFriends(completion: { [weak self] result in
-            self?.users = result.response.items
-            self?.sortFriends()
-            self?.tableView.reloadData()
+            guard let self = self else { return }
+            self.users = result.response.items
+            self.sortFriends()
+            self.tableView.reloadData()
         })
     }
 
