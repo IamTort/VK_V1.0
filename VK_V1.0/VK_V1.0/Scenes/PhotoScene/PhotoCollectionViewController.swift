@@ -21,7 +21,7 @@ final class PhotoCollectionViewController: UICollectionViewController {
 
     private let networkService = NetworkService()
     private var photos: [Photo]?
-    private var imageUrls: [String] = []
+    private var imageUrlsString: [String] = []
 
     // MARK: - LifeCycle
 
@@ -34,7 +34,7 @@ final class PhotoCollectionViewController: UICollectionViewController {
     // MARK: - Public methods
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        imageUrls.count
+        imageUrlsString.count
     }
 
     override func collectionView(
@@ -45,7 +45,7 @@ final class PhotoCollectionViewController: UICollectionViewController {
             withReuseIdentifier: Constants.cellIdentifier,
             for: indexPath
         ) as? PhotoCollectionViewCell else { return UICollectionViewCell() }
-        cell.setupData(data: imageUrls[indexPath.item])
+        cell.setupData(data: imageUrlsString[indexPath.item])
         return cell
     }
 
@@ -54,7 +54,7 @@ final class PhotoCollectionViewController: UICollectionViewController {
               let destination = segue.destination as? SwipePhotoViewController,
               let cell = sender as? UICollectionViewCell,
               let indexPath = collectionView.indexPath(for: cell) else { return }
-        destination.photosUrls = imageUrls
+        destination.photosUrls = imageUrlsString
         destination.swipe = indexPath.row
     }
 
@@ -65,7 +65,7 @@ final class PhotoCollectionViewController: UICollectionViewController {
             guard let imagesLinks = self?.sortImage(type: Constants.photoType, array: result.response.items),
                   let self = self else { return }
             self.photos = result.response.items
-            self.imageUrls = imagesLinks
+            self.imageUrlsString = imagesLinks
             self.collectionView.reloadData()
         }
     }
@@ -73,8 +73,8 @@ final class PhotoCollectionViewController: UICollectionViewController {
     private func sortImage(type: String, array: [Photo]) -> [String] {
         var links: [String] = []
 
-        for model in array {
-            for size in model.sizes {
+        for image in array {
+            for size in image.sizes {
                 guard size.type == type else { continue }
                 links.append(size.url)
             }

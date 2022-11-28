@@ -32,9 +32,10 @@ final class SwipePhotoViewController: UIViewController {
     // MARK: - Private methods
 
     private func configureImageView() {
-        guard let image = photosUrls?[0] else { return }
+        guard let image = photosUrls?[swipe],
+              let url = URL(string: image) else { return }
         photoImageView.isUserInteractionEnabled = true
-        photoImageView.loadImage(with: image)
+        photoImageView.loadImage(url: url)
     }
 
     private func addSwipeGestureRecognizers() {
@@ -79,6 +80,7 @@ final class SwipePhotoViewController: UIViewController {
                 return
             }
             swipe -= 1
+            guard let url = URL(string: photosUrls[swipe]) else { return }
             UIView.animateKeyframes(
                 withDuration: 1,
                 delay: 0.2,
@@ -91,12 +93,12 @@ final class SwipePhotoViewController: UIViewController {
                 self.photoImageView.frame.origin.x = .zero
                 UIView.animate(
                     withDuration: 0.5,
-                    delay: 0,
+                    delay: 0.5,
                     options: .curveEaseIn
                 ) {
                     self.photoImageView.frame.origin.x = self.view.bounds.width
                     self.photoImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                    self.photoImageView.loadImage(with: photosUrls[self.swipe])
+                    self.photoImageView.loadImage(url: url)
                 }
             }
         case .left:
@@ -105,6 +107,7 @@ final class SwipePhotoViewController: UIViewController {
                 return
             }
             swipe += 1
+            guard let url = URL(string: photosUrls[swipe]) else { return }
             UIView.animateKeyframes(
                 withDuration: 0.7,
                 delay: 0,
@@ -116,8 +119,8 @@ final class SwipePhotoViewController: UIViewController {
                 self.photoImageView.frame.origin.x = .zero
                 self.photoImageView.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
             } completion: { _ in
-                self.photoImageView.loadImage(with: photosUrls[self.swipe])
-                UIView.animate(withDuration: 0.6, delay: 0, options: .curveEaseIn) {
+                self.photoImageView.loadImage(url: url)
+                UIView.animate(withDuration: 0.6, delay: 0.5, options: .curveEaseIn) {
                     self.photoImageView.transform = CGAffineTransform(scaleX: 1, y: 1)
                 }
             }

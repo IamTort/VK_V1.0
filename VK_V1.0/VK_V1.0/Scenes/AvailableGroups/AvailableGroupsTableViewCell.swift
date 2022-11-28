@@ -13,7 +13,8 @@ final class AvailableGroupsTableViewCell: UITableViewCell {
     // MARK: - Public methods
 
     func setup(group: Group) {
-        avatarImageView.loadImage(with: group.imageUrl)
+        guard let url = URL(string: group.imageUrl) else { return }
+        avatarImageView.loadImage(url: url)
         titleLabel.text = group.name
     }
 }

@@ -32,7 +32,8 @@ final class FriendsTableViewCell: UITableViewCell {
             avatarImageView.image = UIImage(named: Constants.avatarImageName)
             return
         }
-        avatarImageView.loadImage(with: data.photoUrl)
+        guard let url = URL(string: data.photoUrl) else { return }
+        avatarImageView.loadImage(url: url)
     }
 
     // MARK: - Private methods
