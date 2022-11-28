@@ -9,13 +9,6 @@ final class AvailableGroupsTableViewController: UITableViewController {
 
     private enum Constants {
         static let cellIdentifier = "availableGroupCell"
-        static let availableGroups = [
-            Group(imageName: "built", title: "Cтроить вес"),
-            Group(imageName: "bear", title: "Музыка"),
-            Group(imageName: "cat", title: "Коты - цветы жизни"),
-            Group(imageName: "built", title: "Cтроить дом"),
-            Group(imageName: "man", title: "Молодые мужчины")
-        ]
         static let searchText = "nature"
     }
 
@@ -25,20 +18,11 @@ final class AvailableGroupsTableViewController: UITableViewController {
 
     // MARK: - Public property
 
-    let availableGroups = Constants.availableGroups
+    var filteredGroups: [Group] = []
 
     // MARK: - Private property
 
     private let networkService = NetworkService()
-    private var filteredGroups: [Group] = []
-
-    // MARK: - LifeCycle
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        updateFilteredGroups()
-        loadAvailableGroups()
-    }
 
     // MARK: - Public methods
 
@@ -56,12 +40,12 @@ final class AvailableGroupsTableViewController: UITableViewController {
 
     // MARK: - Private methods
 
-    private func loadAvailableGroups() {
-        networkService.fetchAvailableGroups(searchText: Constants.searchText)
-    }
-
-    private func updateFilteredGroups() {
-        filteredGroups = availableGroups
+    private func loadAvailableGroups(text: String) {
+        networkService.fetchAvailableGroups(searchText: text) { [weak self] result in
+            guard let self = self else { return }
+            self.filteredGroups = result.response.items
+            self.tableView.reloadData()
+        }
     }
 }
 
@@ -69,7 +53,11 @@ final class AvailableGroupsTableViewController: UITableViewController {
 
 extension AvailableGroupsTableViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        filteredGroups = searchText.isEmpty ? availableGroups : availableGroups.filter { $0.title.contains(searchText) }
-        tableView.reloadData()
+        filteredGroups.removeAll()
+        guard !searchText.isEmpty else {
+            tableView.reloadData()
+            return
+        }
+        loadAvailableGroups(text: searchText)
     }
 }

@@ -10,26 +10,18 @@ final class FriendsTableViewController: UITableViewController {
     private enum Constants {
         static let cellIdentifier = "friendCell"
         static let segueIdentifier = "photoSegue"
-        static let friends = [
-            User(imageName: "cat", name: "Marcus Volfgan", photos: ["cat", "car", "bear"]),
-            User(imageName: nil, name: "Ahdurcus Volfgan", photos: ["cat", "car", "bear"]),
-            User(imageName: "cat", name: "Tarcus Volfgan", photos: ["cat", "car", "bear"]),
-            User(imageName: "cat", name: "Arrcus Volfgan", photos: ["cat", "car", "bear"]),
-            User(imageName: nil, name: "Krcus Volfgan", photos: ["cat", "car", "bear"])
-        ]
     }
 
     // MARK: - Private property
 
     private let networkService = NetworkService()
-    private let friends = Constants.friends
     private var sortedFriendsMap = [Character: [User]]()
+    private var users: [User] = []
 
     // MARK: - LifeCycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        sortFriends()
         loadFriends()
     }
 
@@ -68,8 +60,7 @@ final class FriendsTableViewController: UITableViewController {
         guard segue.identifier == Constants.segueIdentifier,
               let destination = segue.destination as? PhotoCollectionViewController,
               let indexPath = tableView.indexPathForSelectedRow else { return }
-
-        destination.user = friends[indexPath.row]
+        destination.user = getOneUser(indexPath: indexPath)
     }
 
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -83,7 +74,12 @@ final class FriendsTableViewController: UITableViewController {
     // MARK: - Private methods
 
     private func loadFriends() {
-        networkService.fetchFriends()
+        networkService.fetchFriends(completion: { [weak self] result in
+            guard let self = self else { return }
+            self.users = result.response.items
+            self.sortFriends()
+            self.tableView.reloadData()
+        })
     }
 
     private func configureHeaderView(section index: Int) -> UIView {
@@ -96,7 +92,7 @@ final class FriendsTableViewController: UITableViewController {
         var friendsDict = [Character: [User]]()
         friends.forEach { friend in
 
-            guard let firstChar = friend.name.first else { return }
+            guard let firstChar = friend.firstName.first else { return }
 
             if var thisCharFriend = friendsDict[firstChar] {
                 thisCharFriend.append(friend)
@@ -108,7 +104,14 @@ final class FriendsTableViewController: UITableViewController {
         return friendsDict
     }
 
+    private func getOneUser(indexPath: IndexPath) -> User? {
+        let firstChar = sortedFriendsMap.keys.sorted()[indexPath.section]
+        guard let users = sortedFriendsMap[firstChar] else { return nil }
+        let user = users[indexPath.row]
+        return user
+    }
+
     private func sortFriends() {
-        sortedFriendsMap = sort(friends: friends)
+        sortedFriendsMap = sort(friends: users)
     }
 }

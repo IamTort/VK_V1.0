@@ -5,9 +5,13 @@ import UIKit
 
 /// Расширение для универсального алерта
 extension UIViewController {
+    // MARK: - Constants
+
     private enum Constants {
         static let actionTitle = "ok"
     }
+
+    // MARK: - Public methods
 
     func showLoginError(title: String, message: String) {
         let alertController = UIAlertController(

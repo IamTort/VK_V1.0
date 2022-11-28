@@ -28,7 +28,7 @@ final class NetworkService {
 
     // MARK: - Public methods
 
-    func fetchFriends() {
+    func fetchFriends(completion: @escaping (ResponseUser) -> Void) {
         guard let id = SessionInformation.shared.userId,
               let token = SessionInformation.shared.token else { return }
         let params = [
@@ -38,10 +38,10 @@ final class NetworkService {
         ]
         guard let url: URL = .configureURL(token: token, typeMethod: Constants.friendMethod, paramsMap: params)
         else { return }
-        requestUrl(url: url)
+        requestUrl(url: url, completion: completion)
     }
 
-    func fetchPhotos(for ownerId: String?) {
+    func fetchPhotos(for ownerId: Int?, completion: @escaping (ResponsePhoto) -> Void) {
         guard let ownerId = ownerId,
               let token = SessionInformation.shared.token else { return }
         let params = [
@@ -51,10 +51,10 @@ final class NetworkService {
         ]
         guard let url: URL = .configureURL(token: token, typeMethod: Constants.photosMethod, paramsMap: params)
         else { return }
-        requestUrl(url: url)
+        requestUrl(url: url, completion: completion)
     }
 
-    func fetchMyGroups() {
+    func fetchMyGroups(completion: @escaping (ResponseGroup) -> Void) {
         guard let id = SessionInformation.shared.userId,
               let token = SessionInformation.shared.token else { return }
         let params = [
@@ -64,10 +64,10 @@ final class NetworkService {
         ]
         guard let url: URL = .configureURL(token: token, typeMethod: Constants.myGroupsMethod, paramsMap: params)
         else { return }
-        requestUrl(url: url)
+        requestUrl(url: url, completion: completion)
     }
 
-    func fetchAvailableGroups(searchText: String?) {
+    func fetchAvailableGroups(searchText: String?, completion: @escaping (ResponseGroup) -> Void) {
         guard let text = searchText,
               let token = SessionInformation.shared.token else { return }
         let params = [
@@ -78,15 +78,20 @@ final class NetworkService {
         ]
         guard let url: URL = .configureURL(token: token, typeMethod: Constants.availableGroupsMethod, paramsMap: params)
         else { return }
-        requestUrl(url: url)
+        requestUrl(url: url, completion: completion)
     }
 
     // MARK: - Private methods
 
-    private func requestUrl(url: URL) {
-        AF.request(url).responseJSON { response in
+    private func requestUrl<T: Decodable>(url: URL, completion: @escaping (T) -> Void) {
+        AF.request(url).responseData { response in
             guard let value = response.value else { return }
-            print(value)
+            do {
+                let model = try JSONDecoder().decode(T.self, from: value)
+                completion(model)
+            } catch {
+                fatalError()
+            }
         }
     }
 }

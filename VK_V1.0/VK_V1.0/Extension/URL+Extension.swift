@@ -5,11 +5,15 @@ import Foundation
 
 /// Расширение для создания ссылки
 extension URL {
+    // MARK: - Constants
+
     private enum Constants {
         static let accessTokenName = "access_token"
-        static let schemeValue = "https"
+        static let schemeValueText = "https"
         static let hostValue = "api.vk.com"
     }
+
+    // MARK: - Public methods
 
     static func configureURL(token: String, typeMethod: String, paramsMap: [String: String]) -> URL? {
         var queryItems: [URLQueryItem] = []
@@ -19,7 +23,7 @@ extension URL {
         queryItems.append(URLQueryItem(name: Constants.accessTokenName, value: token))
 
         var components = URLComponents()
-        components.scheme = Constants.schemeValue
+        components.scheme = Constants.schemeValueText
         components.host = Constants.hostValue
         components.path = typeMethod
         components.queryItems = queryItems

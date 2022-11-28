@@ -10,13 +10,12 @@ final class MyGroupsTableViewController: UITableViewController {
     private enum Constants {
         static let cellIdentifier = "groupCell"
         static let segueIdentifier = "addGroupSegue"
-        static let myGroups = [Group(imageName: "built", title: "Cтроить весело")]
     }
 
     // MARK: - Private property
 
     private let networkService = NetworkService()
-    private var myGroups = Constants.myGroups
+    private var groups: [Group] = []
 
     // MARK: - LifeCycle
 
@@ -28,13 +27,13 @@ final class MyGroupsTableViewController: UITableViewController {
     // MARK: - Public methods
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        myGroups.count
+        groups.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier, for: indexPath)
             as? MyGroupsTableViewCell else { return UITableViewCell() }
-        cell.setup(group: myGroups[indexPath.row])
+        cell.setup(group: groups[indexPath.row])
         return cell
     }
 
@@ -44,7 +43,7 @@ final class MyGroupsTableViewController: UITableViewController {
         forRowAt indexPath: IndexPath
     ) {
         guard editingStyle == .delete else { return }
-        myGroups.remove(at: indexPath.row)
+        groups.remove(at: indexPath.row)
         tableView.deleteRows(at: [indexPath], with: .fade)
     }
 
@@ -54,16 +53,20 @@ final class MyGroupsTableViewController: UITableViewController {
         guard segue.identifier == Constants.segueIdentifier,
               let availableGroupController = segue.source as? AvailableGroupsTableViewController,
               let indexPath = availableGroupController.tableView.indexPathForSelectedRow,
-              !myGroups.contains(where: { $0.title == availableGroupController.availableGroups[indexPath.row].title })
+              !groups.contains(where: { $0.name == availableGroupController.filteredGroups[indexPath.row].name })
         else { return }
 
-        myGroups.append(availableGroupController.availableGroups[indexPath.row])
+        groups.append(availableGroupController.filteredGroups[indexPath.row])
         tableView.reloadData()
     }
 
     // MARK: - Private methods
 
     private func loadMyGroups() {
-        networkService.fetchMyGroups()
+        networkService.fetchMyGroups(completion: { [weak self] result in
+            guard let self = self else { return }
+            self.groups = result.response.items
+            self.tableView.reloadData()
+        })
     }
 }
