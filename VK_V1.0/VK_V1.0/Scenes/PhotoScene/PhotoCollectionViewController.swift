@@ -1,6 +1,7 @@
 // PhotoCollectionViewController.swift
 // Copyright © RoadMap. All rights reserved.
 
+import RealmSwift
 import UIKit
 
 ///  Экран фотографии друга
@@ -20,7 +21,7 @@ final class PhotoCollectionViewController: UICollectionViewController {
     // MARK: - Private property
 
     private let networkService = NetworkService()
-    private var photos: [Photo]?
+    private var photos: Results<Photo>?
     private var imageUrlsString: [String] = []
 
     // MARK: - LifeCycle
@@ -61,16 +62,11 @@ final class PhotoCollectionViewController: UICollectionViewController {
     // MARK: - Private methods
 
     private func fetchPhotos() {
-        networkService.fetchPhotos(for: user?.id) { [weak self] result in
-            guard let imagesLinks = self?.sortImage(type: Constants.photoType, array: result.response.items),
-                  let self = self else { return }
-            self.photos = result.response.items
-            self.imageUrlsString = imagesLinks
-            self.collectionView.reloadData()
-        }
+        networkService.fetchPhotos(for: user?.id)
+        loadPhotoData()
     }
 
-    private func sortImage(type: String, array: [Photo]) -> [String] {
+    private func sortImage(type: String, array: Results<Photo>) -> [String] {
         var links: [String] = []
 
         for image in array {
@@ -84,5 +80,18 @@ final class PhotoCollectionViewController: UICollectionViewController {
 
     private func setupTitle() {
         navigationItem.title = "\(user?.firstName ?? "") \(user?.lastName ?? "")"
+    }
+
+    private func loadPhotoData() {
+        do {
+            let realm = try Realm()
+            let photos = realm.objects(Photo.self)
+            let imagesLinks = sortImage(type: Constants.photoType, array: photos)
+            self.photos = photos
+            imageUrlsString = imagesLinks
+            collectionView.reloadData()
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
     }
 }

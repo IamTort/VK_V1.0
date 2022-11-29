@@ -1,6 +1,7 @@
 // MyGroupsTableViewController.swift
 // Copyright © RoadMap. All rights reserved.
 
+import RealmSwift
 import UIKit
 
 /// Экран Мои группы
@@ -15,25 +16,28 @@ final class MyGroupsTableViewController: UITableViewController {
     // MARK: - Private property
 
     private let networkService = NetworkService()
-    private var groups: [Group] = []
+    private var notificationToken: NotificationToken?
+    private var groups: Results<Group>?
 
     // MARK: - LifeCycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         loadMyGroups()
+        loadGroupsFromRealm()
     }
 
     // MARK: - Public methods
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        groups.count
+        groups?.count ?? 0
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier, for: indexPath)
             as? MyGroupsTableViewCell else { return UITableViewCell() }
-        cell.setup(group: groups[indexPath.row])
+        guard let group = groups?[indexPath.row] else { return UITableViewCell() }
+        cell.setup(group: group)
         return cell
     }
 
@@ -42,31 +46,51 @@ final class MyGroupsTableViewController: UITableViewController {
         commit editingStyle: UITableViewCell.EditingStyle,
         forRowAt indexPath: IndexPath
     ) {
-        guard editingStyle == .delete else { return }
-        groups.remove(at: indexPath.row)
-        tableView.deleteRows(at: [indexPath], with: .fade)
-    }
-
-    // MARK: - Private IBAction
-
-    @IBAction private func addGroupAction(segue: UIStoryboardSegue) {
-        guard segue.identifier == Constants.segueIdentifier,
-              let availableGroupController = segue.source as? AvailableGroupsTableViewController,
-              let indexPath = availableGroupController.tableView.indexPathForSelectedRow,
-              !groups.contains(where: { $0.name == availableGroupController.filteredGroups[indexPath.row].name })
-        else { return }
-
-        groups.append(availableGroupController.filteredGroups[indexPath.row])
+        guard let group = groups?[indexPath.row],
+              editingStyle == .delete else { return }
+        deleteGroup(group)
         tableView.reloadData()
     }
 
     // MARK: - Private methods
 
     private func loadMyGroups() {
-        networkService.fetchMyGroups(completion: { [weak self] result in
-            guard let self = self else { return }
-            self.groups = result.response.items
-            self.tableView.reloadData()
-        })
+        networkService.fetchMyGroups()
+        loadGroupsFromRealm()
+    }
+
+    private func loadGroupsFromRealm() {
+        do {
+            let realm = try Realm()
+            let groups = realm.objects(Group.self)
+            self.groups = groups
+            createNotificationToken()
+        } catch {
+            print(error)
+        }
+    }
+
+    private func createNotificationToken() {
+        notificationToken = groups?.observe { [weak self] result in
+            switch result {
+            case .initial:
+                break
+            case .update:
+                self?.tableView.reloadData()
+            case let .error(error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+
+    private func deleteGroup(_ group: Group) {
+        do {
+            let realm = try Realm()
+            try realm.write {
+                realm.delete(group)
+            }
+        } catch {
+            print(error)
+        }
     }
 }

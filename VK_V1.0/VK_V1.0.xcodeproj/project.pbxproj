@@ -23,6 +23,7 @@
 		FA26811F293019C900A567BC /* PhotoInfoDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA26811E293019C900A567BC /* PhotoInfoDto.swift */; };
 		FA26812229301A0700A567BC /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA26812129301A0700A567BC /* Users.swift */; };
 		FA26812429301A2400A567BC /* ResponseUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA26812329301A2400A567BC /* ResponseUser.swift */; };
+		FA26812B2936A54500A567BC /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA26812A2936A54500A567BC /* DataProvider.swift */; };
 		FA31421E291278B3008AF0CF /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31421D291278B3008AF0CF /* UIViewController+Extension.swift */; };
 		FA3142222912BB5A008AF0CF /* FriendsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3142212912BB5A008AF0CF /* FriendsTableViewController.swift */; };
 		FA3142242912BB68008AF0CF /* FriendsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3142232912BB68008AF0CF /* FriendsTableViewCell.swift */; };
@@ -74,6 +75,7 @@
 		FA26811E293019C900A567BC /* PhotoInfoDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoInfoDto.swift; sourceTree = "<group>"; };
 		FA26812129301A0700A567BC /* Users.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
 		FA26812329301A2400A567BC /* ResponseUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseUser.swift; sourceTree = "<group>"; };
+		FA26812A2936A54500A567BC /* DataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProvider.swift; sourceTree = "<group>"; };
 		FA31421D291278B3008AF0CF /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		FA3142212912BB5A008AF0CF /* FriendsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableViewController.swift; sourceTree = "<group>"; };
 		FA3142232912BB68008AF0CF /* FriendsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableViewCell.swift; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				FA2680D4292DAAFD00A567BC /* NetworkService.swift */,
+				FA26812A2936A54500A567BC /* DataProvider.swift */,
 			);
 			path = Servics;
 			sourceTree = "<group>";
@@ -514,6 +517,7 @@
 				FA31426C291D1824008AF0CF /* PopAnimator.swift in Sources */,
 				FA314272291D1B0C008AF0CF /* CustomInteractiveTransition.swift in Sources */,
 				FA3142322912DA92008AF0CF /* AvailableGroupsTableViewController.swift in Sources */,
+				FA26812B2936A54500A567BC /* DataProvider.swift in Sources */,
 				FA2680E5292EAE6400A567BC /* User.swift in Sources */,
 				FA314270291D1A68008AF0CF /* MainNavigationController.swift in Sources */,
 				FA26811F293019C900A567BC /* PhotoInfoDto.swift in Sources */,

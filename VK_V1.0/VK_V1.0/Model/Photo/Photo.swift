@@ -2,8 +2,10 @@
 // Copyright © RoadMap. All rights reserved.
 
 import Foundation
+import RealmSwift
 
 /// Фотография
-struct Photo: Decodable {
-    var sizes: [PhotoInfoDto]
+@objcMembers
+class Photo: Object, Decodable {
+    dynamic var sizes = List<PhotoInfoDto>()
 }

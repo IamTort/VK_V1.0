@@ -1,6 +1,7 @@
 // FriendsTableViewController.swift
 // Copyright © RoadMap. All rights reserved.
 
+import RealmSwift
 import UIKit
 
 ///  Экран Друзья
@@ -16,7 +17,8 @@ final class FriendsTableViewController: UITableViewController {
 
     private let networkService = NetworkService()
     private var sortedFriendsMap = [Character: [User]]()
-    private var users: [User] = []
+    private var users: Results<User>?
+    private var notificationToken: NotificationToken?
 
     // MARK: - LifeCycle
 
@@ -74,12 +76,8 @@ final class FriendsTableViewController: UITableViewController {
     // MARK: - Private methods
 
     private func loadFriends() {
-        networkService.fetchFriends(completion: { [weak self] result in
-            guard let self = self else { return }
-            self.users = result.response.items
-            self.sortFriends()
-            self.tableView.reloadData()
-        })
+        networkService.fetchFriends()
+        loadFriendsFromRealm()
     }
 
     private func configureHeaderView(section index: Int) -> UIView {
@@ -88,9 +86,9 @@ final class FriendsTableViewController: UITableViewController {
         return headerView
     }
 
-    private func sort(friends: [User]) -> [Character: [User]] {
+    private func sort(friends: Results<User>?) -> [Character: [User]] {
         var friendsDict = [Character: [User]]()
-        friends.forEach { friend in
+        friends?.forEach { friend in
 
             guard let firstChar = friend.firstName.first else { return }
 
@@ -113,5 +111,30 @@ final class FriendsTableViewController: UITableViewController {
 
     private func sortFriends() {
         sortedFriendsMap = sort(friends: users)
+    }
+
+    private func loadFriendsFromRealm() {
+        do {
+            let realm = try Realm()
+            let users = realm.objects(User.self)
+            self.users = users
+            sortFriends()
+            createNotificationToken()
+        } catch {
+            print(error)
+        }
+    }
+
+    private func createNotificationToken() {
+        notificationToken = users?.observe { [weak self] result in
+            switch result {
+            case .initial:
+                break
+            case .update:
+                self?.tableView.reloadData()
+            case let .error(error):
+                print(error.localizedDescription)
+            }
+        }
     }
 }

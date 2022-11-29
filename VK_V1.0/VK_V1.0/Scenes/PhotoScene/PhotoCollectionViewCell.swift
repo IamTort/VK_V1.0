@@ -12,7 +12,6 @@ final class PhotoCollectionViewCell: UICollectionViewCell {
     // MARK: - Public methods
 
     func setupData(data: String) {
-        guard let url = URL(string: data) else { return }
-        photoImageView.loadImage(url: url)
+        photoImageView.loadImage(with: data)
     }
 }

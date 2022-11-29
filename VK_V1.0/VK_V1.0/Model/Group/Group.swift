@@ -15,4 +15,8 @@ final class Group: Object, Decodable {
         case name
         case imageUrl = "photo_50"
     }
+
+    override class func primaryKey() -> String? {
+        "id"
+    }
 }

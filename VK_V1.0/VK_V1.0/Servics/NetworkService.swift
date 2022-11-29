@@ -3,6 +3,7 @@
 
 import Alamofire
 import Foundation
+import RealmSwift
 
 /// Загрузка данных с сервера
 final class NetworkService {
@@ -26,9 +27,13 @@ final class NetworkService {
         static let countGroupsValue = "40"
     }
 
+    // MARK: - Private property
+
+    private let dataProvider = DataProvider()
+
     // MARK: - Public methods
 
-    func fetchFriends(completion: @escaping (ResponseUser) -> Void) {
+    func fetchFriends() {
         guard let id = SessionInformation.shared.userId,
               let token = SessionInformation.shared.token else { return }
         let params = [
@@ -38,10 +43,18 @@ final class NetworkService {
         ]
         guard let url: URL = .configureURL(token: token, typeMethod: Constants.friendMethod, paramsMap: params)
         else { return }
-        requestUrl(url: url, completion: completion)
+        AF.request(url).responseData { response in
+            guard let value = response.value else { return }
+            do {
+                let model = try JSONDecoder().decode(ResponseUser.self, from: value)
+                self.dataProvider.saveFriendsInRealm(user: model.response.items)
+            } catch {
+                fatalError()
+            }
+        }
     }
 
-    func fetchPhotos(for ownerId: Int?, completion: @escaping (ResponsePhoto) -> Void) {
+    func fetchPhotos(for ownerId: Int?) {
         guard let ownerId = ownerId,
               let token = SessionInformation.shared.token else { return }
         let params = [
@@ -51,10 +64,18 @@ final class NetworkService {
         ]
         guard let url: URL = .configureURL(token: token, typeMethod: Constants.photosMethod, paramsMap: params)
         else { return }
-        requestUrl(url: url, completion: completion)
+        AF.request(url).responseData { response in
+            guard let value = response.value else { return }
+            do {
+                let model = try JSONDecoder().decode(ResponsePhoto.self, from: value).response.items
+                self.dataProvider.savePhotoData(photos: model)
+            } catch {
+                fatalError()
+            }
+        }
     }
 
-    func fetchMyGroups(completion: @escaping (ResponseGroup) -> Void) {
+    func fetchMyGroups() {
         guard let id = SessionInformation.shared.userId,
               let token = SessionInformation.shared.token else { return }
         let params = [
@@ -64,7 +85,15 @@ final class NetworkService {
         ]
         guard let url: URL = .configureURL(token: token, typeMethod: Constants.myGroupsMethod, paramsMap: params)
         else { return }
-        requestUrl(url: url, completion: completion)
+        AF.request(url).responseData { response in
+            guard let value = response.value else { return }
+            do {
+                let model = try JSONDecoder().decode(ResponseGroup.self, from: value)
+                self.dataProvider.saveGroupsInRealm(group: model.response.items)
+            } catch {
+                fatalError()
+            }
+        }
     }
 
     func fetchAvailableGroups(searchText: String?, completion: @escaping (ResponseGroup) -> Void) {
@@ -79,6 +108,14 @@ final class NetworkService {
         guard let url: URL = .configureURL(token: token, typeMethod: Constants.availableGroupsMethod, paramsMap: params)
         else { return }
         requestUrl(url: url, completion: completion)
+    }
+
+    func loadImage(iconUrl: String, completion: @escaping (Data) -> Void) {
+        guard let url = URL(string: iconUrl) else { return }
+        URLSession.shared.dataTask(with: url) { data, _, _ in
+            guard let data = data else { return }
+            completion(data)
+        }.resume()
     }
 
     // MARK: - Private methods
