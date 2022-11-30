@@ -12,6 +12,7 @@ final class PhotoCollectionViewController: UICollectionViewController {
         static let cellIdentifier = "photoCell"
         static let segueIdentifier = "swipeSceneSegue"
         static let photoType = "z"
+        static let errorTitleString = "Ошибка"
     }
 
     // MARK: - Public property
@@ -21,6 +22,7 @@ final class PhotoCollectionViewController: UICollectionViewController {
     // MARK: - Private property
 
     private let networkService = NetworkService()
+    private let dataProvider = DataProvider()
     private var photos: Results<Photo>?
     private var imageUrlsString: [String] = []
 
@@ -63,7 +65,13 @@ final class PhotoCollectionViewController: UICollectionViewController {
 
     private func fetchPhotos() {
         networkService.fetchPhotos(for: user?.id)
-        loadPhotoData()
+        self.photos = dataProvider.loadDataFromRealm(items: Photo.self)
+        guard let photos = photos else {
+            return
+        }
+        let imagesLinks = sortImage(type: Constants.photoType, array: photos)
+        imageUrlsString = imagesLinks
+        collectionView.reloadData()
     }
 
     private func sortImage(type: String, array: Results<Photo>) -> [String] {
@@ -80,18 +88,5 @@ final class PhotoCollectionViewController: UICollectionViewController {
 
     private func setupTitle() {
         navigationItem.title = "\(user?.firstName ?? "") \(user?.lastName ?? "")"
-    }
-
-    private func loadPhotoData() {
-        do {
-            let realm = try Realm()
-            let photos = realm.objects(Photo.self)
-            let imagesLinks = sortImage(type: Constants.photoType, array: photos)
-            self.photos = photos
-            imageUrlsString = imagesLinks
-            collectionView.reloadData()
-        } catch let error as NSError {
-            print(error.localizedDescription)
-        }
     }
 }

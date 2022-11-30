@@ -11,11 +11,13 @@ final class FriendsTableViewController: UITableViewController {
     private enum Constants {
         static let cellIdentifier = "friendCell"
         static let segueIdentifier = "photoSegue"
+        static let errorTitleString = "Ошибка"
     }
 
     // MARK: - Private property
 
     private let networkService = NetworkService()
+    private let dataProvider = DataProvider()
     private var sortedFriendsMap = [Character: [User]]()
     private var users: Results<User>?
     private var notificationToken: NotificationToken?
@@ -77,7 +79,9 @@ final class FriendsTableViewController: UITableViewController {
 
     private func loadFriends() {
         networkService.fetchFriends()
-        loadFriendsFromRealm()
+        users = dataProvider.loadDataFromRealm(items: User.self)
+        sortFriends()
+        createNotificationToken()
     }
 
     private func configureHeaderView(section index: Int) -> UIView {
@@ -113,27 +117,16 @@ final class FriendsTableViewController: UITableViewController {
         sortedFriendsMap = sort(friends: users)
     }
 
-    private func loadFriendsFromRealm() {
-        do {
-            let realm = try Realm()
-            let users = realm.objects(User.self)
-            self.users = users
-            sortFriends()
-            createNotificationToken()
-        } catch {
-            print(error)
-        }
-    }
-
     private func createNotificationToken() {
         notificationToken = users?.observe { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .initial:
                 break
             case .update:
-                self?.tableView.reloadData()
+                self.tableView.reloadData()
             case let .error(error):
-                print(error.localizedDescription)
+                self.showErrorAlert(title: Constants.errorTitleString, message: error.localizedDescription)
             }
         }
     }

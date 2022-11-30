@@ -18,6 +18,8 @@ final class User: Object, Decodable {
         case lastName = "last_name"
     }
 
+    // MARK: - Public methods
+
     override class func primaryKey() -> String? {
         "id"
     }

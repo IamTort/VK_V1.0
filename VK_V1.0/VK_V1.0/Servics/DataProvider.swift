@@ -22,7 +22,6 @@ final class DataProvider {
         do {
             let realm = try Realm()
             try realm.write {
-                print(realm.configuration.fileURL)
                 realm.add(group, update: .modified)
             }
         } catch {
@@ -39,5 +38,16 @@ final class DataProvider {
         } catch {
             print(error.localizedDescription)
         }
+    }
+
+    func loadDataFromRealm<T: Object>(items: T.Type) -> Results<T>? {
+        var groups: Results<T>?
+        do {
+            let realm = try Realm()
+            groups = realm.objects(T.self)
+        } catch {
+            print(error.localizedDescription)
+        }
+        return groups
     }
 }

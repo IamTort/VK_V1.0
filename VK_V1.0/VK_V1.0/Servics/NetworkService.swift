@@ -49,7 +49,7 @@ final class NetworkService {
                 let model = try JSONDecoder().decode(ResponseUser.self, from: value)
                 self.dataProvider.saveFriendsInRealm(user: model.response.items)
             } catch {
-                fatalError()
+                print(error.localizedDescription)
             }
         }
     }
@@ -70,7 +70,7 @@ final class NetworkService {
                 let model = try JSONDecoder().decode(ResponsePhoto.self, from: value).response.items
                 self.dataProvider.savePhotoData(photos: model)
             } catch {
-                fatalError()
+                print(error.localizedDescription)
             }
         }
     }
@@ -91,7 +91,7 @@ final class NetworkService {
                 let model = try JSONDecoder().decode(ResponseGroup.self, from: value)
                 self.dataProvider.saveGroupsInRealm(group: model.response.items)
             } catch {
-                fatalError()
+                print(error.localizedDescription)
             }
         }
     }
@@ -127,7 +127,7 @@ final class NetworkService {
                 let model = try JSONDecoder().decode(T.self, from: value)
                 completion(model)
             } catch {
-                fatalError()
+                print(error.localizedDescription)
             }
         }
     }

@@ -11,11 +11,13 @@ final class MyGroupsTableViewController: UITableViewController {
     private enum Constants {
         static let cellIdentifier = "groupCell"
         static let segueIdentifier = "addGroupSegue"
+        static let errorTitleString = "Ошибка"
     }
 
     // MARK: - Private property
 
     private let networkService = NetworkService()
+    private let dataProvider = DataProvider()
     private var notificationToken: NotificationToken?
     private var groups: Results<Group>?
 
@@ -24,7 +26,6 @@ final class MyGroupsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loadMyGroups()
-        loadGroupsFromRealm()
     }
 
     // MARK: - Public methods
@@ -35,8 +36,8 @@ final class MyGroupsTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier, for: indexPath)
-            as? MyGroupsTableViewCell else { return UITableViewCell() }
-        guard let group = groups?[indexPath.row] else { return UITableViewCell() }
+            as? MyGroupsTableViewCell,
+            let group = groups?[indexPath.row] else { return UITableViewCell() }
         cell.setup(group: group)
         return cell
     }
@@ -55,30 +56,21 @@ final class MyGroupsTableViewController: UITableViewController {
     // MARK: - Private methods
 
     private func loadMyGroups() {
+        createNotificationToken()
         networkService.fetchMyGroups()
-        loadGroupsFromRealm()
-    }
-
-    private func loadGroupsFromRealm() {
-        do {
-            let realm = try Realm()
-            let groups = realm.objects(Group.self)
-            self.groups = groups
-            createNotificationToken()
-        } catch {
-            print(error)
-        }
+        groups = dataProvider.loadDataFromRealm(items: Group.self)
     }
 
     private func createNotificationToken() {
         notificationToken = groups?.observe { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .initial:
                 break
             case .update:
-                self?.tableView.reloadData()
+                self.tableView.reloadData()
             case let .error(error):
-                print(error.localizedDescription)
+                self.showErrorAlert(title: Constants.errorTitleString, message: error.localizedDescription)
             }
         }
     }
@@ -90,7 +82,7 @@ final class MyGroupsTableViewController: UITableViewController {
                 realm.delete(group)
             }
         } catch {
-            print(error)
+            showErrorAlert(title: Constants.errorTitleString, message: error.localizedDescription)
         }
     }
 }
