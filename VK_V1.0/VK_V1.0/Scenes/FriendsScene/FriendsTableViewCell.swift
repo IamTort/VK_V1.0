@@ -26,13 +26,13 @@ final class FriendsTableViewCell: UITableViewCell {
 
     // MARK: - Public methods
 
-    func setupData(data: User) {
+    func setupData(data: User, networkService: NetworkService) {
         nameLabel.text = "\(data.firstName) \(data.lastName)"
         guard !data.photoUrl.isEmpty else {
             avatarImageView.image = UIImage(named: Constants.avatarImageName)
             return
         }
-        avatarImageView.loadImage(with: data.photoUrl)
+        avatarImageView.loadImage(with: data.photoUrl, networkService: networkService)
     }
 
     // MARK: - Private methods

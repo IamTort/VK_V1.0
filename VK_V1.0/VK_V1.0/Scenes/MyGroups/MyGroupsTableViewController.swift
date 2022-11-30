@@ -12,6 +12,7 @@ final class MyGroupsTableViewController: UITableViewController {
         static let cellIdentifier = "groupCell"
         static let segueIdentifier = "addGroupSegue"
         static let errorTitleString = "Ошибка"
+        static let errorDescriptionString = "Ошибка загрузки данных с сервера"
     }
 
     // MARK: - Private property
@@ -38,7 +39,7 @@ final class MyGroupsTableViewController: UITableViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier, for: indexPath)
             as? MyGroupsTableViewCell,
             let group = groups?[indexPath.row] else { return UITableViewCell() }
-        cell.setup(group: group)
+        cell.setup(group: group, networkService: networkService)
         return cell
     }
 
@@ -49,7 +50,7 @@ final class MyGroupsTableViewController: UITableViewController {
     ) {
         guard let group = groups?[indexPath.row],
               editingStyle == .delete else { return }
-        deleteGroup(group)
+        dataProvider.deleteGroup(group)
         tableView.reloadData()
     }
 
@@ -57,8 +58,17 @@ final class MyGroupsTableViewController: UITableViewController {
 
     private func loadMyGroups() {
         createNotificationToken()
-        networkService.fetchMyGroups()
-        groups = dataProvider.loadDataFromRealm(items: Group.self)
+        networkService.fetchMyGroups { [weak self] results in
+            guard let self = self else { return }
+            switch results {
+            case let .success(result):
+                DataProvider.save(items: result)
+                self.groups = self.dataProvider.loadData(items: Group.self)
+                self.tableView.reloadData()
+            case .failure:
+                self.showErrorAlert(title: Constants.errorTitleString, message: Constants.errorDescriptionString)
+            }
+        }
     }
 
     private func createNotificationToken() {
@@ -72,17 +82,6 @@ final class MyGroupsTableViewController: UITableViewController {
             case let .error(error):
                 self.showErrorAlert(title: Constants.errorTitleString, message: error.localizedDescription)
             }
-        }
-    }
-
-    private func deleteGroup(_ group: Group) {
-        do {
-            let realm = try Realm()
-            try realm.write {
-                realm.delete(group)
-            }
-        } catch {
-            showErrorAlert(title: Constants.errorTitleString, message: error.localizedDescription)
         }
     }
 }

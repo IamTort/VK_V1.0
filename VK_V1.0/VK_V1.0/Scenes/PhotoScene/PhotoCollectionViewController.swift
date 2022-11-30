@@ -48,7 +48,7 @@ final class PhotoCollectionViewController: UICollectionViewController {
             withReuseIdentifier: Constants.cellIdentifier,
             for: indexPath
         ) as? PhotoCollectionViewCell else { return UICollectionViewCell() }
-        cell.setupData(data: imageUrlsString[indexPath.item])
+        cell.setupData(data: imageUrlsString[indexPath.item], networkService: networkService)
         return cell
     }
 
@@ -64,17 +64,21 @@ final class PhotoCollectionViewController: UICollectionViewController {
     // MARK: - Private methods
 
     private func fetchPhotos() {
-        networkService.fetchPhotos(for: user?.id)
-        self.photos = dataProvider.loadDataFromRealm(items: Photo.self)
-        guard let photos = photos else {
-            return
+        networkService.fetchPhotos(for: user?.id) { [weak self] results in
+            guard let self = self else { return }
+            switch results {
+            case let .success(photos):
+                DataProvider.save(items: photos, update: false)
+                self.photos = self.dataProvider.loadData(items: Photo.self)
+                self.imageUrlsString = self.sortImage(type: Constants.photoType, array: photos)
+                self.collectionView.reloadData()
+            case let .failure(error):
+                self.showErrorAlert(title: Constants.errorTitleString, message: error.localizedDescription)
+            }
         }
-        let imagesLinks = sortImage(type: Constants.photoType, array: photos)
-        imageUrlsString = imagesLinks
-        collectionView.reloadData()
     }
 
-    private func sortImage(type: String, array: Results<Photo>) -> [String] {
+    private func sortImage(type: String, array: [Photo]) -> [String] {
         var links: [String] = []
 
         for image in array {

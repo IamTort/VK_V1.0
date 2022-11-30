@@ -34,7 +34,7 @@ final class AvailableGroupsTableViewController: UITableViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier, for: indexPath)
             as? AvailableGroupsTableViewCell else { return UITableViewCell() }
 
-        cell.setup(group: filteredGroups[indexPath.row])
+        cell.setup(group: filteredGroups[indexPath.row], networkService: networkService)
         return cell
     }
 

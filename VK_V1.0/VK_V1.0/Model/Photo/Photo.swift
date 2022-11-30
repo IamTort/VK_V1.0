@@ -6,6 +6,6 @@ import RealmSwift
 
 /// Фотография
 @objcMembers
-class Photo: Object, Decodable {
+final class Photo: Object, Decodable {
     dynamic var sizes = List<PhotoInfoDto>()
 }

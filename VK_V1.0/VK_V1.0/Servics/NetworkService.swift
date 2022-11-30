@@ -3,7 +3,6 @@
 
 import Alamofire
 import Foundation
-import RealmSwift
 
 /// Загрузка данных с сервера
 final class NetworkService {
@@ -27,13 +26,9 @@ final class NetworkService {
         static let countGroupsValue = "40"
     }
 
-    // MARK: - Private property
-
-    private let dataProvider = DataProvider()
-
     // MARK: - Public methods
 
-    func fetchFriends() {
+    func fetchFriends(completion: @escaping (Result<[User], Error>) -> ()) {
         guard let id = SessionInformation.shared.userId,
               let token = SessionInformation.shared.token else { return }
         let params = [
@@ -47,14 +42,14 @@ final class NetworkService {
             guard let value = response.value else { return }
             do {
                 let model = try JSONDecoder().decode(ResponseUser.self, from: value)
-                self.dataProvider.saveFriendsInRealm(user: model.response.items)
+                completion(.success(model.response.items))
             } catch {
-                print(error.localizedDescription)
+                completion(.failure(error))
             }
         }
     }
 
-    func fetchPhotos(for ownerId: Int?) {
+    func fetchPhotos(for ownerId: Int?, completion: @escaping (Result<[Photo], Error>) -> Void) {
         guard let ownerId = ownerId,
               let token = SessionInformation.shared.token else { return }
         let params = [
@@ -68,14 +63,14 @@ final class NetworkService {
             guard let value = response.value else { return }
             do {
                 let model = try JSONDecoder().decode(ResponsePhoto.self, from: value).response.items
-                self.dataProvider.savePhotoData(photos: model)
+                completion(.success(model))
             } catch {
-                print(error.localizedDescription)
+                completion(.failure(error))
             }
         }
     }
 
-    func fetchMyGroups() {
+    func fetchMyGroups(completion: @escaping (Result<[Group], Error>) -> ()) {
         guard let id = SessionInformation.shared.userId,
               let token = SessionInformation.shared.token else { return }
         let params = [
@@ -89,9 +84,9 @@ final class NetworkService {
             guard let value = response.value else { return }
             do {
                 let model = try JSONDecoder().decode(ResponseGroup.self, from: value)
-                self.dataProvider.saveGroupsInRealm(group: model.response.items)
+                completion(.success(model.response.items))
             } catch {
-                print(error.localizedDescription)
+                completion(.failure(error))
             }
         }
     }

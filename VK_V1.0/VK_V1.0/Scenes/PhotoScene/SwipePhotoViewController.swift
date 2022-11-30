@@ -21,6 +21,10 @@ final class SwipePhotoViewController: UIViewController {
     var photosUrls: [String]?
     var swipe = 0
 
+    // MARK: - Private property
+
+    private let networkService = NetworkService()
+
     // MARK: - LifeCycle
 
     override func viewDidLoad() {
@@ -34,7 +38,7 @@ final class SwipePhotoViewController: UIViewController {
     private func configureImageView() {
         guard let image = photosUrls?[swipe] else { return }
         photoImageView.isUserInteractionEnabled = true
-        photoImageView.loadImage(with: image)
+        photoImageView.loadImage(with: image, networkService: networkService)
     }
 
     private func addSwipeGestureRecognizers() {
@@ -96,7 +100,7 @@ final class SwipePhotoViewController: UIViewController {
                 ) {
                     self.photoImageView.frame.origin.x = self.view.bounds.width
                     self.photoImageView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-                    self.photoImageView.loadImage(with: photosUrls[self.swipe])
+                    self.photoImageView.loadImage(with: photosUrls[self.swipe], networkService: self.networkService)
                 }
             }
         case .left:
@@ -116,7 +120,7 @@ final class SwipePhotoViewController: UIViewController {
                 self.photoImageView.frame.origin.x = .zero
                 self.photoImageView.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
             } completion: { _ in
-                self.photoImageView.loadImage(with: photosUrls[self.swipe])
+                self.photoImageView.loadImage(with: photosUrls[self.swipe], networkService: self.networkService)
                 UIView.animate(withDuration: 0.6, delay: 0.2, options: .curveEaseIn) {
                     self.photoImageView.transform = CGAffineTransform(scaleX: 1, y: 1)
                 }

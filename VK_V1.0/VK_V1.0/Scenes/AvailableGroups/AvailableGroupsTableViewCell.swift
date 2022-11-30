@@ -12,8 +12,8 @@ final class AvailableGroupsTableViewCell: UITableViewCell {
 
     // MARK: - Public methods
 
-    func setup(group: Group) {
-        avatarImageView.loadImage(with: group.imageUrl)
+    func setup(group: Group, networkService: NetworkService) {
+        avatarImageView.loadImage(with: group.imageUrl, networkService: networkService)
         titleLabel.text = group.name
     }
 }

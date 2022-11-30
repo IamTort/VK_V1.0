@@ -12,6 +12,7 @@ final class FriendsTableViewController: UITableViewController {
         static let cellIdentifier = "friendCell"
         static let segueIdentifier = "photoSegue"
         static let errorTitleString = "Ошибка"
+        static let errorDescriptionString = "Ошибка загрузки данных с сервера"
     }
 
     // MARK: - Private property
@@ -48,7 +49,7 @@ final class FriendsTableViewController: UITableViewController {
             let friends = sortedFriendsMap[firstChar] else { return UITableViewCell() }
 
         let friend = friends[indexPath.row]
-        cell.setupData(data: friend)
+        cell.setupData(data: friend, networkService: networkService)
         return cell
     }
 
@@ -78,10 +79,19 @@ final class FriendsTableViewController: UITableViewController {
     // MARK: - Private methods
 
     private func loadFriends() {
-        networkService.fetchFriends()
-        users = dataProvider.loadDataFromRealm(items: User.self)
-        sortFriends()
         createNotificationToken()
+        networkService.fetchFriends { [weak self] results in
+            guard let self = self else { return }
+            switch results {
+            case let .success(result):
+                DataProvider.save(items: result)
+                self.users = self.dataProvider.loadData(items: User.self)
+                self.sortFriends()
+                self.tableView.reloadData()
+            case .failure:
+                self.showErrorAlert(title: Constants.errorTitleString, message: Constants.errorDescriptionString)
+            }
+        }
     }
 
     private func configureHeaderView(section index: Int) -> UIView {
