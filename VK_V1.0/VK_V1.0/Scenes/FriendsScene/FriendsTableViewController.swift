@@ -84,7 +84,7 @@ final class FriendsTableViewController: UITableViewController {
             guard let self = self else { return }
             switch results {
             case let .success(result):
-                DataProvider.save(items: result)
+                DataProvider.save(items: result.response.items)
                 self.users = self.dataProvider.loadData(items: User.self)
                 self.sortFriends()
                 self.tableView.reloadData()

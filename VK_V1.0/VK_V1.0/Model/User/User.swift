@@ -6,9 +6,13 @@ import RealmSwift
 
 /// Друг
 final class User: Object, Decodable {
+    /// Идентификатор
     @objc dynamic var id = 0
+    /// Ссылка на фото аватарки
     @objc dynamic var photoUrl: String = ""
+    /// Имя
     @objc dynamic var firstName: String = ""
+    /// Фамилия
     @objc dynamic var lastName: String = ""
 
     enum CodingKeys: String, CodingKey {

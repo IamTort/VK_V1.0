@@ -67,10 +67,10 @@ final class PhotoCollectionViewController: UICollectionViewController {
         networkService.fetchPhotos(for: user?.id) { [weak self] results in
             guard let self = self else { return }
             switch results {
-            case let .success(photos):
-                DataProvider.save(items: photos, update: false)
+            case let .success(results):
+                DataProvider.save(items: results.response.items, update: false)
                 self.photos = self.dataProvider.loadData(items: Photo.self)
-                self.imageUrlsString = self.sortImage(type: Constants.photoType, array: photos)
+                self.imageUrlsString = self.sortImage(type: Constants.photoType, array: results.response.items)
                 self.collectionView.reloadData()
             case let .failure(error):
                 self.showErrorAlert(title: Constants.errorTitleString, message: error.localizedDescription)

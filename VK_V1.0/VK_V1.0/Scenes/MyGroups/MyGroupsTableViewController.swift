@@ -62,7 +62,7 @@ final class MyGroupsTableViewController: UITableViewController {
             guard let self = self else { return }
             switch results {
             case let .success(result):
-                DataProvider.save(items: result)
+                DataProvider.save(items: result.response.items)
                 self.groups = self.dataProvider.loadData(items: Group.self)
                 self.tableView.reloadData()
             case .failure:

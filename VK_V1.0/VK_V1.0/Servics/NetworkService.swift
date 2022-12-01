@@ -28,7 +28,7 @@ final class NetworkService {
 
     // MARK: - Public methods
 
-    func fetchFriends(completion: @escaping (Result<[User], Error>) -> ()) {
+    func fetchFriends(completion: @escaping (Result<ResponseUser, Error>) -> ()) {
         guard let id = SessionInformation.shared.userId,
               let token = SessionInformation.shared.token else { return }
         let params = [
@@ -38,18 +38,10 @@ final class NetworkService {
         ]
         guard let url: URL = .configureURL(token: token, typeMethod: Constants.friendMethod, paramsMap: params)
         else { return }
-        AF.request(url).responseData { response in
-            guard let value = response.value else { return }
-            do {
-                let model = try JSONDecoder().decode(ResponseUser.self, from: value)
-                completion(.success(model.response.items))
-            } catch {
-                completion(.failure(error))
-            }
-        }
+        requestData(url: url, completion: completion)
     }
 
-    func fetchPhotos(for ownerId: Int?, completion: @escaping (Result<[Photo], Error>) -> Void) {
+    func fetchPhotos(for ownerId: Int?, completion: @escaping (Result<ResponsePhoto, Error>) -> Void) {
         guard let ownerId = ownerId,
               let token = SessionInformation.shared.token else { return }
         let params = [
@@ -59,18 +51,10 @@ final class NetworkService {
         ]
         guard let url: URL = .configureURL(token: token, typeMethod: Constants.photosMethod, paramsMap: params)
         else { return }
-        AF.request(url).responseData { response in
-            guard let value = response.value else { return }
-            do {
-                let model = try JSONDecoder().decode(ResponsePhoto.self, from: value).response.items
-                completion(.success(model))
-            } catch {
-                completion(.failure(error))
-            }
-        }
+        requestData(url: url, completion: completion)
     }
 
-    func fetchMyGroups(completion: @escaping (Result<[Group], Error>) -> ()) {
+    func fetchMyGroups(completion: @escaping (Result<ResponseGroup, Error>) -> ()) {
         guard let id = SessionInformation.shared.userId,
               let token = SessionInformation.shared.token else { return }
         let params = [
@@ -80,18 +64,10 @@ final class NetworkService {
         ]
         guard let url: URL = .configureURL(token: token, typeMethod: Constants.myGroupsMethod, paramsMap: params)
         else { return }
-        AF.request(url).responseData { response in
-            guard let value = response.value else { return }
-            do {
-                let model = try JSONDecoder().decode(ResponseGroup.self, from: value)
-                completion(.success(model.response.items))
-            } catch {
-                completion(.failure(error))
-            }
-        }
+        requestData(url: url, completion: completion)
     }
 
-    func fetchAvailableGroups(searchText: String?, completion: @escaping (ResponseGroup) -> Void) {
+    func fetchAvailableGroups(searchText: String?, completion: @escaping (Result<ResponseGroup, Error>) -> Void) {
         guard let text = searchText,
               let token = SessionInformation.shared.token else { return }
         let params = [
@@ -102,7 +78,7 @@ final class NetworkService {
         ]
         guard let url: URL = .configureURL(token: token, typeMethod: Constants.availableGroupsMethod, paramsMap: params)
         else { return }
-        requestUrl(url: url, completion: completion)
+        requestData(url: url, completion: completion)
     }
 
     func loadImage(iconUrl: String, completion: @escaping (Data) -> Void) {
@@ -115,14 +91,14 @@ final class NetworkService {
 
     // MARK: - Private methods
 
-    private func requestUrl<T: Decodable>(url: URL, completion: @escaping (T) -> Void) {
+    private func requestData<T: Decodable>(url: URL, completion: @escaping (Result<T, Error>) -> ()) {
         AF.request(url).responseData { response in
             guard let value = response.value else { return }
             do {
                 let model = try JSONDecoder().decode(T.self, from: value)
-                completion(model)
+                completion(.success(model))
             } catch {
-                print(error.localizedDescription)
+                completion(.failure(error))
             }
         }
     }
