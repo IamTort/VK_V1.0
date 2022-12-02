@@ -9,7 +9,8 @@ final class AvailableGroupsTableViewController: UITableViewController {
 
     private enum Constants {
         static let cellIdentifier = "availableGroupCell"
-        static let searchText = "nature"
+        static let errorTitleString = "Ошибка"
+        static let errorDescriptionString = "Ошибка загрузки данных с сервера"
     }
 
     // MARK: - Private IBOutlet
@@ -34,17 +35,22 @@ final class AvailableGroupsTableViewController: UITableViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier, for: indexPath)
             as? AvailableGroupsTableViewCell else { return UITableViewCell() }
 
-        cell.setup(group: filteredGroups[indexPath.row])
+        cell.setup(group: filteredGroups[indexPath.row], networkService: networkService)
         return cell
     }
 
     // MARK: - Private methods
 
     private func loadAvailableGroups(text: String) {
-        networkService.fetchAvailableGroups(searchText: text) { [weak self] result in
+        networkService.fetchAvailableGroups(searchText: text) { [weak self] results in
             guard let self = self else { return }
-            self.filteredGroups = result.response.items
-            self.tableView.reloadData()
+            switch results {
+            case let .success(result):
+                self.filteredGroups = result.response.items
+                self.tableView.reloadData()
+            case .failure:
+                self.showErrorAlert(title: Constants.errorTitleString, message: Constants.errorDescriptionString)
+            }
         }
     }
 }

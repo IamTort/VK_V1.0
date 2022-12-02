@@ -5,13 +5,13 @@ import UIKit
 
 /// загрузка картинки
 extension UIImageView {
-    func loadImage(url: URL) {
-        DispatchQueue.global().async {
-            guard
-                let data = try? Data(contentsOf: url),
-                let image = UIImage(data: data) else { return }
-
+    func loadImage(with url: String, placeHolder: UIImage? = nil, networkService: NetworkService) {
+        image = nil
+        let iconUrl = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        networkService.loadImage(iconUrl: iconUrl) { [weak self] data in
             DispatchQueue.main.async {
+                guard let image = UIImage(data: data),
+                      let self = self else { return }
                 self.image = image
             }
         }

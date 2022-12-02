@@ -48,7 +48,7 @@ final class LoginViewController: UIViewController {
         guard identifier == Constants.segueIdentifier,
               checkLoginInfo()
         else {
-            showLoginError(title: Constants.alertTitleText, message: Constants.alertMessageText)
+            showErrorAlert(title: Constants.alertTitleText, message: Constants.alertMessageText)
             return false
         }
         animateDots()

@@ -1,6 +1,7 @@
 // PhotoCollectionViewController.swift
 // Copyright © RoadMap. All rights reserved.
 
+import RealmSwift
 import UIKit
 
 ///  Экран фотографии друга
@@ -11,6 +12,7 @@ final class PhotoCollectionViewController: UICollectionViewController {
         static let cellIdentifier = "photoCell"
         static let segueIdentifier = "swipeSceneSegue"
         static let photoType = "z"
+        static let errorTitleString = "Ошибка"
     }
 
     // MARK: - Public property
@@ -20,7 +22,8 @@ final class PhotoCollectionViewController: UICollectionViewController {
     // MARK: - Private property
 
     private let networkService = NetworkService()
-    private var photos: [Photo]?
+    private let dataProvider = DataProvider()
+    private var photos: Results<Photo>?
     private var imageUrlsString: [String] = []
 
     // MARK: - LifeCycle
@@ -45,7 +48,7 @@ final class PhotoCollectionViewController: UICollectionViewController {
             withReuseIdentifier: Constants.cellIdentifier,
             for: indexPath
         ) as? PhotoCollectionViewCell else { return UICollectionViewCell() }
-        cell.setupData(data: imageUrlsString[indexPath.item])
+        cell.setupData(data: imageUrlsString[indexPath.item], networkService: networkService)
         return cell
     }
 
@@ -61,12 +64,17 @@ final class PhotoCollectionViewController: UICollectionViewController {
     // MARK: - Private methods
 
     private func fetchPhotos() {
-        networkService.fetchPhotos(for: user?.id) { [weak self] result in
-            guard let imagesLinks = self?.sortImage(type: Constants.photoType, array: result.response.items),
-                  let self = self else { return }
-            self.photos = result.response.items
-            self.imageUrlsString = imagesLinks
-            self.collectionView.reloadData()
+        networkService.fetchPhotos(for: user?.id) { [weak self] results in
+            guard let self = self else { return }
+            switch results {
+            case let .success(results):
+                DataProvider.save(items: results.response.items, update: false)
+                self.photos = self.dataProvider.loadData(items: Photo.self)
+                self.imageUrlsString = self.sortImage(type: Constants.photoType, array: results.response.items)
+                self.collectionView.reloadData()
+            case let .failure(error):
+                self.showErrorAlert(title: Constants.errorTitleString, message: error.localizedDescription)
+            }
         }
     }
 

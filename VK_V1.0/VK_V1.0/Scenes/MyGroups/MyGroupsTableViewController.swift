@@ -1,6 +1,7 @@
 // MyGroupsTableViewController.swift
 // Copyright © RoadMap. All rights reserved.
 
+import RealmSwift
 import UIKit
 
 /// Экран Мои группы
@@ -10,12 +11,16 @@ final class MyGroupsTableViewController: UITableViewController {
     private enum Constants {
         static let cellIdentifier = "groupCell"
         static let segueIdentifier = "addGroupSegue"
+        static let errorTitleString = "Ошибка"
+        static let errorDescriptionString = "Ошибка загрузки данных с сервера"
     }
 
     // MARK: - Private property
 
     private let networkService = NetworkService()
-    private var groups: [Group] = []
+    private let dataProvider = DataProvider()
+    private var notificationToken: NotificationToken?
+    private var groups: Results<Group>?
 
     // MARK: - LifeCycle
 
@@ -27,13 +32,14 @@ final class MyGroupsTableViewController: UITableViewController {
     // MARK: - Public methods
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        groups.count
+        groups?.count ?? 0
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier, for: indexPath)
-            as? MyGroupsTableViewCell else { return UITableViewCell() }
-        cell.setup(group: groups[indexPath.row])
+            as? MyGroupsTableViewCell,
+            let group = groups?[indexPath.row] else { return UITableViewCell() }
+        cell.setup(group: group, networkService: networkService)
         return cell
     }
 
@@ -42,31 +48,40 @@ final class MyGroupsTableViewController: UITableViewController {
         commit editingStyle: UITableViewCell.EditingStyle,
         forRowAt indexPath: IndexPath
     ) {
-        guard editingStyle == .delete else { return }
-        groups.remove(at: indexPath.row)
-        tableView.deleteRows(at: [indexPath], with: .fade)
-    }
-
-    // MARK: - Private IBAction
-
-    @IBAction private func addGroupAction(segue: UIStoryboardSegue) {
-        guard segue.identifier == Constants.segueIdentifier,
-              let availableGroupController = segue.source as? AvailableGroupsTableViewController,
-              let indexPath = availableGroupController.tableView.indexPathForSelectedRow,
-              !groups.contains(where: { $0.name == availableGroupController.filteredGroups[indexPath.row].name })
-        else { return }
-
-        groups.append(availableGroupController.filteredGroups[indexPath.row])
+        guard let group = groups?[indexPath.row],
+              editingStyle == .delete else { return }
+        dataProvider.deleteGroup(group)
         tableView.reloadData()
     }
 
     // MARK: - Private methods
 
     private func loadMyGroups() {
-        networkService.fetchMyGroups(completion: { [weak self] result in
+        createNotificationToken()
+        networkService.fetchMyGroups { [weak self] results in
             guard let self = self else { return }
-            self.groups = result.response.items
-            self.tableView.reloadData()
-        })
+            switch results {
+            case let .success(result):
+                DataProvider.save(items: result.response.items)
+                self.groups = self.dataProvider.loadData(items: Group.self)
+                self.tableView.reloadData()
+            case .failure:
+                self.showErrorAlert(title: Constants.errorTitleString, message: Constants.errorDescriptionString)
+            }
+        }
+    }
+
+    private func createNotificationToken() {
+        notificationToken = groups?.observe { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .initial:
+                break
+            case .update:
+                self.tableView.reloadData()
+            case let .error(error):
+                self.showErrorAlert(title: Constants.errorTitleString, message: error.localizedDescription)
+            }
+        }
     }
 }

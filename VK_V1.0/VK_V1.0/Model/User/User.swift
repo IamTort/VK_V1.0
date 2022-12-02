@@ -6,9 +6,13 @@ import RealmSwift
 
 /// Друг
 final class User: Object, Decodable {
+    /// Идентификатор
     @objc dynamic var id = 0
+    /// Ссылка на фото аватарки
     @objc dynamic var photoUrl: String = ""
+    /// Имя
     @objc dynamic var firstName: String = ""
+    /// Фамилия
     @objc dynamic var lastName: String = ""
 
     enum CodingKeys: String, CodingKey {
@@ -16,5 +20,11 @@ final class User: Object, Decodable {
         case photoUrl = "photo_50"
         case firstName = "first_name"
         case lastName = "last_name"
+    }
+
+    // MARK: - Public methods
+
+    override class func primaryKey() -> String? {
+        "id"
     }
 }

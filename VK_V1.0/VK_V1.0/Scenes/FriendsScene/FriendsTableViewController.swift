@@ -1,6 +1,7 @@
 // FriendsTableViewController.swift
 // Copyright © RoadMap. All rights reserved.
 
+import RealmSwift
 import UIKit
 
 ///  Экран Друзья
@@ -10,13 +11,17 @@ final class FriendsTableViewController: UITableViewController {
     private enum Constants {
         static let cellIdentifier = "friendCell"
         static let segueIdentifier = "photoSegue"
+        static let errorTitleString = "Ошибка"
+        static let errorDescriptionString = "Ошибка загрузки данных с сервера"
     }
 
     // MARK: - Private property
 
     private let networkService = NetworkService()
+    private let dataProvider = DataProvider()
     private var sortedFriendsMap = [Character: [User]]()
-    private var users: [User] = []
+    private var users: Results<User>?
+    private var notificationToken: NotificationToken?
 
     // MARK: - LifeCycle
 
@@ -44,7 +49,7 @@ final class FriendsTableViewController: UITableViewController {
             let friends = sortedFriendsMap[firstChar] else { return UITableViewCell() }
 
         let friend = friends[indexPath.row]
-        cell.setupData(data: friend)
+        cell.setupData(data: friend, networkService: networkService)
         return cell
     }
 
@@ -74,12 +79,19 @@ final class FriendsTableViewController: UITableViewController {
     // MARK: - Private methods
 
     private func loadFriends() {
-        networkService.fetchFriends(completion: { [weak self] result in
+        createNotificationToken()
+        networkService.fetchFriends { [weak self] results in
             guard let self = self else { return }
-            self.users = result.response.items
-            self.sortFriends()
-            self.tableView.reloadData()
-        })
+            switch results {
+            case let .success(result):
+                DataProvider.save(items: result.response.items)
+                self.users = self.dataProvider.loadData(items: User.self)
+                self.sortFriends()
+                self.tableView.reloadData()
+            case .failure:
+                self.showErrorAlert(title: Constants.errorTitleString, message: Constants.errorDescriptionString)
+            }
+        }
     }
 
     private func configureHeaderView(section index: Int) -> UIView {
@@ -88,9 +100,9 @@ final class FriendsTableViewController: UITableViewController {
         return headerView
     }
 
-    private func sort(friends: [User]) -> [Character: [User]] {
+    private func sort(friends: Results<User>?) -> [Character: [User]] {
         var friendsDict = [Character: [User]]()
-        friends.forEach { friend in
+        friends?.forEach { friend in
 
             guard let firstChar = friend.firstName.first else { return }
 
@@ -113,5 +125,19 @@ final class FriendsTableViewController: UITableViewController {
 
     private func sortFriends() {
         sortedFriendsMap = sort(friends: users)
+    }
+
+    private func createNotificationToken() {
+        notificationToken = users?.observe { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .initial:
+                break
+            case .update:
+                self.tableView.reloadData()
+            case let .error(error):
+                self.showErrorAlert(title: Constants.errorTitleString, message: error.localizedDescription)
+            }
+        }
     }
 }

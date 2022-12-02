@@ -12,9 +12,8 @@ final class MyGroupsTableViewCell: UITableViewCell {
 
     // MARK: - Public method
 
-    func setup(group: Group) {
-        guard let url = URL(string: group.imageUrl) else { return }
-        avatarImageView.loadImage(url: url)
+    func setup(group: Group, networkService: NetworkService) {
+        avatarImageView.loadImage(with: group.imageUrl, networkService: networkService)
         titleGroupLabel.text = group.name
     }
 }
