@@ -13,6 +13,7 @@ final class NetworkService {
         static let photosMethod = "/method/photos.getAll"
         static let myGroupsMethod = "/method/groups.get"
         static let availableGroupsMethod = "/method/groups.search"
+        static let newsfeedGetMethod = "/method/newsfeed.get"
         static let userIdName = "user_id"
         static let versionName = "v"
         static let versionValue = "5.131"
@@ -24,6 +25,12 @@ final class NetworkService {
         static let ownerIdName = "owner_id"
         static let countGroupsName = "count"
         static let countGroupsValue = "40"
+        static let filtersName = "filters"
+        static let filtersValue = "post"
+        static let responseName = "response"
+        static let itemsName = "items"
+        static let profilesName = "profiles"
+        static let groupsName = "groups"
     }
 
     // MARK: - Public methods
@@ -81,6 +88,21 @@ final class NetworkService {
         requestData(url: url, completion: completion)
     }
 
+    func fetchNewsfeed(completion: @escaping (ResponseNewsfeed) -> Void) {
+        guard let token = SessionInformation.shared.token else { return }
+        let params = [
+            Constants.versionName: Constants.versionValue,
+            Constants.filtersName: Constants.filtersValue
+        ]
+
+        guard let url: URL = .configureURL(token: token, typeMethod: Constants.newsfeedGetMethod, paramsMap: params)
+        else { return }
+        AF.request(url).responseData { [self] response in
+            guard let value = response.value else { return }
+            parse(data: value, completionHandler: completion)
+        }
+    }
+
     func loadImage(iconUrl: String, completion: @escaping (Data) -> Void) {
         guard let url = URL(string: iconUrl) else { return }
         URLSession.shared.dataTask(with: url) { data, _, _ in
@@ -99,6 +121,66 @@ final class NetworkService {
                 completion(.success(model))
             } catch {
                 completion(.failure(error))
+            }
+        }
+    }
+
+    private func asyncParse<Model: Decodable>(data: Data, group: DispatchGroup, completion: @escaping (Model) -> Void) {
+        DispatchQueue.global().async {
+            if let parsedModel = try? JSONDecoder().decode(Model.self, from: data) {
+                completion(parsedModel)
+            }
+            group.leave()
+        }
+    }
+
+    private func parse(data: Data, completionHandler: @escaping (ResponseNewsfeed) -> Void) {
+        DispatchQueue.global().async {
+            var parsedItems: [Newsfeed] = []
+            var parsedProfiles: [NewsProfile] = []
+            var parsedGroups: [NewsGroup] = []
+
+            let json = (
+                try? JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
+                    as? [String: Any]
+            ) ?? [:]
+            let response = (json[Constants.responseName] as? [String: Any]) ?? [:]
+
+            let items = response[Constants.itemsName]
+            let profiles = response[Constants.profilesName]
+            let groups = response[Constants.groupsName]
+
+            let itemsData = (try? JSONSerialization.data(withJSONObject: items as Any, options: .fragmentsAllowed))
+                ?? Data()
+            let profilesData = (try? JSONSerialization.data(
+                withJSONObject: profiles as Any,
+                options: .fragmentsAllowed
+            )) ?? Data()
+            let groupsData = (try? JSONSerialization.data(withJSONObject: groups as Any, options: .fragmentsAllowed))
+                ?? Data()
+
+            let dispatchGroup = DispatchGroup()
+            dispatchGroup.enter()
+            dispatchGroup.enter()
+            dispatchGroup.enter()
+
+            self.asyncParse(data: itemsData, group: dispatchGroup) { (model: [Newsfeed]) in
+                parsedItems = model
+            }
+            self.asyncParse(data: profilesData, group: dispatchGroup) { (model: [NewsProfile]) in
+                parsedProfiles = model
+            }
+            self.asyncParse(data: groupsData, group: dispatchGroup) { (model: [NewsGroup]) in
+                parsedGroups = model
+            }
+
+            dispatchGroup.notify(queue: .global()) {
+                let news = ResponseNewsfeed(response: ItemsNewsfeed(
+                    items: parsedItems,
+                    profiles: parsedProfiles,
+                    groups: parsedGroups
+                ))
+                completionHandler(news)
             }
         }
     }
