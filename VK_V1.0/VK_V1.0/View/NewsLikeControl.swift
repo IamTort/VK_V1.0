@@ -51,7 +51,7 @@ final class NewsLikeControl: UIControl {
 
         guard isLiked else {
             heartImageView.image = UIImage(systemName: Constants.heartImageName)
-            countLikeLabel?.textColor = .systemGray
+            countLikeLabel.textColor = .systemGray
             heartImageView.tintColor = .systemGray
             likesCount -= 1
             return
@@ -62,7 +62,7 @@ final class NewsLikeControl: UIControl {
             options: .transitionFlipFromRight, animations: nil
         )
         heartImageView.image = UIImage(systemName: Constants.fillHeartImageName)
-        countLikeLabel?.textColor = .red
+        countLikeLabel.textColor = .red
         heartImageView.tintColor = .red
         likesCount += 1
     }
