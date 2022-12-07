@@ -766,7 +766,7 @@
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="1" id="LHz-py-sgs"/>
                                             </constraints>
                                         </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OCC-mh-igt" customClass="NewsLikeControl" customModule="VK_V1_0" customModuleProvider="target">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OCC-mh-igt">
                                             <rect key="frame" x="20" y="6" width="168" height="31"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="Ao4-dv-yne">
@@ -871,10 +871,6 @@
                                                 <constraint firstAttribute="bottom" secondItem="Ao4-dv-yne" secondAttribute="bottom" id="sW0-Tq-aCR"/>
                                                 <constraint firstAttribute="trailing" secondItem="Ao4-dv-yne" secondAttribute="trailing" id="u5d-MB-L2A"/>
                                             </constraints>
-                                            <connections>
-                                                <outlet property="countLikeLabel" destination="CL4-ZY-cEF" id="Yl3-rq-qD3"/>
-                                                <outlet property="heartImageView" destination="JyT-Iu-htI" id="nvw-r3-nrd"/>
-                                            </connections>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xIf-wb-hTt">
                                             <rect key="frame" x="319" y="15" width="65" height="13"/>
@@ -927,7 +923,7 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="likeControl" destination="OCC-mh-igt" id="ei7-hz-ag6"/>
+                                    <outlet property="likeControl" destination="csm-HZ-n5F" id="0f8-33-hzS"/>
                                     <outlet property="viewsCount" destination="Q1T-zx-HKv" id="1hu-8C-Rh2"/>
                                 </connections>
                             </tableViewCell>
