@@ -97,9 +97,9 @@ final class NetworkService {
 
         guard let url: URL = .configureURL(token: token, typeMethod: Constants.newsfeedGetMethod, paramsMap: params)
         else { return }
-        AF.request(url).responseData { [self] response in
+        AF.request(url).responseData { response in
             guard let value = response.value else { return }
-            parse(data: value, completionHandler: completion)
+            self.parse(data: value, completionHandler: completion)
         }
     }
 
@@ -126,18 +126,17 @@ final class NetworkService {
     }
 
     private func asyncParse<Model: Decodable>(data: Data, group: DispatchGroup, completion: @escaping (Model) -> Void) {
-        DispatchQueue.global().async {
-            if let parsedModel = try? JSONDecoder().decode(Model.self, from: data) {
-                completion(parsedModel)
-            }
-            group.leave()
+        group.enter()
+        if let parsedModel = try? JSONDecoder().decode(Model.self, from: data) {
+            completion(parsedModel)
         }
+        group.leave()
     }
 
     private func parse(data: Data, completionHandler: @escaping (ResponseNewsfeed) -> Void) {
         DispatchQueue.global().async {
             var parsedItems: [Newsfeed] = []
-            var parsedProfiles: [NewsProfile] = []
+            var parsedProfiles: [Profile] = []
             var parsedGroups: [NewsGroup] = []
 
             let json = (
@@ -160,14 +159,11 @@ final class NetworkService {
                 ?? Data()
 
             let dispatchGroup = DispatchGroup()
-            dispatchGroup.enter()
-            dispatchGroup.enter()
-            dispatchGroup.enter()
 
             self.asyncParse(data: itemsData, group: dispatchGroup) { (model: [Newsfeed]) in
                 parsedItems = model
             }
-            self.asyncParse(data: profilesData, group: dispatchGroup) { (model: [NewsProfile]) in
+            self.asyncParse(data: profilesData, group: dispatchGroup) { (model: [Profile]) in
                 parsedProfiles = model
             }
             self.asyncParse(data: groupsData, group: dispatchGroup) { (model: [NewsGroup]) in
@@ -176,8 +172,8 @@ final class NetworkService {
 
             dispatchGroup.notify(queue: .global()) {
                 let news = ResponseNewsfeed(response: ItemsNewsfeed(
-                    items: parsedItems,
-                    profiles: parsedProfiles,
+                    newsFeed: parsedItems,
+                    users: parsedProfiles,
                     groups: parsedGroups
                 ))
                 completionHandler(news)

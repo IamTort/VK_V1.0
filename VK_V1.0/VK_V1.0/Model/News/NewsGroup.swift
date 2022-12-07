@@ -10,10 +10,10 @@ struct NewsGroup: Decodable {
     /// Имя
     let name: String
     /// Фото аватара
-    let photoUrl: String?
+    let photoUrlString: String?
 
     enum CodingKeys: String, CodingKey {
-        case photoUrl = "photo_50"
+        case photoUrlString = "photo_50"
         case name
         case id
     }

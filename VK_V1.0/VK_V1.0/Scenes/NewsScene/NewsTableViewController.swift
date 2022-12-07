@@ -40,7 +40,7 @@ final class NewsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadNewsfeed()
+        fetchNewsfeed()
     }
 
     // MARK: - Public methods
@@ -94,27 +94,27 @@ final class NewsTableViewController: UITableViewController {
     // MARK: - Private  methods
 
     private func filterData(result: ResponseNewsfeed) {
-        result.response.items.forEach { news in
+        result.response.newsFeed.forEach { news in
             if news.sourceId < 0 {
                 guard let group = result.response.groups.filter({ group in
                     group.id == news.sourceId * -1
                 }).first else { return }
                 news.authorName = group.name
-                news.avatarUrl = group.photoUrl
+                news.avatarUrl = group.photoUrlString
             } else {
-                guard let user = result.response.profiles.filter({ user in
+                guard let user = result.response.users.filter({ user in
                     user.id == news.sourceId
                 }).first else { return }
                 news.authorName = "\(user.firstName) \(user.lastName)"
-                news.avatarUrl = user.photoUrl
+                news.avatarUrl = user.photoUrlString
             }
         }
     }
 
-    private func loadNewsfeed() {
+    private func fetchNewsfeed() {
         networkService.fetchNewsfeed { [weak self] results in
             guard let self = self else { return }
-            self.newsFeed = results.response.items
+            self.newsFeed = results.response.newsFeed
             self.filterData(result: results)
             DispatchQueue.main.async {
                 self.tableView.reloadData()

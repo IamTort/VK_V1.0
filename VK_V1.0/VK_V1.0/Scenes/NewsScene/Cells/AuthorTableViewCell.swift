@@ -22,12 +22,12 @@ final class AuthorTableViewCell: UITableViewCell {
         guard let avatar = news.avatarUrl else { return }
         avatarImageView.loadImage(with: avatar, networkService: networkService)
         nameLabel.text = news.authorName
-        timeLabel.text = createDate(date: news.date)
+        timeLabel.text = formatteDate(date: news.date)
     }
 
     // MARK: - Private methods
 
-    private func createDate(date: Int) -> String {
+    private func formatteDate(date: Int) -> String {
         let date = Date(timeIntervalSince1970: TimeInterval(date))
         let dateFormatter = DateFormatter()
         dateFormatter.timeStyle = DateFormatter.Style.short
