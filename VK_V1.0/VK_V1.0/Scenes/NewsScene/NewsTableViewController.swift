@@ -7,14 +7,6 @@ import UIKit
 final class NewsTableViewController: UITableViewController {
     // MARK: - Constants
 
-    private enum Cell {
-        case top
-        case text
-        case image
-        case bottom
-        case none
-    }
-
     private enum Constants {
         static let errorTitleString = "Ошибка"
         static let errorDescriptionString = "Ошибка загрузки данных с сервера"
@@ -24,6 +16,16 @@ final class NewsTableViewController: UITableViewController {
         static let likeCellIdentifier = "likeCell"
     }
 
+    // MARK: - Types
+
+    private enum CellType {
+        case top
+        case text
+        case image
+        case bottom
+        case none
+    }
+
     // MARK: - Private IBOutlet
 
     @IBOutlet private var searchBar: UISearchBar!
@@ -31,7 +33,7 @@ final class NewsTableViewController: UITableViewController {
     // MARK: - Private property
 
     private let networkService = NetworkService()
-    private var indexOfCell: Cell = .none
+    private var indexOfCell: CellType = .none
     private var newsFeed: [Newsfeed] = []
 
     // MARK: - LifeCycle
@@ -56,18 +58,7 @@ final class NewsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard !newsFeed.isEmpty else { return UITableViewCell() }
         let news = newsFeed[indexPath.section]
-        switch indexPath.row {
-        case 0:
-            indexOfCell = .top
-        case 1:
-            indexOfCell = news.text == nil ? .image : .text
-        case 2:
-            indexOfCell = news.avatarUrl == nil || news.text == nil ? .bottom : .image
-        case 3:
-            indexOfCell = .bottom
-        default:
-            indexOfCell = .none
-        }
+        setCellType(news, indexPath: indexPath)
 
         switch indexOfCell {
         case .top:
@@ -75,20 +66,18 @@ final class NewsTableViewController: UITableViewController {
                 withIdentifier: Constants.authorCellIdentifier,
                 for: indexPath
             ) as? AuthorTableViewCell else { return UITableViewCell() }
-
             cell.configure(news: newsFeed[indexPath.section], networkService: networkService)
             return cell
         case .text:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.textCellIdentifier, for: indexPath)
                 as? TextTableViewCell else { return UITableViewCell() }
-            cell.configure(news: news)
+            cell.configure(newsText: news.text ?? "")
             return cell
         case .image:
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: Constants.imageCellIdentifier,
                 for: indexPath
-            )
-                as? ImageTableViewCell else { return UITableViewCell() }
+            ) as? ImageTableViewCell else { return UITableViewCell() }
             cell.configure(news: news, networkService: networkService)
             return cell
         case .bottom:
@@ -130,15 +119,21 @@ final class NewsTableViewController: UITableViewController {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
+        }
+    }
 
-//            switch results {
-//            case let .success(result):
-//                self.newsFeed = result.response.items
-//                self.filterData(result: result)
-//                self.tableView.reloadData()
-//            case .failure:
-//                self.showErrorAlert(title: Constants.errorTitleString, message: Constants.errorDescriptionString)
-//            }
+    private func setCellType(_ news: Newsfeed, indexPath: IndexPath) {
+        switch indexPath.row {
+        case 0:
+            indexOfCell = .top
+        case 1:
+            indexOfCell = news.text == nil ? .image : .text
+        case 2:
+            indexOfCell = news.avatarUrl == nil || news.text == nil ? .bottom : .image
+        case 3:
+            indexOfCell = .bottom
+        default:
+            indexOfCell = .none
         }
     }
 }

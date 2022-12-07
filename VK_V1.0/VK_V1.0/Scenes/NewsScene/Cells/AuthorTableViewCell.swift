@@ -5,7 +5,7 @@ import UIKit
 
 ///  Ячейка автора новости
 final class AuthorTableViewCell: UITableViewCell {
-    // MARK: - IBOutlet
+    // MARK: - Private IBOutlet
 
     @IBOutlet private var avatarImageView: UIImageView! {
         didSet {

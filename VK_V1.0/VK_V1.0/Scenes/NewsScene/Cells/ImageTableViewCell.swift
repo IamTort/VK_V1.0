@@ -5,7 +5,7 @@ import UIKit
 
 ///  Ячейка картинки новости
 final class ImageTableViewCell: UITableViewCell {
-    // MARK: - IBOutlet
+    // MARK: - Private IBOutlet
 
     @IBOutlet private var photoImageView: UIImageView!
 

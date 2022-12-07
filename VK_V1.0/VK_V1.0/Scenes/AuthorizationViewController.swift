@@ -13,7 +13,7 @@ final class AuthorizationViewController: UIViewController {
         static let schemeValue = "https"
         static let hostValue = "oauth.vk.com"
         static let queryItemsValue = [
-            URLQueryItem(name: "client_id", value: "8181012"),
+            URLQueryItem(name: "client_id", value: "51497000"),
             URLQueryItem(name: "display", value: "mobile"),
             URLQueryItem(name: "redirect_uri", value: "https://oauth.vk.com/blank.html"),
             URLQueryItem(name: "scope", value: "offline, friends, groups, photos, wall"),

@@ -1,10 +1,10 @@
-// Comment.swift
+// Views.swift
 // Copyright © RoadMap. All rights reserved.
 
 import Foundation
 
-/// Комментарии
-struct Comment: Decodable {
+/// Кол-во просмотров
+struct Views: Decodable {
     /// Количество
     let count: Int
 }

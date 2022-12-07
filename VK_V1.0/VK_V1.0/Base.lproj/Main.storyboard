@@ -924,7 +924,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="likeControl" destination="csm-HZ-n5F" id="0f8-33-hzS"/>
-                                    <outlet property="viewsCount" destination="Q1T-zx-HKv" id="1hu-8C-Rh2"/>
+                                    <outlet property="viewsCountLabel" destination="Q1T-zx-HKv" id="1hu-8C-Rh2"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
