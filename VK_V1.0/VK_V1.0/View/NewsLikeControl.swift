@@ -35,8 +35,8 @@ final class NewsLikeControl: UIControl {
 
     // MARK: - Public methods
 
-    func setupData(data: News) {
-        likesCount = data.likeCount
+    func setupData(data: Int) {
+        likesCount = data
     }
 
     // MARK: - Private methods

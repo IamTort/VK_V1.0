@@ -8,58 +8,22 @@ final class NewsTableViewController: UITableViewController {
     // MARK: - Constants
 
     private enum Constants {
-        static let cellIdentifier = "newsCell"
-        static let news = [
-            News(
-                avatarImageName: "cat",
-                name: "Marcus Volfgan",
-                time: "15.09.2022",
-                description: """
-                Когда так много позади всего,
-                в особенности — горя,
-                поддержки чьей-нибудь не жди,
-                сядь в поезд, высадись у моря.
-                """,
-                photoImageName: "car",
-                likeCount: 346,
-                viewsCount: 2984
-            ),
-            News(
-                avatarImageName: "car",
-                name: "Marcus Volfgan",
-                time: "15.01.2022",
-                description:
-                "Стоишь на берегу и чувствуешь солёный запах ветра, что веет с моря." +
-                    " И веришь, что свободен ты, и жизнь лишь началась.",
-                photoImageName: "bear",
-                likeCount: 456,
-                viewsCount: 584
-            ),
-            News(
-                avatarImageName: "man",
-                name: "Marcus Volfgan",
-                time: "12.03.2022",
-                description: """
-                Приехать к морю в несезон,
-                помимо материальных выгод,
-                имеет тот еще резон,
-                что это — временный, но выход.
-                """,
-                photoImageName: "cat",
-                likeCount: 45,
-                viewsCount: 4
-            ),
-            News(
-                avatarImageName: "cat",
-                name: "Marcus Volfgan",
-                time: "05.09.2022",
-                description:
-                nil,
-                photoImageName: "car",
-                likeCount: 456,
-                viewsCount: 584
-            )
-        ]
+        static let errorTitleString = "Ошибка"
+        static let errorDescriptionString = "Ошибка загрузки данных с сервера"
+        static let authorCellIdentifier = "authorCell"
+        static let textCellIdentifier = "textCell"
+        static let imageCellIdentifier = "imageCell"
+        static let likeCellIdentifier = "likeCell"
+    }
+
+    // MARK: - Types
+
+    private enum CellType {
+        case top
+        case text
+        case image
+        case bottom
+        case none
     }
 
     // MARK: - Private IBOutlet
@@ -68,18 +32,106 @@ final class NewsTableViewController: UITableViewController {
 
     // MARK: - Private property
 
-    private let news = Constants.news
+    private let networkService = NetworkService()
+    private var indexOfCell: CellType = .none
+    private var newsFeed: [Newsfeed] = []
+
+    // MARK: - LifeCycle
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        fetchNewsfeed()
+    }
 
     // MARK: - Public methods
 
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        newsFeed.count
+    }
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        news.count
+        var number = 4
+        if newsFeed[section].text == nil { number -= 1 }
+        return number
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier, for: indexPath)
-            as? NewsTableViewCell else { return UITableViewCell() }
-        cell.setup(news: news[indexPath.row])
-        return cell
+        guard !newsFeed.isEmpty else { return UITableViewCell() }
+        let news = newsFeed[indexPath.section]
+        setCellType(news, indexPath: indexPath)
+
+        switch indexOfCell {
+        case .top:
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: Constants.authorCellIdentifier,
+                for: indexPath
+            ) as? AuthorTableViewCell else { return UITableViewCell() }
+            cell.configure(news: newsFeed[indexPath.section], networkService: networkService)
+            return cell
+        case .text:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.textCellIdentifier, for: indexPath)
+                as? TextTableViewCell else { return UITableViewCell() }
+            cell.configure(newsText: news.text ?? "")
+            return cell
+        case .image:
+            guard let cell = tableView.dequeueReusableCell(
+                withIdentifier: Constants.imageCellIdentifier,
+                for: indexPath
+            ) as? ImageTableViewCell else { return UITableViewCell() }
+            cell.configure(news: news, networkService: networkService)
+            return cell
+        case .bottom:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.likeCellIdentifier, for: indexPath)
+                as? LikeTableViewCell else { return UITableViewCell() }
+            cell.configure(news: news)
+            return cell
+        case .none:
+            let cell = UITableViewCell()
+            return cell
+        }
+    }
+
+    // MARK: - Private  methods
+
+    private func filterData(result: ResponseNewsfeed) {
+        result.response.newsFeed.forEach { news in
+            if news.sourceId < 0 {
+                guard let group = result.response.groups.filter({ group in
+                    group.id == news.sourceId * -1
+                }).first else { return }
+                news.authorName = group.name
+                news.avatarUrl = group.photoUrlString
+            } else {
+                guard let user = result.response.users.filter({ user in
+                    user.id == news.sourceId
+                }).first else { return }
+                news.authorName = "\(user.firstName) \(user.lastName)"
+                news.avatarUrl = user.photoUrlString
+            }
+        }
+    }
+
+    private func fetchNewsfeed() {
+        networkService.fetchNewsfeed { [weak self] results in
+            guard let self = self else { return }
+            self.newsFeed = results.response.newsFeed
+            self.filterData(result: results)
+            self.tableView.reloadData()
+        }
+    }
+
+    private func setCellType(_ news: Newsfeed, indexPath: IndexPath) {
+        switch indexPath.row {
+        case 0:
+            indexOfCell = .top
+        case 1:
+            indexOfCell = news.text == nil ? .image : .text
+        case 2:
+            indexOfCell = news.avatarUrl == nil || news.text == nil ? .bottom : .image
+        case 3:
+            indexOfCell = .bottom
+        default:
+            indexOfCell = .none
+        }
     }
 }
