@@ -13,7 +13,9 @@ final class LikeTableViewCell: UITableViewCell {
     // MARK: - Public methods
 
     func configure(news: Newsfeed) {
-        likeControl.setupData(data: news.likes.count)
-        viewsCountLabel.text = String(news.views.count)
+        guard let likes = news.likes?.count,
+              let views = news.views?.count else { return }
+        likeControl.setupData(data: likes)
+        viewsCountLabel.text = String(views)
     }
 }

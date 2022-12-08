@@ -170,7 +170,7 @@ final class NetworkService {
                 parsedGroups = model
             }
 
-            dispatchGroup.notify(queue: .global()) {
+            dispatchGroup.notify(queue: .main) {
                 let news = ResponseNewsfeed(response: ItemsNewsfeed(
                     newsFeed: parsedItems,
                     users: parsedProfiles,

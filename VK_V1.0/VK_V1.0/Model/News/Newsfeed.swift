@@ -16,13 +16,13 @@ final class Newsfeed: Decodable {
     /// Аватар
     var avatarUrl: String?
     /// Комментарии
-    let comments: Comments
+    let comments: Comments?
     /// Лайки
-    let likes: Likes
+    let likes: Likes?
     /// Репосты
-    let reposts: Reposts
+    let reposts: Reposts?
     /// Просмотры
-    let views: Views
+    let views: Views?
 
     enum CodingKeys: String, CodingKey {
         case sourceId = "source_id"

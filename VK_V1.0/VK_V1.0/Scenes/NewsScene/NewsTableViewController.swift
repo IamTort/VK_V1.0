@@ -116,9 +116,7 @@ final class NewsTableViewController: UITableViewController {
             guard let self = self else { return }
             self.newsFeed = results.response.newsFeed
             self.filterData(result: results)
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
+            self.tableView.reloadData()
         }
     }
 
