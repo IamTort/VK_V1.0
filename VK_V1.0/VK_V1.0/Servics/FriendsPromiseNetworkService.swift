@@ -6,7 +6,7 @@ import Foundation
 import PromiseKit
 
 /// Сервис для получения данных друзей
-class PromiseNetworkService {
+class FriendsPromiseNetworkService {
     // MARK: - Constants
 
     private enum Constants {

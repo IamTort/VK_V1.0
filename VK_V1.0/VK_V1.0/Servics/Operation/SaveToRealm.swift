@@ -3,13 +3,13 @@
 
 import Foundation
 
-/// Сохранение в базу данных
+/// Операция сохранения в реалм
 final class SaveToRealm: Operation {
     // MARK: - Public methods
 
     override func main() {
         guard let getParseData = dependencies.first as? ParseGroup else { return }
-        let parseData = getParseData.outputData
+        let parseData = getParseData.groups
         RealmService.save(items: parseData)
     }
 }

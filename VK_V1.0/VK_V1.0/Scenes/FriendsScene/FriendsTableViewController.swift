@@ -19,7 +19,7 @@ final class FriendsTableViewController: UITableViewController {
     // MARK: - Private property
 
     private let networkService = NetworkService()
-    private let promiseNetworkService = PromiseNetworkService()
+    private let promiseNetworkService = FriendsPromiseNetworkService()
     private let realmService = RealmService()
     private var sortedFriendsMap = [Character: [User]]()
     private var users: Results<User>?

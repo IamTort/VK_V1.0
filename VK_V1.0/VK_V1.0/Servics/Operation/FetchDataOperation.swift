@@ -4,7 +4,7 @@
 import Alamofire
 import UIKit
 
-/// Загрузка данных
+/// Асинхронная операция по загрузке данных
 final class FetchDataOperation: AsyncOperation {
     // MARK: - Public property
 

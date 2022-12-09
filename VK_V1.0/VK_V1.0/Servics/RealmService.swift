@@ -3,7 +3,7 @@
 
 import RealmSwift
 
-/// Взаимодействие с базой данных
+/// Реалм сервис
 final class RealmService {
     // MARK: - Public property
 
