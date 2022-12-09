@@ -57,22 +57,18 @@ final class MyGroupsTableViewController: UITableViewController {
     // MARK: - Private methods
 
     private func loadMyGroups() {
-        createNotificationToken()
-        networkService.fetchMyGroups { [weak self] results in
-            guard let self = self else { return }
-            switch results {
-            case let .success(result):
-                DataProvider.save(items: result.response.items)
-                self.groups = self.dataProvider.loadData(items: Group.self)
-                self.tableView.reloadData()
-            case .failure:
-                self.showErrorAlert(title: Constants.errorTitleString, message: Constants.errorDescriptionString)
-            }
-        }
+        networkService.getGroups()
+        fetchGroups()
     }
 
-    private func createNotificationToken() {
-        notificationToken = groups?.observe { [weak self] result in
+    private func fetchGroups() {
+        guard let group = dataProvider.loadData(items: Group.self) else { return }
+        createNotificationToken(group)
+        groups = group
+    }
+
+    private func createNotificationToken(_ groups: Results<Group>) {
+        notificationToken = groups.observe { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .initial:

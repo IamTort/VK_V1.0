@@ -111,6 +111,20 @@ final class NetworkService {
         }.resume()
     }
 
+    func getGroups() {
+        guard let url = configureURL() else { return }
+        let operationQueue = OperationQueue()
+        let request = sendGroupRequest(url: url)
+        let getDataOperation = GetDataOperation(request: request)
+        operationQueue.addOperation(getDataOperation)
+        let parseData = ParseData()
+        parseData.addDependency(getDataOperation)
+        operationQueue.addOperation(parseData)
+        let saveToRealm = SaveToRealm()
+        saveToRealm.addDependency(parseData)
+        operationQueue.addOperation(saveToRealm)
+    }
+
     // MARK: - Private methods
 
     private func requestData<T: Decodable>(url: URL, completion: @escaping (Result<T, Error>) -> ()) {
@@ -179,5 +193,26 @@ final class NetworkService {
                 completionHandler(news)
             }
         }
+    }
+
+    private func sendGroupRequest(url: URL) -> DataRequest {
+        let request = AF.request(url)
+        return request
+    }
+
+    private func configureURL() -> URL? {
+        guard let id = SessionInformation.shared.userId,
+              let token = SessionInformation.shared.token else { return nil }
+        let params = [
+            Constants.userIdName: "\(id)",
+            Constants.versionName: Constants.versionValue,
+            Constants.extendedName: Constants.extendedValue
+        ]
+        guard let url: URL = .configureURL(
+            token: token,
+            typeMethod: Constants.myGroupsMethod,
+            paramsMap: params
+        ) else { return nil }
+        return url
     }
 }
