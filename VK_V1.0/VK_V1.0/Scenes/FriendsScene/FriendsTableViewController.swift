@@ -1,6 +1,7 @@
 // FriendsTableViewController.swift
 // Copyright © RoadMap. All rights reserved.
 
+import PromiseKit
 import RealmSwift
 import UIKit
 
@@ -18,7 +19,8 @@ final class FriendsTableViewController: UITableViewController {
     // MARK: - Private property
 
     private let networkService = NetworkService()
-    private let dataProvider = DataProvider()
+    private let promiseNetworkService = FriendsPromiseNetworkService()
+    private let realmService = RealmService()
     private var sortedFriendsMap = [Character: [User]]()
     private var users: Results<User>?
     private var notificationToken: NotificationToken?
@@ -27,7 +29,7 @@ final class FriendsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadFriends()
+        fetchFriends()
     }
 
     // MARK: - Public methods
@@ -78,19 +80,19 @@ final class FriendsTableViewController: UITableViewController {
 
     // MARK: - Private methods
 
-    private func loadFriends() {
-        createNotificationToken()
-        networkService.fetchFriends { [weak self] results in
+    private func fetchFriends() {
+        firstly {
+            promiseNetworkService.fetchFriends()
+        }.done { [weak self] response in
             guard let self = self else { return }
-            switch results {
-            case let .success(result):
-                DataProvider.save(items: result.response.items)
-                self.users = self.dataProvider.loadData(items: User.self)
-                self.sortFriends()
-                self.tableView.reloadData()
-            case .failure:
-                self.showErrorAlert(title: Constants.errorTitleString, message: Constants.errorDescriptionString)
-            }
+            RealmService.save(items: response, update: true)
+            guard let users = self.realmService.loadData(items: User.self) else { return }
+            self.createNotificationToken(users)
+            self.users = users
+            self.sortFriends()
+            self.tableView.reloadData()
+        }.catch { _ in
+            self.showErrorAlert(title: Constants.errorTitleString, message: Constants.errorDescriptionString)
         }
     }
 
@@ -127,8 +129,8 @@ final class FriendsTableViewController: UITableViewController {
         sortedFriendsMap = sort(friends: users)
     }
 
-    private func createNotificationToken() {
-        notificationToken = users?.observe { [weak self] result in
+    private func createNotificationToken(_ users: Results<User>) {
+        notificationToken = users.observe { [weak self] result in
             guard let self = self else { return }
             switch result {
             case .initial:

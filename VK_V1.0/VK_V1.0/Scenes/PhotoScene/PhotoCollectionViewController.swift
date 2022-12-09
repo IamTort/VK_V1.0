@@ -22,7 +22,7 @@ final class PhotoCollectionViewController: UICollectionViewController {
     // MARK: - Private property
 
     private let networkService = NetworkService()
-    private let dataProvider = DataProvider()
+    private let realmService = RealmService()
     private var photos: Results<Photo>?
     private var imageUrlsString: [String] = []
 
@@ -68,8 +68,8 @@ final class PhotoCollectionViewController: UICollectionViewController {
             guard let self = self else { return }
             switch results {
             case let .success(results):
-                DataProvider.save(items: results.response.items, update: false)
-                self.photos = self.dataProvider.loadData(items: Photo.self)
+                RealmService.save(items: results.response.items, update: false)
+                self.photos = self.realmService.loadData(items: Photo.self)
                 self.imageUrlsString = self.sortImage(type: Constants.photoType, array: results.response.items)
                 self.collectionView.reloadData()
             case let .failure(error):
