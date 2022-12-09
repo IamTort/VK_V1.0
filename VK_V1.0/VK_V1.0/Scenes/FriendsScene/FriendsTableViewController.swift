@@ -20,7 +20,7 @@ final class FriendsTableViewController: UITableViewController {
 
     private let networkService = NetworkService()
     private let promiseNetworkService = PromiseNetworkService()
-    private let dataProvider = DataProvider()
+    private let realmService = RealmService()
     private var sortedFriendsMap = [Character: [User]]()
     private var users: Results<User>?
     private var notificationToken: NotificationToken?
@@ -85,8 +85,8 @@ final class FriendsTableViewController: UITableViewController {
             promiseNetworkService.fetchFriends()
         }.done { [weak self] response in
             guard let self = self else { return }
-            DataProvider.save(items: response, update: true)
-            guard let users = self.dataProvider.loadData(items: User.self) else { return }
+            RealmService.save(items: response, update: true)
+            guard let users = self.realmService.loadData(items: User.self) else { return }
             self.createNotificationToken(users)
             self.users = users
             self.sortFriends()

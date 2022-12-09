@@ -18,7 +18,7 @@ final class MyGroupsTableViewController: UITableViewController {
     // MARK: - Private property
 
     private let networkService = NetworkService()
-    private let dataProvider = DataProvider()
+    private let realmService = RealmService()
     private var notificationToken: NotificationToken?
     private var groups: Results<Group>?
 
@@ -50,19 +50,19 @@ final class MyGroupsTableViewController: UITableViewController {
     ) {
         guard let group = groups?[indexPath.row],
               editingStyle == .delete else { return }
-        dataProvider.deleteGroup(group)
+        realmService.deleteGroup(group)
         tableView.reloadData()
     }
 
     // MARK: - Private methods
 
     private func loadMyGroups() {
-        networkService.getGroups()
+        networkService.fetchGroups()
         fetchGroups()
     }
 
     private func fetchGroups() {
-        guard let group = dataProvider.loadData(items: Group.self) else { return }
+        guard let group = realmService.loadData(items: Group.self) else { return }
         createNotificationToken(group)
         groups = group
     }

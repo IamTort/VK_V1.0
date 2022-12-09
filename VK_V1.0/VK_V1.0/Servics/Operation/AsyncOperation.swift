@@ -8,13 +8,15 @@ class AsyncOperation: Operation {
     // MARK: - Public enum
 
     enum State: String {
-        case ready, executing, finished
+        case ready
+        case executing
+        case finished
         fileprivate var keyPath: String {
             Constants.isText + rawValue.capitalized
         }
     }
 
-    // MARK: - Private enum
+    // MARK: - Private Constants
 
     private enum Constants {
         static let isText = "is"

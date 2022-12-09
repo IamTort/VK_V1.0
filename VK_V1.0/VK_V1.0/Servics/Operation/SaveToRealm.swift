@@ -8,8 +8,8 @@ final class SaveToRealm: Operation {
     // MARK: - Public methods
 
     override func main() {
-        guard let getParseData = dependencies.first as? ParseData else { return }
+        guard let getParseData = dependencies.first as? ParseGroup else { return }
         let parseData = getParseData.outputData
-        DataProvider.save(items: parseData)
+        RealmService.save(items: parseData)
     }
 }

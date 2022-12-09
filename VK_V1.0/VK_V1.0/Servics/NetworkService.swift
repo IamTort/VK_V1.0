@@ -111,17 +111,17 @@ final class NetworkService {
         }.resume()
     }
 
-    func getGroups() {
+    func fetchGroups() {
         guard let url = configureURL() else { return }
         let operationQueue = OperationQueue()
-        let request = sendGroupRequest(url: url)
-        let getDataOperation = GetDataOperation(request: request)
+        let sendGroupRequest = sendGroupRequest(url: url)
+        let getDataOperation = FetchDataOperation(request: sendGroupRequest)
         operationQueue.addOperation(getDataOperation)
-        let parseData = ParseData()
-        parseData.addDependency(getDataOperation)
-        operationQueue.addOperation(parseData)
+        let parseGroup = ParseGroup()
+        parseGroup.addDependency(getDataOperation)
+        operationQueue.addOperation(parseGroup)
         let saveToRealm = SaveToRealm()
-        saveToRealm.addDependency(parseData)
+        saveToRealm.addDependency(parseGroup)
         operationQueue.addOperation(saveToRealm)
     }
 
@@ -196,8 +196,7 @@ final class NetworkService {
     }
 
     private func sendGroupRequest(url: URL) -> DataRequest {
-        let request = AF.request(url)
-        return request
+        AF.request(url)
     }
 
     private func configureURL() -> URL? {

@@ -23,7 +23,7 @@
 		FA26811F293019C900A567BC /* PhotoInfoDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA26811E293019C900A567BC /* PhotoInfoDto.swift */; };
 		FA26812229301A0700A567BC /* Users.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA26812129301A0700A567BC /* Users.swift */; };
 		FA26812429301A2400A567BC /* ResponseUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA26812329301A2400A567BC /* ResponseUser.swift */; };
-		FA26812B2936A54500A567BC /* DataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA26812A2936A54500A567BC /* DataProvider.swift */; };
+		FA26812B2936A54500A567BC /* RealmService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA26812A2936A54500A567BC /* RealmService.swift */; };
 		FA31421E291278B3008AF0CF /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA31421D291278B3008AF0CF /* UIViewController+Extension.swift */; };
 		FA3142222912BB5A008AF0CF /* FriendsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3142212912BB5A008AF0CF /* FriendsTableViewController.swift */; };
 		FA3142242912BB68008AF0CF /* FriendsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3142232912BB68008AF0CF /* FriendsTableViewCell.swift */; };
@@ -67,8 +67,8 @@
 		FADC7468293FC830002E79CC /* ImageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADC7467293FC830002E79CC /* ImageTableViewCell.swift */; };
 		FADC746A293FC83E002E79CC /* LikeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADC7469293FC83E002E79CC /* LikeTableViewCell.swift */; };
 		FAECCD472941DAB90038736F /* AsyncOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAECCD462941DAB90038736F /* AsyncOperation.swift */; };
-		FAECCD492941E3950038736F /* GetDataOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAECCD482941E3950038736F /* GetDataOperation.swift */; };
-		FAECCD4B294200AD0038736F /* ParseData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAECCD4A294200AD0038736F /* ParseData.swift */; };
+		FAECCD492941E3950038736F /* FetchDataOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAECCD482941E3950038736F /* FetchDataOperation.swift */; };
+		FAECCD4B294200AD0038736F /* ParseGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAECCD4A294200AD0038736F /* ParseGroup.swift */; };
 		FAECCD4D294205D80038736F /* SaveToRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAECCD4C294205D80038736F /* SaveToRealm.swift */; };
 /* End PBXBuildFile section */
 
@@ -91,7 +91,7 @@
 		FA26811E293019C900A567BC /* PhotoInfoDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoInfoDto.swift; sourceTree = "<group>"; };
 		FA26812129301A0700A567BC /* Users.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Users.swift; sourceTree = "<group>"; };
 		FA26812329301A2400A567BC /* ResponseUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseUser.swift; sourceTree = "<group>"; };
-		FA26812A2936A54500A567BC /* DataProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataProvider.swift; sourceTree = "<group>"; };
+		FA26812A2936A54500A567BC /* RealmService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmService.swift; sourceTree = "<group>"; };
 		FA31421D291278B3008AF0CF /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		FA3142212912BB5A008AF0CF /* FriendsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableViewController.swift; sourceTree = "<group>"; };
 		FA3142232912BB68008AF0CF /* FriendsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableViewCell.swift; sourceTree = "<group>"; };
@@ -137,8 +137,8 @@
 		FADC7467293FC830002E79CC /* ImageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTableViewCell.swift; sourceTree = "<group>"; };
 		FADC7469293FC83E002E79CC /* LikeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeTableViewCell.swift; sourceTree = "<group>"; };
 		FAECCD462941DAB90038736F /* AsyncOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncOperation.swift; sourceTree = "<group>"; };
-		FAECCD482941E3950038736F /* GetDataOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetDataOperation.swift; sourceTree = "<group>"; };
-		FAECCD4A294200AD0038736F /* ParseData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseData.swift; sourceTree = "<group>"; };
+		FAECCD482941E3950038736F /* FetchDataOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchDataOperation.swift; sourceTree = "<group>"; };
+		FAECCD4A294200AD0038736F /* ParseGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParseGroup.swift; sourceTree = "<group>"; };
 		FAECCD4C294205D80038736F /* SaveToRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveToRealm.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -176,7 +176,7 @@
 			children = (
 				FAECCD4E2942737C0038736F /* Operation */,
 				FA2680D4292DAAFD00A567BC /* NetworkService.swift */,
-				FA26812A2936A54500A567BC /* DataProvider.swift */,
+				FA26812A2936A54500A567BC /* RealmService.swift */,
 				FAC6724F2942931B00AB543F /* PromiseNetworkService.swift */,
 			);
 			path = Servics;
@@ -396,8 +396,8 @@
 			isa = PBXGroup;
 			children = (
 				FAECCD462941DAB90038736F /* AsyncOperation.swift */,
-				FAECCD482941E3950038736F /* GetDataOperation.swift */,
-				FAECCD4A294200AD0038736F /* ParseData.swift */,
+				FAECCD482941E3950038736F /* FetchDataOperation.swift */,
+				FAECCD4A294200AD0038736F /* ParseGroup.swift */,
 				FAECCD4C294205D80038736F /* SaveToRealm.swift */,
 			);
 			path = Operation;
@@ -587,7 +587,7 @@
 				FA31426C291D1824008AF0CF /* PopAnimator.swift in Sources */,
 				FA314272291D1B0C008AF0CF /* CustomInteractiveTransition.swift in Sources */,
 				FA3142322912DA92008AF0CF /* AvailableGroupsTableViewController.swift in Sources */,
-				FA26812B2936A54500A567BC /* DataProvider.swift in Sources */,
+				FA26812B2936A54500A567BC /* RealmService.swift in Sources */,
 				FA2680E5292EAE6400A567BC /* User.swift in Sources */,
 				FA314270291D1A68008AF0CF /* MainNavigationController.swift in Sources */,
 				FADC7468293FC830002E79CC /* ImageTableViewCell.swift in Sources */,
@@ -599,7 +599,7 @@
 				FADC746A293FC83E002E79CC /* LikeTableViewCell.swift in Sources */,
 				FAB9C89A2940187F000D0D68 /* Likes.swift in Sources */,
 				FAD44467290FDF19006E71AF /* SceneDelegate.swift in Sources */,
-				FAECCD4B294200AD0038736F /* ParseData.swift in Sources */,
+				FAECCD4B294200AD0038736F /* ParseGroup.swift in Sources */,
 				FA268112292FC68500A567BC /* UIImage+Extension.swift in Sources */,
 				FA314258291BEB0C008AF0CF /* SwipePhotoViewController.swift in Sources */,
 				FA26811D293019A500A567BC /* Photos.swift in Sources */,
@@ -611,7 +611,7 @@
 				FA26812429301A2400A567BC /* ResponseUser.swift in Sources */,
 				FAB9C890294017EA000D0D68 /* ItemsNewsfeed.swift in Sources */,
 				FAB9C89E294018AC000D0D68 /* Views.swift in Sources */,
-				FAECCD492941E3950038736F /* GetDataOperation.swift in Sources */,
+				FAECCD492941E3950038736F /* FetchDataOperation.swift in Sources */,
 				FAB9C89429401837000D0D68 /* Profile.swift in Sources */,
 				FA31422A2912D953008AF0CF /* MyGroupsTableViewCell.swift in Sources */,
 				FA2681162930173000A567BC /* Groups.swift in Sources */,

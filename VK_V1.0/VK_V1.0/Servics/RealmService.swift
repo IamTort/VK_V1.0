@@ -1,10 +1,10 @@
-// DataProvider.swift
+// RealmService.swift
 // Copyright © RoadMap. All rights reserved.
 
 import RealmSwift
 
 /// Взаимодействие с базой данных
-final class DataProvider {
+final class RealmService {
     // MARK: - Public property
 
     static let deleteIfMigration = Realm.Configuration(deleteRealmIfMigrationNeeded: true)

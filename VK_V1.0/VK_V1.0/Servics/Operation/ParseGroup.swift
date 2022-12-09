@@ -1,11 +1,11 @@
-// ParseData.swift
+// ParseGroup.swift
 // Copyright © RoadMap. All rights reserved.
 
 import Alamofire
 import Foundation
 
-/// Парсинг
-final class ParseData: Operation {
+/// Парсинг групп
+final class ParseGroup: Operation {
     // MARK: - Public property
 
     var outputData: [Group] = []
@@ -13,7 +13,7 @@ final class ParseData: Operation {
     // MARK: - Public methods
 
     override func main() {
-        guard let getDataOperation = dependencies.first as? GetDataOperation,
+        guard let getDataOperation = dependencies.first as? FetchDataOperation,
               let data = getDataOperation.data else { return }
 
         do {

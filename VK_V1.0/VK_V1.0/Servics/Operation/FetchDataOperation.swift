@@ -1,11 +1,11 @@
-// GetDataOperation.swift
+// FetchDataOperation.swift
 // Copyright © RoadMap. All rights reserved.
 
 import Alamofire
 import UIKit
 
 /// Загрузка данных
-final class GetDataOperation: AsyncOperation {
+final class FetchDataOperation: AsyncOperation {
     // MARK: - Public property
 
     var data: Data?

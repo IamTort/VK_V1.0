@@ -19,6 +19,7 @@ class PromiseNetworkService {
     }
 
     // MARK: - Public Methods
+
     func fetchFriends() -> Promise<[User]> {
         let promise = Promise<[User]> { resolver in
             guard let id = SessionInformation.shared.userId,
