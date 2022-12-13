@@ -25,6 +25,7 @@ final class PhotoCollectionViewController: UICollectionViewController {
     private let realmService = RealmService()
     private var photos: Results<Photo>?
     private var imageUrlsString: [String] = []
+    private lazy var photoCacheService = PhotoCacheService(self.collectionView)
 
     // MARK: - LifeCycle
 
@@ -48,7 +49,11 @@ final class PhotoCollectionViewController: UICollectionViewController {
             withReuseIdentifier: Constants.cellIdentifier,
             for: indexPath
         ) as? PhotoCollectionViewCell else { return UICollectionViewCell() }
-        cell.setupData(data: imageUrlsString[indexPath.item], networkService: networkService)
+        cell.setupData(
+            atIndexpath: indexPath,
+            photoName: imageUrlsString[indexPath.item],
+            photoCacheService: photoCacheService
+        )
         return cell
     }
 

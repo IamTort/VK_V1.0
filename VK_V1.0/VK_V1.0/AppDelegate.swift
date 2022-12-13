@@ -9,7 +9,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _: UIApplication,
         didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        true
+        print(getDocumentDirectory())
+        return true
+    }
+
+    func getDocumentDirectory() -> URL {
+        FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first ?? URL(fileURLWithPath: "")
     }
 
     // MARK: UISceneSession Lifecycle
