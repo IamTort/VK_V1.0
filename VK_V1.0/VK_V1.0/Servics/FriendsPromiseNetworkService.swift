@@ -1,4 +1,4 @@
-// PromiseNetworkService.swift
+// FriendsPromiseNetworkService.swift
 // Copyright © RoadMap. All rights reserved.
 
 import Alamofire
@@ -6,7 +6,7 @@ import Foundation
 import PromiseKit
 
 /// Сервис для получения данных друзей
-class FriendsPromiseNetworkService {
+final class FriendsPromiseNetworkService {
     // MARK: - Constants
 
     private enum Constants {

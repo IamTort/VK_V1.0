@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3B3C4224D588E8201DF3F905 /* Pods_VK_V1_0.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50F60B6DB1E719A0F2E1FC45 /* Pods_VK_V1_0.framework */; };
+		FA1C022F2948E6C8007AFB90 /* PhotoCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1C022E2948E6C8007AFB90 /* PhotoCacheService.swift */; };
+		FA1C02322948F99E007AFB90 /* DataReloadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1C02312948F99E007AFB90 /* DataReloadable.swift */; };
 		FA2680D5292DAAFD00A567BC /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2680D4292DAAFD00A567BC /* NetworkService.swift */; };
 		FA2680D7292DAC0800A567BC /* URL+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2680D6292DAC0800A567BC /* URL+Extension.swift */; };
 		FA2680D9292DAC3B00A567BC /* SessionInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2680D8292DAC3B00A567BC /* SessionInformation.swift */; };
@@ -76,6 +78,8 @@
 		50F60B6DB1E719A0F2E1FC45 /* Pods_VK_V1_0.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VK_V1_0.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B4388DDE766C66222E49E5F /* Pods-VK_V1.0.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VK_V1.0.release.xcconfig"; path = "Target Support Files/Pods-VK_V1.0/Pods-VK_V1.0.release.xcconfig"; sourceTree = "<group>"; };
 		AF248090E2C1C247B1F76088 /* Pods-VK_V1.0.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VK_V1.0.debug.xcconfig"; path = "Target Support Files/Pods-VK_V1.0/Pods-VK_V1.0.debug.xcconfig"; sourceTree = "<group>"; };
+		FA1C022E2948E6C8007AFB90 /* PhotoCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCacheService.swift; sourceTree = "<group>"; };
+		FA1C02312948F99E007AFB90 /* DataReloadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataReloadable.swift; sourceTree = "<group>"; };
 		FA2680D4292DAAFD00A567BC /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		FA2680D6292DAC0800A567BC /* URL+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extension.swift"; sourceTree = "<group>"; };
 		FA2680D8292DAC3B00A567BC /* SessionInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionInformation.swift; sourceTree = "<group>"; };
@@ -171,6 +175,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		FA1C02302948F989007AFB90 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				FA1C02312948F99E007AFB90 /* DataReloadable.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
 		FA2680D3292DAA9900A567BC /* Servics */ = {
 			isa = PBXGroup;
 			children = (
@@ -178,6 +190,7 @@
 				FA2680D4292DAAFD00A567BC /* NetworkService.swift */,
 				FA26812A2936A54500A567BC /* RealmService.swift */,
 				FAC6724F2942931B00AB543F /* FriendsPromiseNetworkService.swift */,
+				FA1C022E2948E6C8007AFB90 /* PhotoCacheService.swift */,
 			);
 			path = Servics;
 			sourceTree = "<group>";
@@ -363,6 +376,7 @@
 		FAD44463290FDF19006E71AF /* VK_V1.0 */ = {
 			isa = PBXGroup;
 			children = (
+				FA1C02302948F989007AFB90 /* Protocol */,
 				FA268114292FDD6500A567BC /* Scenes */,
 				FA2680E3292EAE5600A567BC /* Model */,
 				FA2680D3292DAA9900A567BC /* Servics */,
@@ -560,6 +574,7 @@
 				FA31421E291278B3008AF0CF /* UIViewController+Extension.swift in Sources */,
 				FA31422C2912D967008AF0CF /* MyGroupsTableViewController.swift in Sources */,
 				FA31425C291C4D5A008AF0CF /* CloudViewController.swift in Sources */,
+				FA1C02322948F99E007AFB90 /* DataReloadable.swift in Sources */,
 				FA3142372912E152008AF0CF /* PhotoCollectionViewController.swift in Sources */,
 				FA31424B291A5144008AF0CF /* NewsTableViewController.swift in Sources */,
 				FA31425A291C46C3008AF0CF /* CloudView.swift in Sources */,
@@ -581,6 +596,7 @@
 				FA31424D291A515B008AF0CF /* AuthorTableViewCell.swift in Sources */,
 				FA3142342912DAA7008AF0CF /* AvailableGroupsTableViewCell.swift in Sources */,
 				FAECCD472941DAB90038736F /* AsyncOperation.swift in Sources */,
+				FA1C022F2948E6C8007AFB90 /* PhotoCacheService.swift in Sources */,
 				FA31424129143987008AF0CF /* LikeControl.swift in Sources */,
 				FAD44465290FDF19006E71AF /* AppDelegate.swift in Sources */,
 				FAB9C89C29401894000D0D68 /* Reposts.swift in Sources */,
