@@ -31,7 +31,7 @@ final class PhotoCacheService {
 
     private let container: Collection
     private let cacheLifeTime: TimeInterval = Constants.cacheLifeTime
-    private var images = [String: UIImage]()
+    private var imagesMap = [String: UIImage]()
 
     // MARK: - Initializers
 
@@ -41,14 +41,14 @@ final class PhotoCacheService {
 
     // MARK: - Public Methods
 
-    func getPhoto(atIndexpath indexPath: IndexPath, byUrl url: String) -> UIImage? {
+    func getPhoto(byUrl url: String) -> UIImage? {
         var image: UIImage?
-        if let photo = images[url] {
+        if let photo = imagesMap[url] {
             image = photo
         } else if let photo = getImageFromCache(url: url) {
             image = photo
         } else {
-            loadPhoto(atIndexpath: indexPath, byUrl: url)
+            loadPhoto(byUrl: url)
         }
         return image
     }
@@ -61,17 +61,14 @@ final class PhotoCacheService {
         return cachesDirectory.appendingPathComponent("\(PhotoCacheService.pathName)\(Constants.slash)\(hashName)").path
     }
 
-    private func loadPhoto(atIndexpath indexPath: IndexPath, byUrl url: String) {
-        AF.request(url).responseData(queue: DispatchQueue.global()) { [weak self] response in
-            guard let self = self,
-                  let data = response.data,
+    private func loadPhoto(byUrl url: String) {
+        AF.request(url).responseData(queue: DispatchQueue.global()) { response in
+            guard let data = response.data,
                   let image = UIImage(data: data) else { return }
             DispatchQueue.main.async {
-                self.images[url] = image
-            }
-            self.saveImageToCache(url: url, image: image)
-            DispatchQueue.main.async {
-                self.container.reloadData(atIndexpath: indexPath)
+                self.imagesMap[url] = image
+                self.saveImageToCache(url: url, image: image)
+                self.container.reloadData()
             }
         }
     }
@@ -94,9 +91,8 @@ final class PhotoCacheService {
         let lifeTime = Date().timeIntervalSince(modificationDate)
         guard lifeTime <= cacheLifeTime,
               let image = UIImage(contentsOfFile: fileName) else { return nil }
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            self.images[url] = image
+        DispatchQueue.main.async {
+            self.imagesMap[url] = image
         }
         return image
     }
@@ -118,8 +114,8 @@ extension PhotoCacheService {
 
         // MARK: - Public Methods
 
-        func reloadData(atIndexpath indexPath: IndexPath) {
-            collection.reloadItems(at: [indexPath])
+        func reloadData() {
+            collection.reloadData()
         }
     }
 }

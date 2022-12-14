@@ -11,8 +11,8 @@ final class PhotoCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Public methods
 
-    func setupData(atIndex index: Int, photoName: String, photoCacheService: PhotoCacheService) {
-        let indexPath = IndexPath(row: index, section: 0)
-        photoImageView.image = photoCacheService.getPhoto(atIndexpath: indexPath, byUrl: photoName)
+    func setupData(photoName: String, photoCacheService: PhotoCacheService) {
+//        let indexPath = IndexPath(row: index, section: 0)
+        photoImageView.image = photoCacheService.getPhoto(byUrl: photoName)
     }
 }

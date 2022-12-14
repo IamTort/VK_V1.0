@@ -50,7 +50,6 @@ final class PhotoCollectionViewController: UICollectionViewController {
             for: indexPath
         ) as? PhotoCollectionViewCell else { return UICollectionViewCell() }
         cell.setupData(
-            atIndex: indexPath.row,
             photoName: imageUrlsString[indexPath.item],
             photoCacheService: photoCacheService
         )
