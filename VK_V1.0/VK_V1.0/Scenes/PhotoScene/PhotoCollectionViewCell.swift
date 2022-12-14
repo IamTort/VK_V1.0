@@ -13,6 +13,6 @@ final class PhotoCollectionViewCell: UICollectionViewCell {
 
     func setupData(atIndex index: Int, photoName: String, photoCacheService: PhotoCacheService) {
         let indexPath = IndexPath(row: index, section: 0)
-        photoImageView.image = photoCacheService.photo(atIndexpath: indexPath, byUrl: photoName)
+        photoImageView.image = photoCacheService.getPhoto(atIndexpath: indexPath, byUrl: photoName)
     }
 }

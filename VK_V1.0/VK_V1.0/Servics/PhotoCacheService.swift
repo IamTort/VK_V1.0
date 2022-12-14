@@ -41,7 +41,7 @@ final class PhotoCacheService {
 
     // MARK: - Public Methods
 
-    func photo(atIndexpath indexPath: IndexPath, byUrl url: String) -> UIImage? {
+    func getPhoto(atIndexpath indexPath: IndexPath, byUrl url: String) -> UIImage? {
         var image: UIImage?
         if let photo = images[url] {
             image = photo
@@ -63,14 +63,15 @@ final class PhotoCacheService {
 
     private func loadPhoto(atIndexpath indexPath: IndexPath, byUrl url: String) {
         AF.request(url).responseData(queue: DispatchQueue.global()) { [weak self] response in
-            guard let data = response.data,
+            guard let self = self,
+                  let data = response.data,
                   let image = UIImage(data: data) else { return }
             DispatchQueue.main.async {
-                self?.images[url] = image
+                self.images[url] = image
             }
-            self?.saveImageToCache(url: url, image: image)
+            self.saveImageToCache(url: url, image: image)
             DispatchQueue.main.async {
-                self?.container.reloadRow(atIndexpath: indexPath)
+                self.container.reloadData(atIndexpath: indexPath)
             }
         }
     }
@@ -94,7 +95,8 @@ final class PhotoCacheService {
         guard lifeTime <= cacheLifeTime,
               let image = UIImage(contentsOfFile: fileName) else { return nil }
         DispatchQueue.main.async { [weak self] in
-            self?.images[url] = image
+            guard let self = self else { return }
+            self.images[url] = image
         }
         return image
     }
@@ -116,7 +118,7 @@ extension PhotoCacheService {
 
         // MARK: - Public Methods
 
-        func reloadRow(atIndexpath indexPath: IndexPath) {
+        func reloadData(atIndexpath indexPath: IndexPath) {
             collection.reloadItems(at: [indexPath])
         }
     }
