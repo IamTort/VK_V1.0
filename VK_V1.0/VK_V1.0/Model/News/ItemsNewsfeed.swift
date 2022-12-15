@@ -11,10 +11,13 @@ struct ItemsNewsfeed: Decodable {
     let users: [Profile]
     /// Группы
     let groups: [NewsGroup]
+    /// Следующая страница новостей
+    let nextPage: String
 
     enum CodingKeys: String, CodingKey {
         case newsFeed = "items"
         case users = "profiles"
         case groups
+        case nextPage = "next_from"
     }
 }

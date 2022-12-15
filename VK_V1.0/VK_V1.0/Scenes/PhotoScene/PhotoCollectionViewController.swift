@@ -25,7 +25,7 @@ final class PhotoCollectionViewController: UICollectionViewController {
     private let realmService = RealmService()
     private var photos: Results<Photo>?
     private var imageUrlsString: [String] = []
-    private lazy var photoCacheService = PhotoCacheService(self.collectionView)
+    private lazy var photoCacheService = PhotoCacheService(container: self.collectionView)
 
     // MARK: - LifeCycle
 

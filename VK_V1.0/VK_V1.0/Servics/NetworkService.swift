@@ -31,6 +31,12 @@ final class NetworkService {
         static let itemsName = "items"
         static let profilesName = "profiles"
         static let groupsName = "groups"
+        static let nextPageName = "next_from"
+        static let emptyString = ""
+        static let startTimeName = "start_time"
+        static let startFromName = "start_from"
+        static let countName = "count"
+        static let countValue = "20"
     }
 
     // MARK: - Public methods
@@ -88,12 +94,25 @@ final class NetworkService {
         requestData(url: url, completion: completion)
     }
 
-    func fetchNewsfeed(completion: @escaping (ResponseNewsfeed) -> Void) {
+    func fetchNewsfeed(
+        nextPage: String? = nil,
+        startTime: TimeInterval? = nil,
+        completion: @escaping (ResponseNewsfeed) -> Void
+    ) {
         guard let token = SessionInformation.shared.token else { return }
-        let params = [
+        var params = [
             Constants.versionName: Constants.versionValue,
-            Constants.filtersName: Constants.filtersValue
+            Constants.filtersName: Constants.filtersValue,
+            Constants.countName: Constants.countValue
         ]
+
+        if let startTime = startTime {
+            params.updateValue(String(startTime), forKey: Constants.startTimeName)
+        }
+
+        if let nextPage = nextPage {
+            params.updateValue(nextPage, forKey: Constants.startFromName)
+        }
 
         guard let url: URL = .configureURL(token: token, typeMethod: Constants.newsfeedGetMethod, paramsMap: params)
         else { return }
@@ -152,6 +171,7 @@ final class NetworkService {
             var parsedItems: [Newsfeed] = []
             var parsedProfiles: [Profile] = []
             var parsedGroups: [NewsGroup] = []
+            var parsedNextPage: String = Constants.emptyString
 
             let json = (
                 try? JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)
@@ -162,6 +182,7 @@ final class NetworkService {
             let items = response[Constants.itemsName]
             let profiles = response[Constants.profilesName]
             let groups = response[Constants.groupsName]
+            let nextPage = response[Constants.nextPageName]
 
             let itemsData = (try? JSONSerialization.data(withJSONObject: items as Any, options: .fragmentsAllowed))
                 ?? Data()
@@ -171,6 +192,11 @@ final class NetworkService {
             )) ?? Data()
             let groupsData = (try? JSONSerialization.data(withJSONObject: groups as Any, options: .fragmentsAllowed))
                 ?? Data()
+
+            let nextPageData = (try? JSONSerialization.data(
+                withJSONObject: nextPage as Any,
+                options: .fragmentsAllowed
+            )) ?? Data()
 
             let dispatchGroup = DispatchGroup()
 
@@ -183,12 +209,16 @@ final class NetworkService {
             self.asyncParse(data: groupsData, group: dispatchGroup) { (model: [NewsGroup]) in
                 parsedGroups = model
             }
+            self.asyncParse(data: nextPageData, group: dispatchGroup) { (model: String) in
+                parsedNextPage += model
+            }
 
             dispatchGroup.notify(queue: .main) {
                 let news = ResponseNewsfeed(response: ItemsNewsfeed(
                     newsFeed: parsedItems,
                     users: parsedProfiles,
-                    groups: parsedGroups
+                    groups: parsedGroups,
+                    nextPage: parsedNextPage
                 ))
                 completionHandler(news)
             }

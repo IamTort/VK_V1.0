@@ -8,13 +8,15 @@ final class Newsfeed: Decodable {
     /// Идентификатор новости
     let sourceId: Int
     /// Дата
-    let date: Int
+    let date: Double
     /// Текст
     let text: String?
     /// Имя автора
     var authorName: String?
     /// Аватар
     var avatarUrl: String?
+    /// Ссылка на изображения к новости
+    let attachments: [NewsPhotoPost]?
     /// Комментарии
     let comments: Comments?
     /// Лайки
@@ -34,5 +36,6 @@ final class Newsfeed: Decodable {
         case views
         case comments
         case reposts
+        case attachments
     }
 }

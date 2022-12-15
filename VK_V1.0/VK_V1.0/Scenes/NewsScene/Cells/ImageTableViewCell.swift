@@ -11,8 +11,13 @@ final class ImageTableViewCell: UITableViewCell {
 
     // MARK: - Public methods
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        photoImageView.image = nil
+    }
+
     func configure(news: Newsfeed, networkService: NetworkService) {
-        guard let avatar = news.avatarUrl else { return }
-        photoImageView.loadImage(with: avatar, networkService: networkService)
+        guard let photo = news.attachments?.first?.photo?.sizes.last?.url else { return }
+        photoImageView.loadImage(with: photo, networkService: networkService)
     }
 }
