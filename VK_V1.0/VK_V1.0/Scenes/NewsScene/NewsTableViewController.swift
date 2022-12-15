@@ -16,7 +16,6 @@ final class NewsTableViewController: UITableViewController {
         static let likeCellIdentifier = "likeCell"
         static let emptyString = ""
         static let loadText = "No news loaded. Pull screen to load data"
-//        static let loadingText = "Loading..."
     }
 
     // MARK: - Types
@@ -122,7 +121,6 @@ final class NewsTableViewController: UITableViewController {
     private func setupPullToRefresh() {
         refreshControl = UIRefreshControl()
         refreshControl?.tintColor = .gray
-//        refreshControl?.attributedTitle = NSAttributedString(string: Constants.loadingText)
         refreshControl?.addTarget(self, action: #selector(refreshNewsAction), for: .valueChanged)
     }
 
