@@ -171,7 +171,7 @@ final class NetworkService {
             var parsedItems: [Newsfeed] = []
             var parsedProfiles: [Profile] = []
             var parsedGroups: [NewsGroup] = []
-            var parsedNextPage: String = Constants.emptyString
+            var parsedNextPage = Constants.emptyString
 
             let json = (
                 try? JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed)

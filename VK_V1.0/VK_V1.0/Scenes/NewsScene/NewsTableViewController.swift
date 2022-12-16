@@ -66,7 +66,8 @@ final class NewsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard !newsFeed.isEmpty else { return UITableViewCell() }
+        guard !newsFeed.isEmpty,
+              let photoCacheService = photoCacheService else { return UITableViewCell() }
         let news = newsFeed[indexPath.section]
         setCellType(news, indexPath: indexPath)
 
@@ -88,7 +89,7 @@ final class NewsTableViewController: UITableViewController {
                 withIdentifier: Constants.imageCellIdentifier,
                 for: indexPath
             ) as? ImageTableViewCell else { return UITableViewCell() }
-            cell.configure(news: news, networkService: networkService)
+            cell.configure(news: news, photoCacheService: photoCacheService)
             return cell
         case .bottom:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.likeCellIdentifier, for: indexPath)
@@ -160,7 +161,7 @@ final class NewsTableViewController: UITableViewController {
         case 1:
             indexOfCell = news.text == nil ? .image : .text
         case 2:
-            indexOfCell = news.avatarUrl == nil || news.text == nil ? .bottom : .image
+            indexOfCell = news.attachments?.first?.photo == nil || news.text == nil ? .none : .image
         case 3:
             indexOfCell = .bottom
         default:
@@ -169,13 +170,13 @@ final class NewsTableViewController: UITableViewController {
     }
 
     private func fetchNewsNextPage() {
-        networkService.fetchNewsfeed(nextPage: nextPage, startTime: nil) { [weak self] results in
+        networkService.fetchNewsfeed(nextPage: nextPage, startTime: nil) { [weak self] result in
             guard let self = self else { return }
             let oldNewsCount = self.newsFeed.count
-            let newSections = (oldNewsCount ..< (oldNewsCount + results.response.newsFeed.count))
-            self.nextPage = results.response.nextPage
-            self.newsFeed += results.response.newsFeed
-            self.filterData(result: results)
+            let newSections = (oldNewsCount ..< (oldNewsCount + result.response.newsFeed.count))
+            self.nextPage = result.response.nextPage
+            self.newsFeed += result.response.newsFeed
+            self.filterData(result: result)
             self.tableView.insertSections(IndexSet(newSections), with: .automatic)
             self.isLoading = false
         }

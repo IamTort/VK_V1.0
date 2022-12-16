@@ -11,12 +11,17 @@ final class PhotoInfoDto: Object, Decodable {
     /// Тип фото
     @objc dynamic var type: String = ""
     /// Высота фото
-    var height: Int
+    var height: Int?
     /// Ширина фото
-    var width: Int
+    var width: Int?
     /// Соотношение сторон у фотографии
     var aspectRatio: CGFloat {
-        CGFloat(height) / CGFloat(width)
+        guard let height = height,
+              let width = width,
+              height != 0,
+              width != 0 else { return 0 }
+
+        return (CGFloat(height) / CGFloat(width))
     }
 
     override class func ignoredProperties() -> [String] {

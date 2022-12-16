@@ -16,8 +16,8 @@ final class ImageTableViewCell: UITableViewCell {
         photoImageView.image = nil
     }
 
-    func configure(news: Newsfeed, networkService: NetworkService) {
+    func configure(news: Newsfeed, photoCacheService: PhotoCacheService) {
         guard let photo = news.attachments?.first?.photo?.sizes.last?.url else { return }
-        photoImageView.loadImage(with: photo, networkService: networkService)
+        photoImageView.image = photoCacheService.getPhoto(byUrl: photo)
     }
 }
