@@ -114,11 +114,11 @@ final class NewsTableViewController: UITableViewController {
 
     private func configure() {
         fetchNewsfeed()
-        setupPullToRefresh()
+        setupRefreshControl()
         tableView.prefetchDataSource = self
     }
 
-    private func setupPullToRefresh() {
+    private func setupRefreshControl() {
         refreshControl = UIRefreshControl()
         refreshControl?.tintColor = .gray
         refreshControl?.addTarget(self, action: #selector(refreshNewsAction), for: .valueChanged)
