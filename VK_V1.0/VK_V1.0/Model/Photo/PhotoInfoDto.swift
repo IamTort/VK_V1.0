@@ -18,7 +18,6 @@ final class PhotoInfoDto: Object, Decodable {
     var aspectRatio: CGFloat {
         guard let height = height,
               let width = width,
-              height != 0,
               width != 0 else { return 0 }
 
         return (CGFloat(height) / CGFloat(width))
