@@ -14,6 +14,8 @@ final class NewsTableViewController: UITableViewController {
         static let textCellIdentifier = "textCell"
         static let imageCellIdentifier = "imageCell"
         static let likeCellIdentifier = "likeCell"
+        static let emptyString = ""
+        static let loadText = "No news loaded. Pull screen to load data"
     }
 
     // MARK: - Types
@@ -33,20 +35,28 @@ final class NewsTableViewController: UITableViewController {
     // MARK: - Private property
 
     private let networkService = NetworkService()
+    private var photoCacheService: PhotoCacheService?
     private var indexOfCell: CellType = .none
     private var newsFeed: [Newsfeed] = []
+    private var isLoading = false
+    private var nextPage = Constants.emptyString
 
     // MARK: - LifeCycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchNewsfeed()
+        configure()
     }
 
     // MARK: - Public methods
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        newsFeed.count
+        if newsFeed.isEmpty {
+            tableView.showEmptyMessage(Constants.loadText)
+        } else {
+            tableView.hideEmptyMessage()
+        }
+        return newsFeed.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -56,7 +66,8 @@ final class NewsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard !newsFeed.isEmpty else { return UITableViewCell() }
+        guard !newsFeed.isEmpty,
+              let photoCacheService = photoCacheService else { return UITableViewCell() }
         let news = newsFeed[indexPath.section]
         setCellType(news, indexPath: indexPath)
 
@@ -78,7 +89,7 @@ final class NewsTableViewController: UITableViewController {
                 withIdentifier: Constants.imageCellIdentifier,
                 for: indexPath
             ) as? ImageTableViewCell else { return UITableViewCell() }
-            cell.configure(news: news, networkService: networkService)
+            cell.configure(news: news, photoCacheService: photoCacheService)
             return cell
         case .bottom:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.likeCellIdentifier, for: indexPath)
@@ -91,7 +102,28 @@ final class NewsTableViewController: UITableViewController {
         }
     }
 
-    // MARK: - Private  methods
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let item = newsFeed[indexPath.section]
+        guard indexOfCell == .image,
+              let photo = item.attachments?.first?.photo?.sizes.last else { return UITableView.automaticDimension }
+        let tableWidth = tableView.bounds.width
+        let cellHeight = tableWidth * photo.aspectRatio
+        return cellHeight
+    }
+
+    // MARK: - Private methods
+
+    private func configure() {
+        fetchNewsfeed()
+        setupRefreshControl()
+        tableView.prefetchDataSource = self
+    }
+
+    private func setupRefreshControl() {
+        refreshControl = UIRefreshControl()
+        refreshControl?.tintColor = .gray
+        refreshControl?.addTarget(self, action: #selector(refreshNewsAction), for: .valueChanged)
+    }
 
     private func filterData(result: ResponseNewsfeed) {
         result.response.newsFeed.forEach { news in
@@ -112,8 +144,10 @@ final class NewsTableViewController: UITableViewController {
     }
 
     private func fetchNewsfeed() {
+        photoCacheService = PhotoCacheService(container: tableView)
         networkService.fetchNewsfeed { [weak self] results in
             guard let self = self else { return }
+            self.nextPage = results.response.nextPage
             self.newsFeed = results.response.newsFeed
             self.filterData(result: results)
             self.tableView.reloadData()
@@ -127,11 +161,41 @@ final class NewsTableViewController: UITableViewController {
         case 1:
             indexOfCell = news.text == nil ? .image : .text
         case 2:
-            indexOfCell = news.avatarUrl == nil || news.text == nil ? .bottom : .image
+            indexOfCell = news.attachments?.first?.photo == nil || news.text == nil ? .none : .image
         case 3:
             indexOfCell = .bottom
         default:
             indexOfCell = .none
         }
+    }
+
+    private func fetchNewsNextPage() {
+        networkService.fetchNewsfeed(nextPage: nextPage, startTime: nil) { [weak self] result in
+            guard let self = self else { return }
+            let oldNewsCount = self.newsFeed.count
+            let newSections = (oldNewsCount ..< (oldNewsCount + result.response.newsFeed.count))
+            self.nextPage = result.response.nextPage
+            self.newsFeed += result.response.newsFeed
+            self.filterData(result: result)
+            self.tableView.insertSections(IndexSet(newSections), with: .automatic)
+            self.isLoading = false
+        }
+    }
+
+    @objc private func refreshNewsAction() {
+        fetchNewsfeed()
+        refreshControl?.endRefreshing()
+    }
+}
+
+// MARK: - UITableViewDataSourcePrefetching
+
+extension NewsTableViewController: UITableViewDataSourcePrefetching {
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        guard let maxRow = indexPaths.map(\.section).max(),
+              maxRow > newsFeed.count - 3,
+              isLoading == false else { return }
+        isLoading = true
+        fetchNewsNextPage()
     }
 }

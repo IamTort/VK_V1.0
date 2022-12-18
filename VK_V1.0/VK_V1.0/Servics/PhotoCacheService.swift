@@ -29,13 +29,17 @@ final class PhotoCacheService {
         return pathName
     }()
 
-    private let container: Collection
+    private let container: DataReloadable
     private let cacheLifeTime: TimeInterval = Constants.cacheLifeTime
     private var imagesMap = [String: UIImage]()
 
     // MARK: - Initializers
 
-    init(_ container: UICollectionView) {
+    init(container: UITableView) {
+        self.container = Table(container)
+    }
+
+    init(container: UICollectionView) {
         self.container = Collection(container)
     }
 
@@ -116,6 +120,18 @@ extension PhotoCacheService {
 
         func reloadData() {
             collection.reloadData()
+        }
+    }
+
+    private class Table: DataReloadable {
+        private let table: UITableView
+
+        init(_ table: UITableView) {
+            self.table = table
+        }
+
+        func reloadData() {
+            table.reloadData()
         }
     }
 }

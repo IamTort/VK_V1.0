@@ -16,24 +16,16 @@ final class AuthorTableViewCell: UITableViewCell {
     @IBOutlet private var nameLabel: UILabel!
     @IBOutlet private var timeLabel: UILabel!
 
+    // MARK: - Private properties
+
+    private let dateFormatter = DateFormatter()
+
     // MARK: - Public methods
 
     func configure(news: Newsfeed, networkService: NetworkService) {
         guard let avatar = news.avatarUrl else { return }
         avatarImageView.loadImage(with: avatar, networkService: networkService)
         nameLabel.text = news.authorName
-        timeLabel.text = formatteDate(date: news.date)
-    }
-
-    // MARK: - Private methods
-
-    private func formatteDate(date: Int) -> String {
-        let date = Date(timeIntervalSince1970: TimeInterval(date))
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeStyle = DateFormatter.Style.short
-        dateFormatter.dateStyle = DateFormatter.Style.medium
-        dateFormatter.timeZone = .current
-        let localDate = dateFormatter.string(from: date)
-        return localDate
+        timeLabel.text = dateFormatter.formatteDate(date: news.date)
     }
 }
